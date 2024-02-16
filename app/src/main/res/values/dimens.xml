@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="heading1">32sp</dimen>
+    <dimen name="heading2">24sp</dimen>
+    <dimen name="heading3">18sp</dimen>
+    <dimen name="heading4">16sp</dimen>
+    <dimen name="heading5">14sp</dimen>
+    <dimen name="buttonCorners">5dp</dimen>
+    <dimen name="tvRightAddressMargin">115dp</dimen>
+</resources>

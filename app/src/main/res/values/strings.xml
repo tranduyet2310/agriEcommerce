@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ArgiEcommerce</string>
+    <string name="slogan">An toàn - Uy tín - Chất lượng</string>
+    <string name="fullNameApp">Hệ thống phân phối \nnông sản</string>
+    <string name="appName">ArgiMart</string>
+    <string name="menu_Home">Trang chủ</string>
+    <string name="menu_Sepcialty">Đặc sản</string>
+    <string name="menu_Standard">Tiêu chuẩn</string>
+    <string name="menu_Category">Danh mục</string>
+    <string name="menu_Profile">Tài khoản</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
