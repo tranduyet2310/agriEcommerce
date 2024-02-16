@@ -17,8 +17,8 @@ class SplashActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val text = "<font color='#ff8800'>Argi</font><font color='#3BD98C'>Mart</font>"
-        binding.tvAppName.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+//        val text = "<font color='#ff8800'>Argi</font><font color='#3BD98C'>Mart</font>"
+//        binding.tvAppName.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         val thread = object : Thread(){
             override fun run() {

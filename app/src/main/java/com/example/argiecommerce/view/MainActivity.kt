@@ -3,9 +3,11 @@ package com.example.argiecommerce.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.argiecommerce.R
@@ -22,15 +24,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-//        val navController = findNavController(R.id.fragmentContainerView)
-//        bottomNavigationView.setupWithNavController(navController)
-//        val appBarConfiguration = AppBarConfiguration(setOf(R.id.dashBoardFragment, R.id.categoryFragment, R.id.profileFragment, R.id.specialtyFragment, R.id.standardFragment))
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
         val bottomNavigationView = binding.bottomNavigationView
         setupWithNavController(bottomNavigationView, navController)
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+        val config = AppBarConfiguration(navController.graph)
+        binding.toolbar.setupWithNavController(navController, config)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.homeFragment -> supportActionBar?.hide()
+                R.id.specialtyFragment -> supportActionBar?.hide()
+                R.id.standardFragment -> supportActionBar?.hide()
+                R.id.categoryFragment -> supportActionBar?.hide()
+                R.id.profileFragment -> supportActionBar?.hide()
+                else -> supportActionBar?.show()
+            }
+        }
     }
 }

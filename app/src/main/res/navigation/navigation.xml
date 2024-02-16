@@ -7,26 +7,97 @@
     <fragment
         android:id="@+id/standardFragment"
         android:name="com.example.argiecommerce.view.StandardFragment"
-        android:label="fragment_standard"
+        android:label="Tiêu chuẩn"
         tools:layout="@layout/fragment_standard" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.argiecommerce.view.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:label="Tài khoản"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+
+    </fragment>
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.example.argiecommerce.view.CategoryFragment"
-        android:label="fragment_category"
+        android:label="Danh mục"
         tools:layout="@layout/fragment_category" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.argiecommerce.view.HomeFragment"
-        android:label="fragment_dash_board"
+        android:label="Trang chủ"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/specialtyFragment"
         android:name="com.example.argiecommerce.view.SpecialtyFragment"
-        android:label="fragment_specialty"
+        android:label="Đặc sản"
         tools:layout="@layout/fragment_specialty" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.argiecommerce.view.LoginFragment"
+        android:label="Đăng nhập"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_passwordAssistantFragment"
+            app:destination="@id/passwordAssistantFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.argiecommerce.view.SignUpFragment"
+        android:label="Đăng ký"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordAssistantFragment"
+        android:name="com.example.argiecommerce.view.PasswordAssistantFragment"
+        android:label="Quên mật khẩu"
+        tools:layout="@layout/fragment_password_assistant">
+        <action
+            android:id="@+id/action_passwordAssistantFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_passwordAssistantFragment_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
+        <action
+            android:id="@+id/action_passwordAssistantFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="com.example.argiecommerce.view.AuthenticationFragment"
+        android:label="Xác thực OTP"
+        tools:layout="@layout/fragment_authentication">
+        <action
+            android:id="@+id/action_authenticationFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.argiecommerce.view.ChangePasswordFragment"
+        android:label="Đặt lại mật khẩu"
+        tools:layout="@layout/fragment_change_password">
+        <action
+            android:id="@+id/action_changePasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_changePasswordFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

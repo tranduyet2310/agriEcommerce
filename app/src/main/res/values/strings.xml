@@ -1,12 +1,42 @@
 <resources>
     <string name="app_name">ArgiEcommerce</string>
     <string name="slogan">An toàn - Uy tín - Chất lượng</string>
-    <string name="fullNameApp">Hệ thống phân phối \nnông sản</string>
-    <string name="appName">ArgiMart</string>
+    <string name="fullNameApp">Hệ thống phân phối nông sản</string>
+    <string name="appName"><font color='#ff8800'>Argi</font><font color='#3BD98C'>Mart</font></string>
     <string name="menu_Home">Trang chủ</string>
     <string name="menu_Sepcialty">Đặc sản</string>
     <string name="menu_Standard">Tiêu chuẩn</string>
     <string name="menu_Category">Danh mục</string>
     <string name="menu_Profile">Tài khoản</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_email">Email</string>
+    <string name="btn_sign_in">Sign in</string>
+    <string name="new_customer_create_account">Bạn mới biết đến AgriMart? <font color='#008CFF'>Đăng ký</font></string>
+    <string name="forgot_pass">Quên mật khẩu</string>
+    <string name="agrimart_2024">2024 AgriMart by Me. All Rights Reserved</string>
+    <string name="password_assistance">Đặt lại mật khẩu</string>
+    <string name="enter_email_address_associated_with_account">Nhập địa chỉ email liên kết với tài khoản của bạn.</string>
+    <string name="email_address">Email Address</string>
+    <string name="btn_continue">Continue</string>
+    <string name="authentication_required">Nhập mã xác thực</string>
+    <string name="description_2">Chúng tôi đã gửi mã từ <b>AgriMart</b> tới email của bạn. Vui lòng nhập mã xác thực bên dưới.</string>
+    <string name="hint_otp">Nhập mã OTP</string>
+    <string name="hint_counter">60</string>
+    <string name="resend_otp">Gửi lại OTP</string>
+    <string name="you_hav_exceeded_number_of_requests">Bạn đã vượt quá số lượng yêu cầu</string>
+    <string name="current_password">Mật khẩu hiện tại</string>
+    <string name="new_password">Mật khẩu mới</string>
+    <string name="retype_new_password">Nhập lại mật khẩu mới</string>
+    <string name="save_changes">Đổi mật khẩu</string>
+    <string name="cancel">Hủy</string>
+    <string name="using_strong_password">Sử dụng mật khẩu mạnh ít nhất 8 ký tự</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="fullNameUser">Họ tên</string>
+    <string name="emailUser">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="eight_characters">Mật khẩu phải có tối thiểu 8 ký tự</string>
+    <string name="create_account">Tạo tài khoản</string>
+    <string name="already_have_account">Đăng nhập. <font color='#008CFF'>Đã có tài khoản?</font></string>
 </resources>
