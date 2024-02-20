@@ -10,7 +10,7 @@ import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentPasswordAssistantBinding
 
-class PasswordAssistantFragment : Fragment() {
+class PasswordAssistantFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentPasswordAssistantBinding? = null
     private val binding get() = _binding!!
@@ -28,11 +28,22 @@ class PasswordAssistantFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
+        binding.btnContinue.setOnClickListener(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.btnContinue -> goToAuthenticationFragment()
+        }
+    }
+
+    private fun goToAuthenticationFragment() {
+        navController.navigate(R.id.action_passwordAssistantFragment_to_authenticationFragment)
     }
 
 }

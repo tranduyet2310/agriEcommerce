@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:elevation="@dimen/dimen1dp"
+    app:cardCornerRadius="@dimen/dimen10dp"
+    app:cardElevation="@dimen/dimen10dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/userName"
+                style="@style/h3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="@dimen/dimen10dp"
+                tools:text="David Swift" />
+
+            <TextView
+                android:id="@+id/dateOfReview"
+                style="@style/h3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="@dimen/dimen10dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dimen16sp"
+                tools:text="01/01/2024" />
+        </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/rateProduct"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen10dp"
+            android:numStars="5"
+            android:progressTint="@color/orange"
+            android:secondaryProgressTint="@android:color/transparent"
+            tools:rating="3.5" />
+
+        <TextView
+            android:id="@+id/userFeedback"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen10dp"
+            android:maxLines="5"
+            android:textAlignment="textStart"
+            android:textColor="@color/vDarkGray"
+            android:textSize="@dimen/dimen16sp"
+            tools:text="Đánh giá mang tính chất demo. Đánh giá mang tính chất demo. Đánh giá mang tính chất demo." />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

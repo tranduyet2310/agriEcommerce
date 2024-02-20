@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGray">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ViewFlipper
+            android:id="@+id/imageSlider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen150dp"
+            android:layout_marginStart="@dimen/dimen10dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="@dimen/dimen10dp"
+            android:background="@drawable/background_banner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/viewfilpper_1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfCategory"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageSlider"
+            tools:listitem="@layout/category_list_item"/>
+
+        <TextView
+            android:id="@+id/tvFlashSale"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/flash_sale"
+            app:drawableStartCompat="@drawable/ic_electric_bolt_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfCategory" />
+
+        <TextView
+            android:id="@+id/tvSeeAllFlashSale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/see_all"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dimen18sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfCategory" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfFlashSale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen5dp"
+            android:layout_marginEnd="@dimen/dimen5dp"
+            android:minHeight="@dimen/dimen200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFlashSale" />
+
+        <TextView
+            android:id="@+id/tvOcopProduct"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/ocop_product"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfFlashSale" />
+
+        <TextView
+            android:id="@+id/tvSeeAllOcopProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/see_all"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfFlashSale" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfOcopProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen5dp"
+            android:layout_marginEnd="@dimen/dimen5dp"
+            android:minHeight="@dimen/dimen200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOcopProduct" />
+
+        <TextView
+            android:id="@+id/tvSpecialtyProduct"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/specialty_products"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfOcopProduct" />
+
+        <TextView
+            android:id="@+id/tvSeeAllSpecialtyProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/see_all"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfOcopProduct" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfSpecialtyProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen5dp"
+            android:layout_marginEnd="@dimen/dimen5dp"
+            android:minHeight="@dimen/dimen200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSpecialtyProduct" />
+
+        <TextView
+            android:id="@+id/tvRecentProduct"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/recent_product"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfSpecialtyProduct" />
+
+        <TextView
+            android:id="@+id/tvSeeAllRecentProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/see_all"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfSpecialtyProduct" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfRecentProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen5dp"
+            android:layout_marginEnd="@dimen/dimen5dp"
+            android:minHeight="@dimen/dimen200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRecentProduct" />
+
+        <TextView
+            android:id="@+id/tvSuggestedProduct"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/today_suggestion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfRecentProduct" />
+
+        <TextView
+            android:id="@+id/tvSeeAllSuggestedProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/see_all"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfRecentProduct" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfSuggestedProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen5dp"
+            android:layout_marginEnd="@dimen/dimen5dp"
+            android:minHeight="@dimen/dimen370dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSuggestedProduct" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

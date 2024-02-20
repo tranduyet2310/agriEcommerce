@@ -15,7 +15,7 @@
     <string name="btn_sign_in">Sign in</string>
     <string name="new_customer_create_account">Bạn mới biết đến AgriMart? <font color='#008CFF'>Đăng ký</font></string>
     <string name="forgot_pass">Quên mật khẩu</string>
-    <string name="agrimart_2024">2024 AgriMart by Me. All Rights Reserved</string>
+    <string name="agrimart_2024">2024 AgriMart. Tất cả các quyền được bảo lưu</string>
     <string name="password_assistance">Đặt lại mật khẩu</string>
     <string name="enter_email_address_associated_with_account">Nhập địa chỉ email liên kết với tài khoản của bạn.</string>
     <string name="email_address">Email Address</string>
@@ -39,4 +39,34 @@
     <string name="eight_characters">Mật khẩu phải có tối thiểu 8 ký tự</string>
     <string name="create_account">Tạo tài khoản</string>
     <string name="already_have_account">Đăng nhập. <font color='#008CFF'>Đã có tài khoản?</font></string>
+    <string name="find_product">Tìm kiếm sản phẩm</string>
+    <string name="flash_sale"><font color="#ffff8800">FLASH SALE</font></string>
+    <string name="see_all">Xem tất cả</string>
+    <string name="ocop_product">Sản phẩm <font color="#FF0000">O</font><font color="#008000">C</font><font color="#0000FF">O</font><font color="#FFD700">P</font></string>
+    <string name="specialty_products">Đặc sản vùng miền</string>
+    <string name="today_suggestion">Gợi ý hôm nay</string>
+    <string name="recent_product">Sản phẩm gần đây</string>
+    <string name="what_is_product_look_for">Nhập tên sản phẩm cần tìm</string>
+    <string name="recent_search">Tìm kiếm gần đây</string>
+    <string name="clear_all">Xoá tất cả</string>
+    <string name="schedule">schedule</string>
+    <string name="vegetable">Rau củ</string>
+    <string name="category_image">Category Image</string>
+    <string name="product_image">Product Image</string>
+    <string name="product_price">50.000 VNĐ</string>
+    <string name="share_product">Share Product</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="add_to_favourite">Add to Favourite</string>
+    <string name="title_demo">Táo - Chanh - Dứa - Kiwi</string>
+    <string name="rating_star">Rating Star</string>
+    <string name="have_sold">Đã bán 0</string>
+    <string name="favourite_product">Favourite Product</string>
+    <string name="hn">Hà Nội</string>
+    <string name="htx_demo">HTX Demo</string>
+    <string name="xem_shop">Xem Shop</string>
+    <string name="add">Thêm</string>
+    <string name="buy_now">Mua ngay</string>
+    <string name="review">Đánh giá</string>
+    <string name="be_first_review">Sản phẩm chưa có đánh giá nào</string>
+    <string name="write_review">Viết đánh giá</string>
 </resources>

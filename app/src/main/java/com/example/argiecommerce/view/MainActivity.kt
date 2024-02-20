@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragment -> supportActionBar?.hide()
                 R.id.specialtyFragment -> supportActionBar?.hide()
                 R.id.standardFragment -> supportActionBar?.hide()
                 R.id.categoryFragment -> supportActionBar?.hide()

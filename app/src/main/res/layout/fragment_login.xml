@@ -115,13 +115,16 @@
 
             <TextView
                 style="@style/h5"
+                android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen70dp"
-                android:gravity="center"
+
                 android:paddingStart="@dimen/dimen24dp"
                 android:paddingEnd="@dimen/dimen24dp"
-                android:text="@string/agrimart_2024" />
+                android:text="@string/agrimart_2024"
+                android:drawablePadding="@dimen/dimen5dp"
+                app:drawableStartCompat="@drawable/ic_copyright_24" />
 
         </LinearLayout>
 

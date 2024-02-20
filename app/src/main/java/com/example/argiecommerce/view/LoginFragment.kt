@@ -45,9 +45,6 @@ class LoginFragment : Fragment(), View.OnClickListener {
             R.id.buttonLogin -> loginUser()
             R.id.textViewSignUp -> goToSignUp()
             R.id.forgetPassword -> goToPasswordAssistant()
-            else -> {
-                Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 
@@ -56,6 +53,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loginUser() {
+        Toast.makeText(requireContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
         navController.navigate(R.id.action_loginFragment_to_homeFragment)
     }
 
