@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/lightGray">
+        android:background="@color/lightBlue">
 
         <ImageView
             android:id="@+id/imageOfProduct"
@@ -41,11 +41,11 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/dimen10dp"
+            android:text="@string/title_demo"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/priceOfProduct"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view"
-            android:text="@string/title_demo" />
+            app:layout_constraintTop_toBottomOf="@id/view" />
 
         <View
             android:id="@+id/background_layout"
@@ -62,11 +62,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen10dp"
+            android:text="5.000.000 đ"
             android:textColor="@color/yellowAgri"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameOfProduct"
-            android:text="5.000.000 đ" />
+            app:layout_constraintTop_toBottomOf="@id/nameOfProduct" />
 
         <TextView
             android:id="@+id/priceOfProductDiscount"
@@ -75,12 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:text="7.500.000 đ"
             android:textColor="@color/redAgri"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/priceOfProduct"
             app:layout_constraintStart_toEndOf="@id/priceOfProduct"
-            app:layout_constraintTop_toTopOf="@id/priceOfProduct"
-            android:text="7.500.000 đ" />
+            app:layout_constraintTop_toTopOf="@id/priceOfProduct" />
 
         <View
             android:id="@+id/divider"
@@ -110,9 +110,9 @@
                 android:id="@+id/tvRatingMiniView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="4.5"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="4.5" />
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="@dimen/dimen15dp"
@@ -215,6 +215,52 @@
             app:layout_constraintTop_toTopOf="@id/provider_layout" />
 
         <LinearLayout
+            android:id="@+id/infor_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen5dp"
+            android:layout_marginBottom="@dimen/dimen5dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/provider_layout">
+
+            <TextView
+                style="@style/h3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:gravity="start"
+                android:padding="5dp"
+                android:text="@string/infor_product"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvInfoDetailsOfProduct"
+                style="@style/h5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen10dp"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:text="@string/infor_product_text" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSeeMoreInfoProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_border"
+                android:gravity="center"
+                android:text="@string/see_more"
+                android:textAllCaps="false"
+                android:textColor="@color/redAgri" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/review_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -223,7 +269,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/provider_layout">
+            app:layout_constraintTop_toBottomOf="@+id/infor_layout">
 
             <TextView
                 android:id="@+id/tvReview"
@@ -266,7 +312,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:visibility="visible"
-                tools:listitem="@layout/review_list_item"/>
+                tools:listitem="@layout/review_list_item" />
 
             <TextView
                 android:id="@+id/tvFirst"

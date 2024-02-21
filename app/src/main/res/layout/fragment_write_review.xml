@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.WriteReviewFragment">
+
+    <EditText
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/dimen10dp"
+        android:clickable="false"
+        android:enabled="false"
+        android:focusable="false"
+        android:hint="@string/appName"
+        android:importantForAutofill="no"
+        android:inputType="none"
+        android:textColor="@color/colorAccent" />
+
+    <RatingBar
+        android:id="@+id/rateProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10dp"
+        android:numStars="5"
+        android:progressTint="@color/orange"
+        android:secondaryProgressTint="@android:color/transparent" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen200dp"
+            android:layout_margin="@dimen/dimen10dp"
+            android:background="@drawable/custom_border"
+            android:gravity="top"
+            android:hint="@string/write_your_feedback"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLength="200"
+            android:padding="@dimen/dimen10dp" />
+
+        <TextView
+            android:id="@+id/textLength"
+            style="@style/h2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/dimen20dp"
+            android:text="@string/_200"
+            android:textColor="@color/greenLight" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        style="@style/h4"
+        android:layout_width="@dimen/dimen150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dimen10dp"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

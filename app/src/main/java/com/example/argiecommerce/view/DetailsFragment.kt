@@ -2,6 +2,7 @@ package com.example.argiecommerce.view
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,53 +24,73 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
     val args: DetailsFragmentArgs by navArgs()
 
+    private var isExpanded: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
-//        val innerLayout = LayoutInflater.from(requireContext()).inflate(R.layout.detail_content, null, false)
-//        binding.root.addView(innerLayout)
-//
-////        val innerBinding = DetailContentBinding.inflate(inflater, null, false)
-//
-//        val product: Product = args.productValue
-////        innerBinding.imageOfProduct.setImageResource(R.drawable.product_demo)
-////        innerBinding.priceOfProduct.text = String.format("%,.0f", product.productPrice)
-////        innerBinding.priceOfProductDiscount.text = String.format("%,.0f", product.productPrice)
-////        innerBinding.tvRatingMiniView.text = "4.5"
-//
-//        binding.details?.imageOfProduct?.setImageResource(R.drawable.product_demo)
-//        binding.details?.priceOfProduct?.text = String.format("%,.0f", product.productPrice)
-//        binding.details?.priceOfProductDiscount?.text = String.format("%,.0f", product.productPrice)
-//        binding.details?.tvRatingMiniView?.text = "4.5"
+        val product: Product = args.productValue
+        binding.details.imageOfProduct.setImageResource(R.drawable.product_demo)
+        binding.details.priceOfProduct.text = String.format("%,.0f", product.productPrice)
+        binding.details.priceOfProductDiscount.text = String.format("%,.0f", product.productPrice)
+        binding.details.tvRatingMiniView.text = "4.5"
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-//        binding.buy.setOnClickListener(this);
-//        binding.addToCart.setOnClickListener(this);
-//        binding.details?.writeReview?.setOnClickListener(this)
+        binding.buy.setOnClickListener(this);
+        binding.addToCart.setOnClickListener(this);
+        binding.details.writeReview.setOnClickListener(this)
+        binding.details.tvSeeAllReviews.setOnClickListener(this)
+        binding.details.btnSeeMoreInfoProduct.setOnClickListener(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.buy -> buyProduct()
             R.id.addToCart -> addProductToCart()
             R.id.writeReview -> writeReview()
+            R.id.tvSeeAllReviews -> seeAllReviews()
+            R.id.btnSeeMoreInfoProduct -> seeMoreInfoProduct()
         }
     }
 
+    private fun seeMoreInfoProduct() {
+        if (isExpanded){
+            binding.details.tvInfoDetailsOfProduct.maxLines = 5
+            binding.details.tvInfoDetailsOfProduct.ellipsize = TextUtils.TruncateAt.END
+            binding.details.btnSeeMoreInfoProduct.text = buildString {
+                append("Xem thêm")
+            }
+            isExpanded = false
+        } else {
+            binding.details.tvInfoDetailsOfProduct.maxLines = Int.MAX_VALUE
+            binding.details.tvInfoDetailsOfProduct.ellipsize = null
+            binding.details.btnSeeMoreInfoProduct.text = buildString {
+                append("Thu gọn")
+            }
+            isExpanded = true
+        }
+    }
+
+    private fun seeAllReviews() {
+        navController.navigate(R.id.action_detailsFragment_to_allReviewsFragment)
+    }
+
     private fun writeReview() {
-        Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+        navController.navigate(R.id.action_detailsFragment_to_writeReviewFragment)
     }
 
     private fun addProductToCart() {
@@ -77,7 +98,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun buyProduct() {
-        Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+        navController.navigate(R.id.action_detailsFragment_to_billingFragment)
     }
 
 

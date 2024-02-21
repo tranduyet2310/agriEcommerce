@@ -14,7 +14,7 @@
           style="@style/h2"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/lightGray"
+          android:background="@color/lightBlue"
           android:gravity="center"
           android:padding="3dp"
           android:text="@string/appName"
@@ -28,7 +28,7 @@
           style="@style/h3"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/lightGray"
+          android:background="@color/lightBlue"
           android:gravity="center"
           android:paddingBottom="@dimen/dimen10dp"
           android:text="@string/fullNameApp"
@@ -155,6 +155,14 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/reSend" />
+
+      <View
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/reSend"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:background="@color/white"/>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

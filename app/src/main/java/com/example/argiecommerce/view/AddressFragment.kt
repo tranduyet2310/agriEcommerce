@@ -5,31 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
-import com.example.argiecommerce.databinding.FragmentAuthenticationBinding
+import com.example.argiecommerce.databinding.FragmentAddressBinding
+import com.example.argiecommerce.databinding.FragmentBillingBinding
 
-class AuthenticationFragment : Fragment(), View.OnClickListener {
-
-    private var _binding: FragmentAuthenticationBinding? = null
+class AddressFragment : Fragment(), View.OnClickListener {
+    private var _binding: FragmentAddressBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAuthenticationBinding.inflate(inflater, container, false)
+    ): View? {
+        _binding = FragmentAddressBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        binding.btnContinue.setOnClickListener(this)
-        binding.reSend.setOnClickListener(this)
+        binding.buttonDelelte.setOnClickListener(this)
+        binding.buttonSave.setOnClickListener(this)
     }
 
     override fun onDestroyView() {
@@ -38,19 +37,13 @@ class AuthenticationFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btnContinue -> goToChangePasswordFragment()
-            R.id.reSend -> resendOtpCode()
+        when (v?.id) {
+            R.id.buttonSave -> goToAddressFragment()
+            R.id.buttonDelelte -> goToAddressFragment()
         }
     }
 
-    private fun resendOtpCode() {
-
+    private fun goToAddressFragment() {
+        Toast.makeText(requireContext(), "Cliked", Toast.LENGTH_SHORT).show()
     }
-
-    private fun goToChangePasswordFragment() {
-        navController.navigate(R.id.action_authenticationFragment_to_changePasswordFragment)
-    }
-
-
 }

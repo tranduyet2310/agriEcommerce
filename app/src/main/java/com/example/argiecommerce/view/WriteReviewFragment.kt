@@ -8,28 +8,27 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
-import com.example.argiecommerce.databinding.FragmentAuthenticationBinding
+import com.example.argiecommerce.databinding.FragmentProfileBinding
+import com.example.argiecommerce.databinding.FragmentWriteReviewBinding
 
-class AuthenticationFragment : Fragment(), View.OnClickListener {
 
-    private var _binding: FragmentAuthenticationBinding? = null
+class WriteReviewFragment : Fragment(), View.OnClickListener {
+    private var _binding: FragmentWriteReviewBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAuthenticationBinding.inflate(inflater, container, false)
+    ): View? {
+        _binding = FragmentWriteReviewBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        binding.btnContinue.setOnClickListener(this)
-        binding.reSend.setOnClickListener(this)
+        binding.btnSubmit.setOnClickListener(this)
+
     }
 
     override fun onDestroyView() {
@@ -39,18 +38,12 @@ class AuthenticationFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.btnContinue -> goToChangePasswordFragment()
-            R.id.reSend -> resendOtpCode()
+            R.id.btnSubmit -> submitReview()
         }
     }
 
-    private fun resendOtpCode() {
-
+    private fun submitReview() {
+        navController.navigate(R.id.action_writeReviewFragment_to_detailsFragment)
     }
-
-    private fun goToChangePasswordFragment() {
-        navController.navigate(R.id.action_authenticationFragment_to_changePasswordFragment)
-    }
-
 
 }

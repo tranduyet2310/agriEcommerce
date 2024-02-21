@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightBlue"
+    tools:context=".view.AllReviewsFragment">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvAverageRating"
+            style="@style/h1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/_4_5" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_star"
+            app:tint="@color/black" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvTotalRating"
+        style="@style/h5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/dimen8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/_200_review"
+        android:textColor="@color/vDarkGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_layout_star" />
+
+    <TextView
+        android:id="@+id/layout_5_star"
+        style="@style/h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10dp"
+        android:layout_marginTop="@dimen/dimen10dp"
+        android:layout_marginEnd="@dimen/dimen8dp"
+        android:drawablePadding="5dp"
+        android:text="@string/_5"
+        android:textSize="12sp"
+        app:drawableEndCompat="@drawable/ic_star_black"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar5Star"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalRating" />
+
+    <ProgressBar
+        android:id="@+id/progressBar5Star"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
+        android:max="100"
+        android:progress="90"
+        android:progressTint="@color/darkGreen"
+        app:layout_constraintBottom_toBottomOf="@id/layout_5_star"
+        app:layout_constraintEnd_toStartOf="@id/tvTotal5StarRating"
+        app:layout_constraintStart_toEndOf="@id/layout_5_star"
+        app:layout_constraintTop_toTopOf="@id/layout_5_star" />
+
+    <TextView
+        android:id="@+id/tvTotal5StarRating"
+        style="@style/h5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="@dimen/dimen10dp"
+        android:text="@string/_100"
+        android:textAlignment="center"
+        android:textColor="@color/darkGray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar5Star"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/progressBar5Star"
+        app:layout_constraintTop_toTopOf="@id/progressBar5Star" />
+
+    <TextView
+        android:id="@+id/layout_4_star"
+        style="@style/h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="@dimen/dimen8dp"
+        android:drawablePadding="5dp"
+        android:text="@string/_4"
+        android:textSize="12sp"
+        app:drawableEndCompat="@drawable/ic_star_black"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar4Star"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/layout_5_star" />
+
+    <ProgressBar
+        android:id="@+id/progressBar4Star"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
+        android:max="100"
+        android:progress="90"
+        android:progressTint="@color/darkGreen"
+        app:layout_constraintBottom_toBottomOf="@id/layout_4_star"
+        app:layout_constraintEnd_toStartOf="@id/tvTotal4StarRating"
+        app:layout_constraintStart_toEndOf="@id/layout_4_star"
+        app:layout_constraintTop_toTopOf="@id/layout_4_star" />
+
+    <TextView
+        android:id="@+id/tvTotal4StarRating"
+        style="@style/h5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="@dimen/dimen10dp"
+        android:text="@string/_100"
+        android:textAlignment="center"
+        android:textColor="@color/darkGray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar4Star"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/progressBar4Star"
+        app:layout_constraintTop_toTopOf="@id/progressBar4Star" />
+
+    <TextView
+        android:id="@+id/layout_3_star"
+        style="@style/h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="@dimen/dimen8dp"
+        android:drawablePadding="5dp"
+        android:text="@string/_3"
+        android:textSize="12sp"
+        app:drawableEndCompat="@drawable/ic_star_black"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar3Star"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/layout_4_star" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3Star"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
+        android:max="100"
+        android:progress="90"
+        android:progressTint="@color/darkGreen"
+        app:layout_constraintBottom_toBottomOf="@id/layout_3_star"
+        app:layout_constraintEnd_toStartOf="@id/tvTotal3StarRating"
+        app:layout_constraintStart_toEndOf="@id/layout_3_star"
+        app:layout_constraintTop_toTopOf="@id/layout_3_star" />
+
+    <TextView
+        android:id="@+id/tvTotal3StarRating"
+        style="@style/h5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="@dimen/dimen10dp"
+        android:text="@string/_100"
+        android:textAlignment="center"
+        android:textColor="@color/darkGray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar3Star"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/progressBar3Star"
+        app:layout_constraintTop_toTopOf="@id/progressBar3Star" />
+
+    <TextView
+        android:id="@+id/layout_2_star"
+        style="@style/h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="@dimen/dimen8dp"
+        android:drawablePadding="5dp"
+        android:text="@string/_2"
+        android:textSize="12sp"
+        app:drawableEndCompat="@drawable/ic_star_black"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar2Star"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/layout_3_star" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2Star"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
+        android:max="100"
+        android:progress="90"
+        android:progressTint="@color/darkGreen"
+        app:layout_constraintBottom_toBottomOf="@id/layout_2_star"
+        app:layout_constraintEnd_toStartOf="@id/tvTotal2StarRating"
+        app:layout_constraintStart_toEndOf="@id/layout_2_star"
+        app:layout_constraintTop_toTopOf="@id/layout_2_star" />
+
+    <TextView
+        android:id="@+id/tvTotal2StarRating"
+        style="@style/h5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="@dimen/dimen10dp"
+        android:text="@string/_100"
+        android:textAlignment="center"
+        android:textColor="@color/darkGray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar2Star"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/progressBar2Star"
+        app:layout_constraintTop_toTopOf="@id/progressBar2Star" />
+
+    <TextView
+        android:id="@+id/layout_1_star"
+        style="@style/h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="@dimen/dimen8dp"
+        android:drawablePadding="5dp"
+        android:text="@string/_1"
+        android:textSize="12sp"
+        app:drawableEndCompat="@drawable/ic_star_black"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar1Star"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/layout_2_star" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1Star"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
+        android:max="100"
+        android:progress="90"
+        android:progressTint="@color/darkGreen"
+        app:layout_constraintBottom_toBottomOf="@id/layout_1_star"
+        app:layout_constraintEnd_toStartOf="@id/tvTotal1StarRating"
+        app:layout_constraintStart_toEndOf="@id/layout_1_star"
+        app:layout_constraintTop_toTopOf="@id/layout_1_star" />
+
+    <TextView
+        android:id="@+id/tvTotal1StarRating"
+        style="@style/h5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="@dimen/dimen10dp"
+        android:text="@string/_100"
+        android:textAlignment="center"
+        android:textColor="@color/darkGray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar1Star"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/progressBar1Star"
+        app:layout_constraintTop_toTopOf="@id/progressBar1Star" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/allReviewsList"
+        android:layout_marginStart="@dimen/dimen5dp"
+        android:layout_marginEnd="@dimen/dimen5dp"
+        android:layout_marginTop="@dimen/dimen5dp"
+        tools:listitem="@layout/review_list_item"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_1_star"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
