@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.suppiler.SuppilerFragment">
+
+    <include
+        android:id="@+id/suppiler_layout"
+        layout="@layout/suppiler_detail" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        style="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/darkGreen">
+
+            <TextView
+                android:id="@+id/tvSearch"
+                style="@style/h4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen15dp"
+                android:layout_marginEnd="@dimen/dimen15dp"
+                android:layout_marginBottom="@dimen/dimen10dp"
+                android:background="@color/white"
+                android:drawablePadding="@dimen/dimen10dp"
+                android:paddingStart="@dimen/dimen8dp"
+                android:paddingTop="@dimen/dimen12dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="@dimen/dimen12dp"
+                android:text="@string/find_product"
+                app:drawableStartCompat="@drawable/ic_search" />
+        </FrameLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

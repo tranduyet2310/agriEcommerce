@@ -75,8 +75,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_cart -> Toast.makeText(this, "Cart", Toast.LENGTH_SHORT).show()
+            R.id.action_cart -> goToCartFragment()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun goToCartFragment() {
+        navController.navigate(R.id.action_homeFragment_to_cartFragment)
     }
 }

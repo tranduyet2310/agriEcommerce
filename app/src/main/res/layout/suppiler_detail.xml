@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/suppiler_background"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen150dp"
+        android:importantForAccessibility="no"
+        android:src="@color/lightGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageOfSuppiler"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="70dp"
+        android:src="@color/green"
+        app:civ_border_color="@color/black"
+        app:civ_border_width="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSuppilerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:drawablePadding="@dimen/dimen10dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_semibold"
+        android:maxLines="1"
+        android:text="@string/title_demo"
+        android:textSize="@dimen/dimen16sp"
+        app:drawableEndCompat="@drawable/ic_arrow"
+        app:layout_constraintStart_toEndOf="@id/imageOfSuppiler"
+        app:layout_constraintTop_toTopOf="@id/imageOfSuppiler" />
+
+    <TextView
+        android:id="@+id/tvSuppilerProvince"
+        style="@style/h5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen5dp"
+        android:gravity="center"
+        android:text="@string/hn"
+        android:textSize="14sp"
+        app:drawableStartCompat="@drawable/ic_location"
+        app:layout_constraintBottom_toBottomOf="@id/imageOfSuppiler"
+        app:layout_constraintStart_toStartOf="@id/tvSuppilerName"
+        app:layout_constraintTop_toBottomOf="@id/tvSuppilerName" />
+
+    <TextView
+        android:id="@+id/tvTotalRatingSuppiler"
+        style="@style/h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:drawablePadding="5dp"
+        android:text="@string/_4_5_5_0"
+        android:textSize="12sp"
+        app:drawableEndCompat="@drawable/ic_star_black"
+        app:layout_constraintBottom_toBottomOf="@id/tvSuppilerProvince"
+        app:layout_constraintStart_toEndOf="@id/tvSuppilerProvince"
+        app:layout_constraintTop_toTopOf="@id/tvSuppilerProvince" />
+
+    <ImageView
+        android:id="@+id/imgSuppilerContact"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/settings_items_background"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_phone_24"
+        app:layout_constraintBottom_toBottomOf="@id/imageOfSuppiler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageOfSuppiler"
+        app:tint="@color/white" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/lightBlue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/suppiler_background"
+        app:tabIndicator="@null"
+        app:tabMode="scrollable"
+        app:tabRippleColor="@color/white"
+        app:tabSelectedTextColor="#D17206"
+        app:tabTextAppearance="@style/tabLayout_text" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpagerSuppiler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

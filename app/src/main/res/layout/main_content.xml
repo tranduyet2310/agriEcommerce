@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen5dp"
             android:layout_marginEnd="@dimen/dimen5dp"
-            android:minHeight="@dimen/dimen200dp"
+            android:minHeight="@dimen/dimen140dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvFlashSale" />
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen5dp"
             android:layout_marginEnd="@dimen/dimen5dp"
-            android:minHeight="@dimen/dimen200dp"
+            android:minHeight="@dimen/dimen140dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvOcopProduct" />
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen5dp"
             android:layout_marginEnd="@dimen/dimen5dp"
-            android:minHeight="@dimen/dimen200dp"
+            android:minHeight="@dimen/dimen140dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSpecialtyProduct" />
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen5dp"
             android:layout_marginEnd="@dimen/dimen5dp"
-            android:minHeight="@dimen/dimen200dp"
+            android:minHeight="@dimen/dimen140dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvRecentProduct" />

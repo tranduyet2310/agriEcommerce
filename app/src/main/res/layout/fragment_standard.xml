@@ -4,16 +4,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.StandardFragment">
+    tools:context=".view.standard.StandardFragment">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/title_specialty"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Tieu chuan"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/lightBlue"
+        android:fontFamily="@font/smooch_regular"
+        android:gravity="center"
+        android:text="@string/standard"
+        android:textColor="#D17206"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="@dimen/dimen24dp"
+        android:layout_height="@dimen/dimen24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="100dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/leaf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="@dimen/dimen24dp"
+        android:layout_height="@dimen/dimen24dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="@dimen/dimen10dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/sprout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/lightBlue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_specialty"
+        app:tabIndicator="@null"
+        app:tabMode="scrollable"
+        app:tabRippleColor="@color/white"
+        app:tabSelectedTextColor="#D17206"
+        app:tabTextAppearance="@style/tabLayout_text" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpagerStandard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

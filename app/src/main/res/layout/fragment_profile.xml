@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/lightBlue"
     android:fillViewport="true"
-    tools:context=".view.ProfileFragment">
+    tools:context=".view.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -160,7 +160,7 @@
 
 
             <LinearLayout
-                android:id="@+id/linearTrackOrder"
+                android:id="@+id/linearWishList"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -176,11 +176,11 @@
                     android:background="@drawable/settings_items_background"
                     android:backgroundTint="#666666"
                     android:importantForAccessibility="no"
-                    android:src="@drawable/ic_search"
+                    android:src="@drawable/ic_favorite_red"
                     app:tint="@color/white" />
 
                 <TextView
-                    android:id="@+id/tvTrackOrders"
+                    android:id="@+id/tvWishlist"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -188,7 +188,7 @@
                     android:layout_marginEnd="@dimen/dimen10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/inter_regular"
-                    android:text="@string/track_orders"
+                    android:text="@string/wishlist"
                     android:textColor="#666666"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -206,7 +206,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
-                app:layout_constraintTop_toBottomOf="@id/linearTrackOrder">
+                app:layout_constraintTop_toBottomOf="@id/linearWishList">
 
                 <ImageView
                     android:layout_width="30dp"

@@ -89,4 +89,6 @@ dependencies {
     // lottie
     val lottie_version = "6.0.0"
     implementation("com.airbnb.android:lottie:$lottie_version")
+    //stepView
+    implementation ("com.github.shuhart:stepview:1.5.1")
 }

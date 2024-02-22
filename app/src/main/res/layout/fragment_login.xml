@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/dimen24dp"
-            tools:context=".view.LoginFragment">
+            tools:context=".view.loginRegister.LoginFragment">
 
             <ImageView
                 android:layout_width="match_parent"
