@@ -14,6 +14,7 @@
         android:id="@+id/productItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="@color/white">
 
         <ImageView
@@ -23,7 +24,7 @@
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:contentDescription="@string/product_image"
-            android:src="@drawable/viewfilpper_1"
+            android:src="@drawable/product_demo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

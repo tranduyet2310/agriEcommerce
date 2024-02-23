@@ -9,7 +9,11 @@
         android:id="@+id/standardFragment"
         android:name="com.example.argiecommerce.view.standard.StandardFragment"
         android:label="Tiêu chuẩn"
-        tools:layout="@layout/fragment_standard" />
+        tools:layout="@layout/fragment_standard" >
+        <action
+            android:id="@+id/action_standardFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.argiecommerce.view.profile.ProfileFragment"
@@ -37,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.example.argiecommerce.view.CategoryFragment"
+        android:name="com.example.argiecommerce.view.category.CategoryFragment"
         android:label="Danh mục"
         tools:layout="@layout/fragment_category" />
     <fragment
@@ -54,12 +58,19 @@
         <action
             android:id="@+id/action_homeFragment_to_cartFragment"
             app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
     </fragment>
     <fragment
         android:id="@+id/specialtyFragment"
         android:name="com.example.argiecommerce.view.specialty.SpecialtyFragment"
         android:label="Đặc sản"
-        tools:layout="@layout/fragment_specialty" />
+        tools:layout="@layout/fragment_specialty" >
+        <action
+            android:id="@+id/action_specialtyFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.argiecommerce.view.loginRegister.LoginFragment"
@@ -155,6 +166,15 @@
         <action
             android:id="@+id/action_detailsFragment_to_suppilerFragment"
             app:destination="@id/suppilerFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_standardFragment"
+            app:destination="@id/standardFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_specialtyFragment"
+            app:destination="@id/specialtyFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
     </fragment>
     <fragment
         android:id="@+id/allReviewsFragment"
@@ -191,7 +211,7 @@
     </fragment>
     <fragment
         android:id="@+id/billingFragment"
-        android:name="com.example.argiecommerce.view.BillingFragment"
+        android:name="com.example.argiecommerce.view.profile.BillingFragment"
         android:label="fragment_billing"
         tools:layout="@layout/fragment_billing" >
         <action
@@ -271,6 +291,21 @@
         tools:layout="@layout/fragment_suppiler" >
         <action
             android:id="@+id/action_suppilerFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seeAllFragment"
+        android:name="com.example.argiecommerce.view.SeeAllFragment"
+        android:label="fragment_see_all"
+        tools:layout="@layout/fragment_see_all" >
+        <action
+            android:id="@+id/action_seeAllFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seeAllFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
 </navigation>

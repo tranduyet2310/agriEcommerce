@@ -37,10 +37,10 @@ class SuppilerFragment : Fragment(), View.OnClickListener {
         binding.tvSearch.setOnClickListener(this)
 
         val specialtiesFragment = arrayListOf<Fragment>(
-            OcopFragment(),
-            VietGapFragment(),
-            GlobalGapFragment(),
-            OrganicFragment()
+            SpIntroFragment(),
+            SpProductFragment(),
+            SpCategoryFragment(),
+            SpShopFragment()
         )
 
         binding.suppilerLayout.viewpagerSuppiler.isUserInputEnabled = false

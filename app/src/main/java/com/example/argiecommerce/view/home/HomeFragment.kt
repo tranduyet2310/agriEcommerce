@@ -20,7 +20,8 @@ import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.utils.ImageUtils
 import com.example.argiecommerce.utils.Utils
 
-class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOnClickListener, DemoAdapter2.DemoAdapterOnClickListener {
+class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOnClickListener,
+    DemoAdapter2.DemoAdapterOnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
@@ -41,6 +42,7 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
 
     private lateinit var imageList: Array<Int>
     private lateinit var titleList: Array<String>
+    private lateinit var categoryAdapter: CategoryAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,37 +53,43 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
         titleList = Utils.getText.getCategoryItemTitle()
 
         rvCategory = binding.content.listOfCategory
-        rvCategory.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
+        rvCategory.layoutManager =
+            GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
         rvCategory.setHasFixedSize(true)
         categoryItemList = arrayListOf()
         getCategoryData()
 
         rvSuggestedProduct = binding.content.listOfSuggestedProduct
-        rvSuggestedProduct.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+        rvSuggestedProduct.layoutManager =
+            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         rvSuggestedProduct.setHasFixedSize(true)
         suggestedProductList = arrayListOf()
         getSuggestedProduct()
 
         rvFlashSaleProduct = binding.content.listOfFlashSale
-        rvFlashSaleProduct.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        rvFlashSaleProduct.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         rvFlashSaleProduct.setHasFixedSize(true)
         flashSaleProductList = arrayListOf()
         getFlashSaleProduct()
 
         rvOcopProduct = binding.content.listOfOcopProduct
-        rvOcopProduct.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        rvOcopProduct.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         rvOcopProduct.setHasFixedSize(true)
         ocopProductList = arrayListOf()
         getOcopProduct()
 
         rvSpecialtyProduct = binding.content.listOfSpecialtyProduct
-        rvSpecialtyProduct.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        rvSpecialtyProduct.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         rvSpecialtyProduct.setHasFixedSize(true)
         specialtyProductList = arrayListOf()
         getSpecialtyProduct()
 
         rvRecentProduct = binding.content.listOfRecentProduct
-        rvRecentProduct.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        rvRecentProduct.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         rvRecentProduct.setHasFixedSize(true)
         recentProductList = arrayListOf()
         getRecentProduct()
@@ -103,6 +111,10 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
         binding.content.tvSeeAllSuggestedProduct.setOnClickListener(this)
         binding.tvSearch.setOnClickListener(this)
 
+        categoryAdapter.onClick = {
+            val b = Bundle().apply { putString("category", it.categoryTitle) }
+            navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
+        }
 
         setUpViews();
     }
@@ -141,23 +153,28 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
     }
 
     private fun goToSuggestedProductFragment() {
-
+        val b = Bundle().apply { putString("category", "Gợi ý hôm nay") }
+        navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
     private fun goToRecentProductFragment() {
-
+        val b = Bundle().apply { putString("category", "Sản phẩm gần đây") }
+        navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
     private fun goToSpecialtyFragment() {
-
+        val b = Bundle().apply { putString("category", "Đặc sản vùng miền") }
+        navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
     private fun goToStandardFragment() {
-
+        val b = Bundle().apply { putString("category", "Sản phẩm đạt chuẩn") }
+        navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
     private fun goToFlashSaleFragment() {
-
+        val b = Bundle().apply { putString("category", "Flash Sale") }
+        navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
     private fun goToSearchFragment() {
@@ -169,7 +186,8 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
             val categoryItem = CategoryItem(imageList[i], titleList[i])
             categoryItemList.add(categoryItem)
         }
-        binding.content.listOfCategory.adapter = CategoryAdapter(categoryItemList)
+        categoryAdapter = CategoryAdapter(categoryItemList)
+        binding.content.listOfCategory.adapter = categoryAdapter
     }
 
     private fun getSuggestedProduct() {
@@ -209,7 +227,7 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
 
     override fun onClick(product: Product) {
         val action =
-            com.example.argiecommerce.view.home.HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
+            HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
                 product
             )
         navController.navigate(action)

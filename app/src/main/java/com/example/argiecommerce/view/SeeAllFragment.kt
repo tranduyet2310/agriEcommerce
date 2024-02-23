@@ -1,48 +1,67 @@
-package com.example.argiecommerce.view.standard
+package com.example.argiecommerce.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.DemoAdapter
 import com.example.argiecommerce.adapter.StandardAdapter
-import com.example.argiecommerce.databinding.FragmentBaseStandardBinding
+import com.example.argiecommerce.databinding.FragmentSeeAllBinding
 import com.example.argiecommerce.model.Product
 
 
-open class BaseStandardFragment : Fragment(R.layout.fragment_base_standard) {
+class SeeAllFragment : Fragment() {
+    private var _binding: FragmentSeeAllBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var navController: NavController
 
-    private lateinit var binding: FragmentBaseStandardBinding
-    protected val demoAdapter: StandardAdapter by lazy { StandardAdapter(createSampleData()) }
+    private val demoAdapter: StandardAdapter by lazy { StandardAdapter(createSampleData()) }
 
+    val args: SeeAllFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentBaseStandardBinding.inflate(inflater)
+    ): View {
+        _binding = FragmentSeeAllBinding.inflate(inflater, container, false)
 
-        binding.allProductRecyclerView.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2 ,GridLayoutManager.VERTICAL, false)
+        val title: String = args.category
+
+        binding.seeAllProductRecyclerView.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2 ,
+                GridLayoutManager.VERTICAL, false)
             adapter = demoAdapter
             setHasFixedSize(true)
         }
+
+        binding.titleCategory.text = title
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        navController = Navigation.findNavController(view)
 
         demoAdapter.onClick = {
             val b = Bundle().apply { putParcelable("product_value", it) }
-            findNavController().navigate(R.id.action_standardFragment_to_detailsFragment, b)
+            findNavController().navigate(R.id.action_seeAllFragment_to_detailsFragment, b)
         }
+
+        binding.imgBack.setOnClickListener{
+            navController.navigateUp()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     fun createSampleData(): ArrayList<Product>{

@@ -1,14 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightBlue"
     tools:context=".view.suppiler.SpShopFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <View
+        android:id="@+id/view_suppilerRating"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvSuppilerRating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvSuppilerRating" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/suppilerRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen20dp"
+        android:drawablePadding="@dimen/dimen10dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/reviews"
+        android:textSize="@dimen/dimen16sp"
+        app:drawableStartCompat="@drawable/ic_star_gray"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSuppilerRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen15dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/_4_5_5_0"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/dimen16sp"
+        app:layout_constraintBottom_toBottomOf="@id/suppilerRating"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/suppilerRating" />
+
+    <View
+        android:id="@+id/view_suppilerProduct"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvSuppilerProduct"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvSuppilerProduct" />
+
+    <TextView
+        android:id="@+id/suppilerProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen20dp"
+        android:drawablePadding="@dimen/dimen10dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/product"
+        android:textSize="@dimen/dimen16sp"
+        app:drawableStartCompat="@drawable/ic_storefront_24"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/suppilerRating" />
+
+    <TextView
+        android:id="@+id/tvSuppilerProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen15dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/_4_5_5_0"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/dimen16sp"
+        app:layout_constraintBottom_toBottomOf="@id/suppilerProduct"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/suppilerProduct" />
+
+    <View
+        android:id="@+id/view_suppilerTime"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvSuppilerTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvSuppilerTime" />
+
+    <TextView
+        android:id="@+id/suppilerTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen20dp"
+        android:drawablePadding="@dimen/dimen10dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/had_joined"
+        android:textSize="@dimen/dimen16sp"
+        app:drawableStartCompat="@drawable/ic_user_24"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/suppilerProduct" />
+
+    <TextView
+        android:id="@+id/tvSuppilerTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen15dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/_4_5_5_0"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/dimen16sp"
+        app:layout_constraintBottom_toBottomOf="@id/suppilerTime"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/suppilerTime" />
+
+    <View
+        android:id="@+id/view_suppilerNote"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvSuppilerNote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_suppilerTime" />
+
+    <TextView
+        android:id="@+id/suppilerNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="@dimen/dimen10dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/shop_description"
+        android:textSize="@dimen/dimen16sp"
+        app:drawableStartCompat="@drawable/ic_edit_note_24"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/suppilerTime" />
+
+    <EditText
+        android:id="@+id/tvSuppilerNote"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/inter_bold"
+        android:inputType="none"
+        android:maxHeight="@dimen/dimen100dp"
+        android:maxLines="5"
+        android:scrollbars="vertical"
+        android:text="@string/infor_product_text"
+        android:textColor="@color/orange"
+        android:textSize="12sp"
+        android:editable="false"
+        app:layout_constraintBottom_toBottomOf="@id/view_suppilerNote"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/suppilerNote" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/dimen5dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_suppilerNote">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dimen10dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/account_have_accept"
+            android:textSize="@dimen/dimen16sp"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="@dimen/dimen10dp"
+            app:drawableStartCompat="@drawable/ic_shield_moon" />
+
+        <ImageView
+            android:id="@+id/imgsuppilerGmail"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_mail"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no" />
+
+        <ImageView
+            android:id="@+id/imgSuppilerPhone"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_phone_android"
+            android:importantForAccessibility="no" />
+
+        <ImageView
+            android:id="@+id/imgSuppilerLocation"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_location"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

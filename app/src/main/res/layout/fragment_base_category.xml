@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.specialty.DongBacBoFragment">
+    tools:context=".view.category.BaseCategoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dBBRecyclerView"
+        android:id="@+id/rvCategory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/product_list_item" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

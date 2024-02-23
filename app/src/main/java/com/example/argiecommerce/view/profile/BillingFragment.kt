@@ -1,4 +1,4 @@
-package com.example.argiecommerce.view
+package com.example.argiecommerce.view.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

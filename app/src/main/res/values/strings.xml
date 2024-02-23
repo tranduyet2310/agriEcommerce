@@ -124,4 +124,8 @@
     <string name="specialty">Đặc sản vùng miền</string>
     <string name="standard">Nông sản đạt chuẩn</string>
     <string name="_4_5_5_0">4.5/5.0</string>
+    <string name="reviews">Đánh giá</string>
+    <string name="had_joined">Đã tham gia</string>
+    <string name="shop_description">Mô tả Shop</string>
+    <string name="account_have_accept">Tài khoản đã được xác minh:</string>
 </resources>

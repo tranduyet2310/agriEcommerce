@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.specialtyFragment,
                 R.id.standardFragment,
                 R.id.categoryFragment,
-                R.id.profileFragment -> {
+                R.id.profileFragment, R.id.seeAllFragment -> {
                     isHomeFragment = false; supportActionBar?.hide()
                 }
 

@@ -1,32 +1,32 @@
-package com.example.argiecommerce.view.standard
+package com.example.argiecommerce.view.specialty
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.DemoAdapter
 import com.example.argiecommerce.adapter.StandardAdapter
-import com.example.argiecommerce.databinding.FragmentBaseStandardBinding
+import com.example.argiecommerce.databinding.FragmentBaseSpecialtyBinding
 import com.example.argiecommerce.model.Product
 
 
-open class BaseStandardFragment : Fragment(R.layout.fragment_base_standard) {
+open class BaseSpecialtyFragment : Fragment(R.layout.fragment_base_specialty) {
 
-    private lateinit var binding: FragmentBaseStandardBinding
+    private lateinit var binding: FragmentBaseSpecialtyBinding
     protected val demoAdapter: StandardAdapter by lazy { StandardAdapter(createSampleData()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBaseStandardBinding.inflate(inflater)
+        binding = FragmentBaseSpecialtyBinding.inflate(inflater)
 
         binding.allProductRecyclerView.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2 ,GridLayoutManager.VERTICAL, false)
+            layoutManager = GridLayoutManager(requireContext(), 2 ,
+                GridLayoutManager.VERTICAL, false)
             adapter = demoAdapter
             setHasFixedSize(true)
         }
@@ -41,7 +41,7 @@ open class BaseStandardFragment : Fragment(R.layout.fragment_base_standard) {
 
         demoAdapter.onClick = {
             val b = Bundle().apply { putParcelable("product_value", it) }
-            findNavController().navigate(R.id.action_standardFragment_to_detailsFragment, b)
+            findNavController().navigate(R.id.action_specialtyFragment_to_detailsFragment, b)
         }
     }
 
@@ -68,4 +68,6 @@ open class BaseStandardFragment : Fragment(R.layout.fragment_base_standard) {
         dataList.add(demo5)
         return dataList
     }
+
+
 }
