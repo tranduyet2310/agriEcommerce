@@ -1,4 +1,4 @@
-package com.example.argiecommerce.view.suppiler
+package com.example.argiecommerce.view.supplier
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +10,6 @@ import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.StandardViewpagerAdapter
 import com.example.argiecommerce.databinding.FragmentSuppilerBinding
-import com.example.argiecommerce.view.standard.GlobalGapFragment
-import com.example.argiecommerce.view.standard.OcopFragment
-import com.example.argiecommerce.view.standard.OrganicFragment
-import com.example.argiecommerce.view.standard.VietGapFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 

@@ -4,18 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.SpecialProductListItemBinding
 import com.example.argiecommerce.model.Product
 
-class DemoAdapter2(
+class SpecialProductAdapter(
     private val dataList: ArrayList<Product>,
     private val listener: DemoAdapterOnClickListener
-) :
-    RecyclerView.Adapter<DemoAdapter2.ViewHolderClass>() {
-
-    private var _binding: SpecialProductListItemBinding? = null
-    private val binding get() = _binding!!
+) : RecyclerView.Adapter<SpecialProductAdapter.ViewHolderClass>() {
 
     interface DemoAdapterOnClickListener {
         fun onClick(product: Product)
@@ -25,9 +22,6 @@ class DemoAdapter2(
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private lateinit var product: Product
         private lateinit var listener: DemoAdapterOnClickListener
-        fun getProduct(product: Product) {
-            this.product = product
-        }
 
         fun setListener(listener: DemoAdapterOnClickListener) {
             this.listener = listener
@@ -38,6 +32,7 @@ class DemoAdapter2(
             binding.tvProductPrice.text = String.format("%,.0f", product.productPrice)
             binding.imgProductImage.setImageResource(product.productImage.toInt())
 
+            this.product = product
         }
 
         init {
@@ -77,12 +72,13 @@ class DemoAdapter2(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
-        _binding = SpecialProductListItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+        return ViewHolderClass(
+            SpecialProductListItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
-        return ViewHolderClass(binding)
     }
 
     override fun getItemCount(): Int {
@@ -91,7 +87,6 @@ class DemoAdapter2(
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val currentItem = dataList[position]
-        holder.getProduct(currentItem)
         holder.bind(currentItem)
         holder.setListener(listener)
     }

@@ -8,33 +8,28 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.ProductListItemBinding
 import com.example.argiecommerce.model.Product
 
-class DemoAdapter(private val dataList: ArrayList<Product>,  private val listener: DemoAdapterOnClickListener) :
-    RecyclerView.Adapter<DemoAdapter.ViewHolderClass>() {
+class NormalProductAdapter(private val dataList: ArrayList<Product>, private val listener: DemoAdapterOnClickListener) :
+    RecyclerView.Adapter<NormalProductAdapter.ViewHolderClass>() {
 
-    private var _binding: ProductListItemBinding? = null
-    private val binding get() = _binding!!
-
-    interface DemoAdapterOnClickListener{
+    interface DemoAdapterOnClickListener {
         fun onClick(product: Product)
     }
-    class ViewHolderClass(val binding: ProductListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+    class ViewHolderClass(private val binding: ProductListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener{
         private lateinit var product: Product
         private lateinit var listener: DemoAdapterOnClickListener
-        fun getProduct(product: Product){
-            this.product = product
-        }
 
-        fun setListener(listener: DemoAdapterOnClickListener){
+        fun setListener(listener: DemoAdapterOnClickListener) {
             this.listener = listener
         }
-
         fun bind(product: Product) {
-            binding.tvProductName.text = product.productName
-            binding.tvProductPrice.text = String.format("%,.0f", product.productPrice)
-            binding.imgProductImage.setImageResource(product.productImage.toInt())
-
+            binding.apply {
+                tvProductName.text = product.productName
+                tvProductPrice.text = String.format("%,.0f", product.productPrice)
+                imgProductImage.setImageResource(product.productImage.toInt())
+            }
+            this.product = product
         }
-
         init {
             itemView.setOnClickListener(this)
             binding.imgFavourite.setOnClickListener(this)
@@ -43,7 +38,7 @@ class DemoAdapter(private val dataList: ArrayList<Product>,  private val listene
 
         override fun onClick(v: View?) {
             val position = bindingAdapterPosition
-            when(v?.id){
+            when (v?.id) {
                 R.id.imgCart -> toggleProductsInCart()
                 R.id.imgFavourite -> toggleFavourite()
                 R.id.card_view -> listener.onClick(product)
@@ -51,20 +46,20 @@ class DemoAdapter(private val dataList: ArrayList<Product>,  private val listene
         }
 
         private fun toggleFavourite() {
-            if(product.isFavourite != 1){
+            if (product.isFavourite != 1) {
                 binding.imgFavourite.setImageResource(R.drawable.ic_favorite_red)
                 product.setIsFavourite(true)
-            }else{
+            } else {
                 binding.imgFavourite.setImageResource(R.drawable.ic_favorite_border)
                 product.setIsFavourite(false)
             }
         }
 
         private fun toggleProductsInCart() {
-            if(product.isInCart != 1){
+            if (product.isInCart != 1) {
                 binding.imgCart.setImageResource(R.drawable.ic_shopping_cart_green)
                 product.setIsInCart(true)
-            }else{
+            } else {
                 binding.imgCart.setImageResource(R.drawable.ic_shopping_cart)
                 product.setIsInCart(false)
             }
@@ -72,8 +67,7 @@ class DemoAdapter(private val dataList: ArrayList<Product>,  private val listene
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
-        _binding = ProductListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolderClass(binding)
+        return ViewHolderClass(ProductListItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun getItemCount(): Int {
@@ -82,7 +76,6 @@ class DemoAdapter(private val dataList: ArrayList<Product>,  private val listene
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val currentItem = dataList[position]
-        holder.getProduct(currentItem)
         holder.bind(currentItem)
         holder.setListener(listener)
     }
