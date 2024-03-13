@@ -1,18 +1,5 @@
 package com.example.argiecommerce.view.specialty
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.DemoAdapter
-import com.example.argiecommerce.databinding.FragmentDongNamBoBinding
-import com.example.argiecommerce.model.Product
-
 
 class DongNamBoFragment : BaseSpecialtyFragment() {
 //    private var _binding: FragmentDongNamBoBinding? = null

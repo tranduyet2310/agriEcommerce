@@ -1,22 +1,5 @@
 package com.example.argiecommerce.view.specialty
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.DemoAdapter
-import com.example.argiecommerce.databinding.FragmentBacBoBinding
-import com.example.argiecommerce.databinding.FragmentSpecialtyBinding
-import com.example.argiecommerce.model.Product
-import com.example.argiecommerce.view.standard.BaseStandardFragment
-
 
 class BacBoFragment : BaseSpecialtyFragment() {
 

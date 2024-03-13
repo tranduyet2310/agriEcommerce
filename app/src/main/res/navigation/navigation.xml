@@ -286,7 +286,7 @@
     </fragment>
     <fragment
         android:id="@+id/suppilerFragment"
-        android:name="com.example.argiecommerce.view.suppiler.SuppilerFragment"
+        android:name="com.example.argiecommerce.view.supplier.SupplierFragment"
         android:label="fragment_suppiler"
         tools:layout="@layout/fragment_suppiler" >
         <action

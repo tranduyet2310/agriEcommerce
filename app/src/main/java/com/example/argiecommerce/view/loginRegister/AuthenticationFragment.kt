@@ -1,10 +1,13 @@
 package com.example.argiecommerce.view.loginRegister
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
@@ -12,15 +15,25 @@ import com.example.argiecommerce.databinding.FragmentAuthenticationBinding
 
 class AuthenticationFragment : Fragment(), View.OnClickListener {
 
+    companion object {
+        private const val TAG = "AuthenticationFragment"
+    }
+
     private var _binding: FragmentAuthenticationBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
+
+    private lateinit var correctOtpCode: String
+    private var clickCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAuthenticationBinding.inflate(inflater, container, false)
+
+       correctOtpCode = "123456"
+
         return binding.root
     }
 
@@ -39,18 +52,50 @@ class AuthenticationFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.btnContinue -> goToChangePasswordFragment()
+            R.id.btnContinue -> checkOtpCode()
             R.id.reSend -> resendOtpCode()
         }
     }
 
     private fun resendOtpCode() {
+        clickCount = clickCount + 1
+        getAnotherOtpCode()
+        if(clickCount >= 3){
+            binding.reSend.isClickable = false
+            binding.numberOfClicks.visibility = View.VISIBLE
+        }
+    }
+
+    private fun getAnotherOtpCode() {
+        binding.reSend.isEnabled = false
+        binding.countDownTimer.visibility = View.VISIBLE
+        countDownTimer(binding.countDownTimer)
+    }
+
+    private fun checkOtpCode() {
+        val otpEntered = binding.otpCode.text.toString()
+
+        if(!otpEntered.equals(correctOtpCode)){
+            binding.otpCode.setError("Mã không chính xác")
+            binding.otpCode.requestFocus()
+        } else {
+            navController.navigate(R.id.action_authenticationFragment_to_changePasswordFragment)
+        }
 
     }
 
-    private fun goToChangePasswordFragment() {
-        navController.navigate(R.id.action_authenticationFragment_to_changePasswordFragment)
-    }
+    fun countDownTimer(textView: TextView){
+        object : CountDownTimer(60000, 1000){
+            override fun onTick(millisUntilFinished: Long) {
+                textView.text = (millisUntilFinished / 1000).toString()
+            }
 
+            override fun onFinish() {
+                Log.d(TAG, "onFinish: Done")
+                binding.reSend.isEnabled = true
+                binding.countDownTimer.visibility = View.INVISIBLE
+            }
+        }.start()
+    }
 
 }

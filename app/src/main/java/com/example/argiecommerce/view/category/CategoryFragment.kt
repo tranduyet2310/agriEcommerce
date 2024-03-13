@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.argiecommerce.adapter.BaseCategoryAdapter
+import com.example.argiecommerce.adapter.SubcategoryAdapter
 import com.example.argiecommerce.adapter.CategoryAdapter
 import com.example.argiecommerce.databinding.FragmentCategoryBinding
 import com.example.argiecommerce.model.CategoryItem
@@ -22,7 +22,7 @@ class CategoryFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
-    private lateinit var baseCategoryAdapter: BaseCategoryAdapter
+    private lateinit var subcategoryAdapter: SubcategoryAdapter
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var categoryItemList: ArrayList<CategoryItem>
     private lateinit var categoryDetailList: ArrayList<String>
@@ -46,7 +46,7 @@ class CategoryFragment : Fragment() {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
-            adapter = baseCategoryAdapter
+            adapter = subcategoryAdapter
         }
 
         return binding.root
@@ -60,7 +60,7 @@ class CategoryFragment : Fragment() {
             Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
         }
 
-        baseCategoryAdapter.onClick = {
+        subcategoryAdapter.onClick = {
             Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
         }
     }
@@ -87,6 +87,6 @@ class CategoryFragment : Fragment() {
         categoryDetailList.add("Cậy họ đỗ")
         categoryDetailList.add("Hạt")
         categoryDetailList.add("Gạo")
-        baseCategoryAdapter = BaseCategoryAdapter(categoryDetailList)
+        subcategoryAdapter = SubcategoryAdapter(categoryDetailList)
     }
 }

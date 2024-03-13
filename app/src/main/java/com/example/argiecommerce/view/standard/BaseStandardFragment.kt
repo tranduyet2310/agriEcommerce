@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.DemoAdapter
-import com.example.argiecommerce.adapter.StandardAdapter
+import com.example.argiecommerce.adapter.SpecialProductAdapter
 import com.example.argiecommerce.databinding.FragmentBaseStandardBinding
 import com.example.argiecommerce.model.Product
 
@@ -17,7 +16,7 @@ import com.example.argiecommerce.model.Product
 open class BaseStandardFragment : Fragment(R.layout.fragment_base_standard) {
 
     private lateinit var binding: FragmentBaseStandardBinding
-    protected val demoAdapter: StandardAdapter by lazy { StandardAdapter(createSampleData()) }
+    protected val demoAdapter: SpecialProductAdapter by lazy { SpecialProductAdapter(createSampleData()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

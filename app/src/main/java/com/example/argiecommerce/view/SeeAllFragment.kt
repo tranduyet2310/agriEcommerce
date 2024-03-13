@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -12,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.StandardAdapter
+import com.example.argiecommerce.adapter.SpecialProductAdapter
 import com.example.argiecommerce.databinding.FragmentSeeAllBinding
 import com.example.argiecommerce.model.Product
 
@@ -22,7 +21,7 @@ class SeeAllFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
 
-    private val demoAdapter: StandardAdapter by lazy { StandardAdapter(createSampleData()) }
+    private val demoAdapter: SpecialProductAdapter by lazy { SpecialProductAdapter(createSampleData()) }
 
     val args: SeeAllFragmentArgs by navArgs()
     override fun onCreateView(

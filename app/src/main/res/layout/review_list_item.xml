@@ -30,7 +30,7 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:padding="@dimen/dimen10dp"
-                tools:text="David Swift" />
+                tools:text="Username" />
 
             <TextView
                 android:id="@+id/dateOfReview"

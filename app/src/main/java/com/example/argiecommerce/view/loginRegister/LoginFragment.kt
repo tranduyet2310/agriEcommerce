@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentLoginBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 class LoginFragment : Fragment(), View.OnClickListener {
@@ -53,7 +54,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loginUser() {
-        Toast.makeText(requireContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+        Snackbar.make(requireView(), "Đăng nhập thành công", Snackbar.LENGTH_SHORT).show()
         navController.navigate(R.id.action_loginFragment_to_homeFragment)
     }
 

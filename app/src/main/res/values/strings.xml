@@ -2,7 +2,8 @@
     <string name="app_name">ArgiEcommerce</string>
     <string name="slogan">An toàn - Uy tín - Chất lượng</string>
     <string name="fullNameApp">Hệ thống phân phối nông sản</string>
-    <string name="appName"><font color='#ff8800'>Argi</font><font color='#3BD98C'>Mart</font></string>
+    <string name="fullNameAppV2">Hệ thống phân phối\n nông sản</string>
+    <string name="appName"><font color='#ff8800'>Agri</font><font color='#3BD98C'>Mart</font></string>
     <string name="menu_Home">Trang chủ</string>
     <string name="menu_Sepcialty">Đặc sản</string>
     <string name="menu_Standard">Tiêu chuẩn</string>
@@ -57,7 +58,7 @@
     <string name="share_product">Share Product</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="add_to_favourite">Add to Favourite</string>
-    <string name="title_demo">Táo - Chanh - Dứa - Kiwi</string>
+    <string name="title_demo">Táo - Chanh - Dứa - Nho</string>
     <string name="rating_star">Rating Star</string>
     <string name="have_sold">Đã bán 0</string>
     <string name="favourite_product">Favourite Product</string>
@@ -126,6 +127,18 @@
     <string name="_4_5_5_0">4.5/5.0</string>
     <string name="reviews">Đánh giá</string>
     <string name="had_joined">Đã tham gia</string>
-    <string name="shop_description">Mô tả Shop</string>
+    <string name="shop_description">Mô tả nông hộ</string>
     <string name="account_have_accept">Tài khoản đã được xác minh:</string>
+    <string name="harvest_time">Giai đoạn thu hoạch</string>
+    <string name="chemical_time">Giai đoạn phòng trừ sâu bệnh</string>
+    <string name="take_care_time">Giai đoạn chăm sóc cây</string>
+    <string name="germination_time">Giai đoạn cây nảy mầm</string>
+    <string name="sow_seed_time">Giai đoạn gieo hạt giống</string>
+    <string name="make_land_time">Giai đoạn làm đất trồng</string>
+    <string name="crops">Cây trồng:</string>
+    <string name="season">Mùa vụ:</string>
+    <string name="land_area">Diện tích vườn:</string>
+    <string name="estimate_yield">Sản lượng dự kiến:</string>
+    <string name="intro_shop">Giới thiệu về Shop</string>
+    <string name="garden_intro">Giới thiệu về vườn</string>
 </resources>

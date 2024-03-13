@@ -3,20 +3,31 @@ package com.example.argiecommerce.model;
 public class User {
     private int id;
     private String name;
+    private String phone;
     private String email;
     private String password;
 
-    public User(String name, String email, String password) {
+    public User(String name, String phone, String email, String password) {
         this.name = name;
+        this.phone = phone;
         this.email = email;
         this.password = password;
     }
 
-    public User(int id, String name, String email, String password) {
+    public User(int id, String name, String phone, String email, String password) {
         this.id = id;
         this.name = name;
+        this.phone = phone;
         this.email = email;
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getId() {

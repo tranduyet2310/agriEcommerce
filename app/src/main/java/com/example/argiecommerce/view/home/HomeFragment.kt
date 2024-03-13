@@ -1,27 +1,29 @@
 package com.example.argiecommerce.view.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.CategoryAdapter
-import com.example.argiecommerce.adapter.DemoAdapter
-import com.example.argiecommerce.adapter.DemoAdapter2
+import com.example.argiecommerce.adapter.VerticalProductAdapter
+import com.example.argiecommerce.adapter.HorizontalProductAdapter
 import com.example.argiecommerce.databinding.FragmentHomeBinding
 import com.example.argiecommerce.model.CategoryItem
 import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.utils.ImageUtils
 import com.example.argiecommerce.utils.Utils
 
-class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOnClickListener,
-    DemoAdapter2.DemoAdapterOnClickListener {
+class HomeFragment : Fragment(), View.OnClickListener,
+    VerticalProductAdapter.DemoAdapterOnClickListener,
+    HorizontalProductAdapter.DemoAdapterOnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
@@ -33,12 +35,11 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
     private lateinit var recentProductList: ArrayList<Product>
     private lateinit var suggestedProductList: ArrayList<Product>
 
-    private lateinit var rvCategory: RecyclerView
-    private lateinit var rvFlashSaleProduct: RecyclerView
-    private lateinit var rvOcopProduct: RecyclerView
-    private lateinit var rvSpecialtyProduct: RecyclerView
-    private lateinit var rvRecentProduct: RecyclerView
-    private lateinit var rvSuggestedProduct: RecyclerView
+    private lateinit var flashSaleProductAdapter: HorizontalProductAdapter
+    private lateinit var ocopProductAdapter: HorizontalProductAdapter
+    private lateinit var specialtyProductAdapter: HorizontalProductAdapter
+    private lateinit var recentProductAdapter: HorizontalProductAdapter
+    private lateinit var suggestedProductAdapter: VerticalProductAdapter
 
     private lateinit var imageList: Array<Int>
     private lateinit var titleList: Array<String>
@@ -52,50 +53,17 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
         imageList = ImageUtils.getImages.getCategoryItem()
         titleList = Utils.getText.getCategoryItemTitle()
 
-        rvCategory = binding.content.listOfCategory
-        rvCategory.layoutManager =
-            GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
-        rvCategory.setHasFixedSize(true)
-        categoryItemList = arrayListOf()
+        setUpViews()
+
         getCategoryData()
-
-        rvSuggestedProduct = binding.content.listOfSuggestedProduct
-        rvSuggestedProduct.layoutManager =
-            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-        rvSuggestedProduct.setHasFixedSize(true)
-        suggestedProductList = arrayListOf()
         getSuggestedProduct()
-
-        rvFlashSaleProduct = binding.content.listOfFlashSale
-        rvFlashSaleProduct.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        rvFlashSaleProduct.setHasFixedSize(true)
-        flashSaleProductList = arrayListOf()
         getFlashSaleProduct()
-
-        rvOcopProduct = binding.content.listOfOcopProduct
-        rvOcopProduct.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        rvOcopProduct.setHasFixedSize(true)
-        ocopProductList = arrayListOf()
         getOcopProduct()
-
-        rvSpecialtyProduct = binding.content.listOfSpecialtyProduct
-        rvSpecialtyProduct.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        rvSpecialtyProduct.setHasFixedSize(true)
-        specialtyProductList = arrayListOf()
         getSpecialtyProduct()
-
-        rvRecentProduct = binding.content.listOfRecentProduct
-        rvRecentProduct.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        rvRecentProduct.setHasFixedSize(true)
-        recentProductList = arrayListOf()
         getRecentProduct()
 
 
-        setFlipImages(ImageUtils.getImages.getSlides());
+        setFlipImages(ImageUtils.getImages.getSlides())
 
         return binding.root
     }
@@ -116,24 +84,65 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
             navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
         }
 
-        setUpViews();
+
     }
 
-    private fun setFlipImages(images: List<Int>) {
-        for (image in images) {
-            val imageView = ImageView(requireContext())
-            imageView.setBackgroundResource(image)
-            binding.content.imageSlider.addView(imageView)
-        }
 
-        binding.content.imageSlider.flipInterval = 2000
-        binding.content.imageSlider.isAutoStart = true
-        binding.content.imageSlider.setInAnimation(requireContext(), R.anim.slide_in_right)
-        binding.content.imageSlider.setOutAnimation(requireContext(), R.anim.slide_out_left)
+    private fun setFlipImages(images: List<Int>) {
+//        for (image in images) {
+//            val imageView = ImageView(requireContext())
+//            imageView.setBackgroundResource(image)
+//            binding.content.imageSlider.addView(imageView)
+//        }
+//
+//        binding.content.imageSlider.flipInterval = 2000
+//        binding.content.imageSlider.isAutoStart = true
+//        binding.content.imageSlider.setInAnimation(requireContext(), R.anim.slide_in_right)
+//        binding.content.imageSlider.setOutAnimation(requireContext(), R.anim.slide_out_left)
+
+        val imageList = ArrayList<SlideModel>();
+        imageList.add(SlideModel(R.drawable.viewfilpper_1))
+        imageList.add(SlideModel(R.drawable.viewfilpper_2))
+        imageList.add(SlideModel(R.drawable.viewfilpper_3))
+        imageList.add(SlideModel(R.drawable.viewfilpper_4))
+        imageList.add(SlideModel(R.drawable.viewfilpper_5))
+        imageList.add(SlideModel(R.drawable.viewfilpper_6))
+        imageList.add(SlideModel(R.drawable.viewfilpper_7))
+        imageList.add(SlideModel(R.drawable.viewfilpper_8))
+
+        binding.content.imageSlider.setImageList(imageList, ScaleTypes.FIT)
     }
 
     private fun setUpViews() {
+        binding.content.listOfCategory.layoutManager =
+            GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
+        binding.content.listOfCategory.setHasFixedSize(true)
+        categoryItemList = arrayListOf()
 
+        binding.content.listOfSuggestedProduct.layoutManager =
+            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+        binding.content.listOfSuggestedProduct.setHasFixedSize(true)
+        suggestedProductList = arrayListOf()
+
+        binding.content.listOfFlashSale.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        binding.content.listOfFlashSale.setHasFixedSize(true)
+        flashSaleProductList = arrayListOf()
+
+        binding.content.listOfOcopProduct.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        binding.content.listOfOcopProduct.setHasFixedSize(true)
+        ocopProductList = arrayListOf()
+
+        binding.content.listOfSpecialtyProduct.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        binding.content.listOfSpecialtyProduct.setHasFixedSize(true)
+        specialtyProductList = arrayListOf()
+
+        binding.content.listOfRecentProduct.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        binding.content.listOfRecentProduct.setHasFixedSize(true)
+        recentProductList = arrayListOf()
     }
 
     override fun onDestroyView() {
@@ -205,31 +214,34 @@ class HomeFragment : Fragment(), View.OnClickListener, DemoAdapter.DemoAdapterOn
         suggestedProductList.add(demo2)
         suggestedProductList.add(demo3)
 
-        binding.content.listOfSuggestedProduct.adapter = DemoAdapter(suggestedProductList, this)
+
+        suggestedProductAdapter = VerticalProductAdapter(suggestedProductList, this)
+        binding.content.listOfSuggestedProduct.adapter = suggestedProductAdapter
+
     }
 
     private fun getRecentProduct() {
-
-        binding.content.listOfRecentProduct.adapter = DemoAdapter2(suggestedProductList, this)
+        recentProductAdapter = HorizontalProductAdapter(suggestedProductList, this)
+        binding.content.listOfRecentProduct.adapter = recentProductAdapter
     }
 
     private fun getSpecialtyProduct() {
-        binding.content.listOfSpecialtyProduct.adapter = DemoAdapter2(suggestedProductList, this)
+        specialtyProductAdapter = HorizontalProductAdapter(suggestedProductList, this)
+        binding.content.listOfSpecialtyProduct.adapter = specialtyProductAdapter
     }
 
     private fun getOcopProduct() {
-        binding.content.listOfOcopProduct.adapter = DemoAdapter2(suggestedProductList, this)
+        ocopProductAdapter = HorizontalProductAdapter(suggestedProductList, this)
+        binding.content.listOfOcopProduct.adapter = ocopProductAdapter
     }
 
     private fun getFlashSaleProduct() {
-        binding.content.listOfFlashSale.adapter = DemoAdapter2(suggestedProductList, this)
+        flashSaleProductAdapter = HorizontalProductAdapter(suggestedProductList, this)
+        binding.content.listOfFlashSale.adapter = flashSaleProductAdapter
     }
 
     override fun onClick(product: Product) {
-        val action =
-            HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
-                product
-            )
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(product)
         navController.navigate(action)
     }
 }

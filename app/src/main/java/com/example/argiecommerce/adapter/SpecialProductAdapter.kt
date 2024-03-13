@@ -7,8 +7,8 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.ProductListItemBinding
 import com.example.argiecommerce.model.Product
 
-class StandardAdapter(private val dataList: ArrayList<Product>) :
-    RecyclerView.Adapter<StandardAdapter.StandardViewHolder>() {
+class SpecialProductAdapter(private val dataList: ArrayList<Product>) :
+    RecyclerView.Adapter<SpecialProductAdapter.StandardViewHolder>() {
 
     var onClick: ((Product) -> Unit)? = null
 

@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.BaseCategoryAdapter
+import com.example.argiecommerce.adapter.SubcategoryAdapter
 import com.example.argiecommerce.databinding.FragmentBaseCategoryBinding
 
 
 open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
 
     private lateinit var binding: FragmentBaseCategoryBinding
-    protected val demoAdapter: BaseCategoryAdapter by lazy { BaseCategoryAdapter(createSampleData()) }
+    protected val demoAdapter: SubcategoryAdapter by lazy { SubcategoryAdapter(createSampleData()) }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

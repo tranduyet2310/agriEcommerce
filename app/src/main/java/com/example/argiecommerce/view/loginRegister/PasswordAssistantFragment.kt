@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentPasswordAssistantBinding
+import com.example.argiecommerce.utils.Validation
 
 class PasswordAssistantFragment : Fragment(), View.OnClickListener {
 
@@ -43,6 +44,20 @@ class PasswordAssistantFragment : Fragment(), View.OnClickListener {
     }
 
     private fun goToAuthenticationFragment() {
+        val email = binding.emailAddress.text.toString()
+        if (email.isEmpty()){
+            binding.emailAddress.setError("Yêu cầu nhập email")
+            binding.emailAddress.requestFocus()
+            return
+        }
+
+        if (!Validation.isValidEmail(email)){
+            binding.emailAddress.setError("Email không đúng định dạng")
+            binding.emailAddress.requestFocus()
+            return
+        }
+
+
         navController.navigate(R.id.action_passwordAssistantFragment_to_authenticationFragment)
     }
 

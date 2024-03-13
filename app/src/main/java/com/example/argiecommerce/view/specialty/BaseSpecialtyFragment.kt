@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.StandardAdapter
+import com.example.argiecommerce.adapter.SpecialProductAdapter
 import com.example.argiecommerce.databinding.FragmentBaseSpecialtyBinding
 import com.example.argiecommerce.model.Product
 
@@ -16,7 +16,7 @@ import com.example.argiecommerce.model.Product
 open class BaseSpecialtyFragment : Fragment(R.layout.fragment_base_specialty) {
 
     private lateinit var binding: FragmentBaseSpecialtyBinding
-    protected val demoAdapter: StandardAdapter by lazy { StandardAdapter(createSampleData()) }
+    protected val demoAdapter: SpecialProductAdapter by lazy { SpecialProductAdapter(createSampleData()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +36,6 @@ open class BaseSpecialtyFragment : Fragment(R.layout.fragment_base_specialty) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         demoAdapter.onClick = {

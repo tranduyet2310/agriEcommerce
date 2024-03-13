@@ -11,13 +11,17 @@
         android:layout_height="wrap_content"
         android:background="@color/lightBlue">
 
-        <ImageView
+        <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/imageOfProduct"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@color/white"
-            android:contentDescription="@string/product_image"
-            android:src="@drawable/product_demo"
+            app:iss_auto_cycle="true"
+            app:iss_corner_radius="20"
+            app:iss_delay="2000"
+            app:iss_error_image="@drawable/banner"
+            app:iss_period="2000"
+            app:iss_placeholder="@drawable/banner"
             app:layout_constraintBottom_toTopOf="@id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,11 +66,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen10dp"
-            android:text="5.000.000 đ"
+            android:text="@string/_5_000_000"
             android:textColor="@color/yellowAgri"
+            android:drawablePadding="5dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameOfProduct" />
+            app:layout_constraintTop_toBottomOf="@id/nameOfProduct"
+            app:drawableEndCompat="@drawable/dong_yellow" />
 
         <TextView
             android:id="@+id/priceOfProductDiscount"
@@ -75,12 +81,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="7.500.000 đ"
+            android:text="7.500.000"
             android:textColor="@color/redAgri"
             android:textStyle="bold"
+            android:drawablePadding="5dp"
             app:layout_constraintBottom_toBottomOf="@id/priceOfProduct"
             app:layout_constraintStart_toEndOf="@id/priceOfProduct"
-            app:layout_constraintTop_toTopOf="@id/priceOfProduct" />
+            app:layout_constraintTop_toTopOf="@id/priceOfProduct"
+            app:drawableEndCompat="@drawable/dong_red" />
 
         <View
             android:id="@+id/divider"
@@ -205,7 +213,7 @@
             android:layout_width="120dp"
             android:layout_height="48dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/custom_border"
+            android:background="@drawable/corner_round_green"
             android:text="@string/xem_shop"
             android:textAllCaps="false"
             android:textColor="@color/white"

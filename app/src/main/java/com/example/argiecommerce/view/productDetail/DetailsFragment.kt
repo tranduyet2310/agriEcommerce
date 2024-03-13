@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentDetailsBinding
 import com.example.argiecommerce.model.Product
@@ -31,12 +33,21 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
         val product: Product = args.productValue
-        binding.details.imageOfProduct.setImageResource(R.drawable.product_demo)
+        setupProductImage(product);
         binding.details.priceOfProduct.text = String.format("%,.0f", product.productPrice)
         binding.details.priceOfProductDiscount.text = String.format("%,.0f", product.productPrice)
         binding.details.tvRatingMiniView.text = "4.5"
 
         return binding.root
+    }
+
+    private fun setupProductImage(product: Product) {
+        val imageList = ArrayList<SlideModel>();
+        imageList.add(SlideModel(R.drawable.product_demo))
+        imageList.add(SlideModel(R.drawable.product_demo))
+        imageList.add(SlideModel(R.drawable.product_demo))
+
+        binding.details.imageOfProduct.setImageList(imageList, ScaleTypes.FIT)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

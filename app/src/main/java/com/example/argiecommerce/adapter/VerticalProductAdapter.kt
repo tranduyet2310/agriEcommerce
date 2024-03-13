@@ -8,8 +8,8 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.ProductListItemBinding
 import com.example.argiecommerce.model.Product
 
-class NormalProductAdapter(private val dataList: ArrayList<Product>, private val listener: DemoAdapterOnClickListener) :
-    RecyclerView.Adapter<NormalProductAdapter.ViewHolderClass>() {
+class VerticalProductAdapter(private val dataList: ArrayList<Product>, private val listener: DemoAdapterOnClickListener) :
+    RecyclerView.Adapter<VerticalProductAdapter.ViewHolderClass>() {
 
     interface DemoAdapterOnClickListener {
         fun onClick(product: Product)

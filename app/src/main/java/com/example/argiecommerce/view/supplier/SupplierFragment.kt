@@ -13,7 +13,7 @@ import com.example.argiecommerce.databinding.FragmentSuppilerBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class SuppilerFragment : Fragment(), View.OnClickListener {
+class SupplierFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentSuppilerBinding? = null
     private val binding get() = _binding!!
@@ -36,6 +36,7 @@ class SuppilerFragment : Fragment(), View.OnClickListener {
             SpIntroFragment(),
             SpProductFragment(),
             SpCategoryFragment(),
+            SpGardenFragment(),
             SpShopFragment()
         )
 
@@ -52,7 +53,8 @@ class SuppilerFragment : Fragment(), View.OnClickListener {
                 0 -> tab.text = "Giới thiệu"
                 1 -> tab.text = "Sản phẩm"
                 2 -> tab.text = "Danh mục hàng"
-                3 -> tab.text = "Shop"
+                3 -> tab.text = "Vườn"
+                4 -> tab.text = "Shop"
             }
         }.attach()
     }

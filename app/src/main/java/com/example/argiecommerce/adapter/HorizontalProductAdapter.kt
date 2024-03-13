@@ -4,15 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.SpecialProductListItemBinding
 import com.example.argiecommerce.model.Product
 
-class SpecialProductAdapter(
+class HorizontalProductAdapter(
     private val dataList: ArrayList<Product>,
     private val listener: DemoAdapterOnClickListener
-) : RecyclerView.Adapter<SpecialProductAdapter.ViewHolderClass>() {
+) : RecyclerView.Adapter<HorizontalProductAdapter.ViewHolderClass>() {
 
     interface DemoAdapterOnClickListener {
         fun onClick(product: Product)

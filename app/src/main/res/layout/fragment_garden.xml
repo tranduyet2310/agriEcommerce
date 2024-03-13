@@ -1,14 +1,560 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.supplier.GardenFragment">
+    tools:context=".view.supplier.SpGardenFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/infor_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="80dp"
+        android:background="@color/lightGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/titleSeason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/season"
+            android:textColor="@color/blackAgri"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/titleCrops"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSeason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="Đông - Xuân"
+            android:textColor="@color/orange"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/titleSeason"
+            app:layout_constraintStart_toEndOf="@id/titleSeason"
+            app:layout_constraintTop_toTopOf="@id/titleSeason" />
+
+        <TextView
+            android:id="@+id/titleCrops"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/crops"
+            android:textColor="@color/blackAgri"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/titleSeason"
+            app:layout_constraintTop_toBottomOf="@id/titleSeason" />
+
+        <Spinner
+            android:id="@+id/spinnerCrops"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/orange"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/titleCrops"
+            app:layout_constraintEnd_toEndOf="@id/guideline4"
+            app:layout_constraintStart_toEndOf="@id/titleCrops"
+            app:layout_constraintTop_toTopOf="@id/titleCrops" />
+
+        <TextView
+            android:id="@+id/titleArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/land_area"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/guideline4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLandArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="5 ha"
+            android:textColor="@color/orange"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/titleArea"
+            app:layout_constraintStart_toStartOf="@id/titleArea"
+            app:layout_constraintTop_toBottomOf="@id/titleArea" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/infor_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--    Land-->
+            <View
+                android:id="@+id/viewLand"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/shape_garden_status_completed"
+                app:layout_constraintBottom_toBottomOf="@id/imageLand"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageLand" />
+
+            <ImageView
+                android:id="@+id/imageLand"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/land"
+                app:layout_constraintStart_toEndOf="@id/viewLand"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/viewLandSupporter"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageLand"
+                app:layout_constraintEnd_toEndOf="@id/imageLand"
+                app:layout_constraintStart_toStartOf="@id/imageLand"
+                app:layout_constraintTop_toTopOf="@id/imageLand" />
+
+            <TextView
+                android:id="@+id/tvLandTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/make_land_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewLandSupporter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageLand" />
+
+            <TextView
+                android:id="@+id/tvLandDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvLandTitle"
+                app:layout_constraintStart_toStartOf="@id/tvLandTitle"
+                app:layout_constraintTop_toBottomOf="@id/viewLandSupporter" />
+            <!--    Seed-->
+            <View
+                android:id="@+id/viewSeed"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_completed"
+                app:layout_constraintBottom_toBottomOf="@id/imageSeed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageSeed" />
+
+            <ImageView
+                android:id="@+id/imageSeed"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/sow"
+                app:layout_constraintStart_toEndOf="@id/viewSeed"
+                app:layout_constraintTop_toBottomOf="@id/imageLand" />
+
+            <View
+                android:id="@+id/viewSeedSupporter"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageSeed"
+                app:layout_constraintEnd_toEndOf="@id/imageSeed"
+                app:layout_constraintStart_toStartOf="@id/imageSeed"
+                app:layout_constraintTop_toTopOf="@id/imageSeed" />
+
+            <TextView
+                android:id="@+id/tvSeedTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/sow_seed_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewSeedSupporter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageSeed" />
+
+            <TextView
+                android:id="@+id/tvSeedDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvSeedTitle"
+                app:layout_constraintStart_toStartOf="@id/tvSeedTitle"
+                app:layout_constraintTop_toBottomOf="@id/viewSeedSupporter" />
+
+            <View
+                android:id="@+id/line_land_seed"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewSeed"
+                app:layout_constraintEnd_toEndOf="@id/viewLand"
+                app:layout_constraintStart_toStartOf="@id/viewLand"
+                app:layout_constraintTop_toBottomOf="@id/viewLand" />
+            <!--   Germination -->
+            <View
+                android:id="@+id/viewGermination"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_current"
+                app:layout_constraintBottom_toBottomOf="@id/imageGermination"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageGermination" />
+
+            <ImageView
+                android:id="@+id/imageGermination"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/germination"
+                app:layout_constraintStart_toEndOf="@id/viewGermination"
+                app:layout_constraintTop_toBottomOf="@id/imageSeed" />
+
+            <View
+                android:id="@+id/viewGerminationSupporter"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageGermination"
+                app:layout_constraintEnd_toEndOf="@id/imageGermination"
+                app:layout_constraintStart_toStartOf="@id/imageGermination"
+                app:layout_constraintTop_toTopOf="@id/imageGermination" />
+
+            <TextView
+                android:id="@+id/tvGerminationTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/germination_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewGerminationSupporter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageGermination" />
+
+            <TextView
+                android:id="@+id/tvGerminationDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvGerminationTitle"
+                app:layout_constraintStart_toStartOf="@id/tvGerminationTitle"
+                app:layout_constraintTop_toBottomOf="@id/viewGerminationSupporter" />
+
+            <View
+                android:id="@+id/line_seed_germination"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewGermination"
+                app:layout_constraintEnd_toEndOf="@id/viewSeed"
+                app:layout_constraintStart_toStartOf="@id/viewSeed"
+                app:layout_constraintTop_toBottomOf="@id/viewSeed" />
+            <!--    Take care-->
+            <View
+                android:id="@+id/viewTakeCare"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_remain"
+                app:layout_constraintBottom_toBottomOf="@id/imageTakeCare"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageTakeCare" />
+
+            <ImageView
+                android:id="@+id/imageTakeCare"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/planting"
+                app:layout_constraintStart_toEndOf="@id/viewGermination"
+                app:layout_constraintTop_toBottomOf="@id/imageGermination" />
+
+            <View
+                android:id="@+id/viewTakeCareSupporter"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageTakeCare"
+                app:layout_constraintEnd_toEndOf="@id/imageTakeCare"
+                app:layout_constraintStart_toStartOf="@id/imageTakeCare"
+                app:layout_constraintTop_toTopOf="@id/imageTakeCare" />
+
+            <TextView
+                android:id="@+id/tvTakeCareTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/take_care_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewTakeCareSupporter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageTakeCare" />
+
+            <TextView
+                android:id="@+id/tvTakeCareDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvTakeCareTitle"
+                app:layout_constraintStart_toStartOf="@id/tvTakeCareTitle"
+                app:layout_constraintTop_toBottomOf="@id/viewTakeCareSupporter" />
+
+            <View
+                android:id="@+id/line_germination_takeCare"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewTakeCare"
+                app:layout_constraintEnd_toEndOf="@id/viewGermination"
+                app:layout_constraintStart_toStartOf="@id/viewGermination"
+                app:layout_constraintTop_toBottomOf="@id/viewGermination" />
+            <!--    Chemical -->
+            <View
+                android:id="@+id/viewChemical"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_remain"
+                app:layout_constraintBottom_toBottomOf="@id/imageChemical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageChemical" />
+
+            <ImageView
+                android:id="@+id/imageChemical"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/chemical"
+                app:layout_constraintStart_toEndOf="@id/viewChemical"
+                app:layout_constraintTop_toBottomOf="@id/imageTakeCare" />
+
+            <View
+                android:id="@+id/viewChemicalSupporter"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageChemical"
+                app:layout_constraintEnd_toEndOf="@id/imageChemical"
+                app:layout_constraintStart_toStartOf="@id/imageChemical"
+                app:layout_constraintTop_toTopOf="@id/imageChemical" />
+
+            <TextView
+                android:id="@+id/tvChemicalTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/chemical_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewChemicalSupporter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageChemical" />
+
+            <TextView
+                android:id="@+id/tvChemicalDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvChemicalTitle"
+                app:layout_constraintStart_toStartOf="@id/tvChemicalTitle"
+                app:layout_constraintTop_toBottomOf="@id/viewChemicalSupporter" />
+
+            <View
+                android:id="@+id/line_takeCare_chemical"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewChemical"
+                app:layout_constraintEnd_toEndOf="@id/viewTakeCare"
+                app:layout_constraintStart_toStartOf="@id/viewTakeCare"
+                app:layout_constraintTop_toBottomOf="@id/viewTakeCare" />
+            <!--    Harvest-->
+            <View
+                android:id="@+id/viewHarvest"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_remain"
+                app:layout_constraintBottom_toBottomOf="@id/imageHarvest"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageHarvest" />
+
+            <ImageView
+                android:id="@+id/imageHarvest"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/harvester"
+                app:layout_constraintStart_toEndOf="@id/viewChemical"
+                app:layout_constraintTop_toBottomOf="@id/imageChemical" />
+
+            <View
+                android:id="@+id/viewHarvestSupporter"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageHarvest"
+                app:layout_constraintEnd_toEndOf="@id/imageHarvest"
+                app:layout_constraintStart_toStartOf="@id/imageHarvest"
+                app:layout_constraintTop_toTopOf="@id/imageHarvest" />
+
+            <TextView
+                android:id="@+id/tvHarvestTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/harvest_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewHarvestSupporter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageHarvest" />
+
+            <TextView
+                android:id="@+id/tvHarvestDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvHarvestTitle"
+                app:layout_constraintStart_toStartOf="@id/tvHarvestTitle"
+                app:layout_constraintTop_toBottomOf="@id/viewHarvestSupporter" />
+
+            <TextView
+                android:id="@+id/titleHarvestYield"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/estimate_yield"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tvHarvestDate"
+                app:layout_constraintTop_toBottomOf="@id/tvHarvestDate" />
+
+            <TextView
+                android:id="@+id/tvHarvestYield"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/_5_000_000"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/titleHarvestYield"
+                app:layout_constraintTop_toBottomOf="@id/tvHarvestDate" />
+
+            <View
+                android:id="@+id/line_chemical_harvest"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewHarvest"
+                app:layout_constraintEnd_toEndOf="@id/viewChemical"
+                app:layout_constraintStart_toStartOf="@id/viewChemical"
+                app:layout_constraintTop_toBottomOf="@id/viewChemical" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleHarvestYield" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

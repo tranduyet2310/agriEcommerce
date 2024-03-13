@@ -91,4 +91,6 @@ dependencies {
     implementation("com.airbnb.android:lottie:$lottie_version")
     //stepView
     implementation ("com.github.shuhart:stepview:1.5.1")
+    // image slider
+    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.0")
 }

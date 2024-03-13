@@ -50,6 +50,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen8dp"
             android:layout_marginBottom="@dimen/dimen8dp"
+            android:hint="@string/phone_number"
+            android:paddingLeft="@dimen/dimen24dp"
+            android:paddingRight="@dimen/dimen24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtUserPhone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_border"
+                android:inputType="textPersonName"
+                android:padding="@dimen/dimen5dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen8dp"
+            android:layout_marginBottom="@dimen/dimen8dp"
             android:hint="@string/emailUser"
             android:paddingLeft="@dimen/dimen24dp"
             android:paddingRight="@dimen/dimen24dp">

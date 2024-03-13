@@ -1,5 +1,7 @@
 package com.example.argiecommerce.utils
 
+import java.text.DecimalFormat
+
 class Utils {
     object getText{
         fun getCategoryItemTitle(): Array<String>{
