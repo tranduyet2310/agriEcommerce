@@ -220,6 +220,9 @@
         <action
             android:id="@+id/action_billingFragment_to_addressFragment"
             app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_billingFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
@@ -307,5 +310,14 @@
         <action
             android:id="@+id/action_seeAllFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.argiecommerce.view.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
     </fragment>
 </navigation>

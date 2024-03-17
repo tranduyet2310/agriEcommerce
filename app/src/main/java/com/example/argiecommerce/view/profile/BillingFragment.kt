@@ -56,6 +56,6 @@ class BillingFragment : Fragment(), View.OnClickListener {
     }
 
     private fun goToPaymentFragment() {
-        Toast.makeText(requireContext(), "Cliked", Toast.LENGTH_SHORT).show()
+        navController.navigate(R.id.action_billingFragment_to_paymentFragment)
     }
 }
