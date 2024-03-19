@@ -101,4 +101,7 @@ dependencies {
     implementation ("com.paypal.checkout:android-sdk:1.2.1")
     // coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    // Okhttp
+    implementation ("com.squareup.okhttp3:okhttp:3.12.1")
+    implementation ("com.squareup.okhttp3:logging-interceptor:3.6.0")
 }

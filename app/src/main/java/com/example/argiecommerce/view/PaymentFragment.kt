@@ -108,31 +108,6 @@ class PaymentFragment : Fragment() {
         return binding.root
     }
 
-//    private fun paymentOrder() {
-//        binding.paymentButtonContainer.setup(
-//            createOrder =
-//            CreateOrder { createOrderActions ->
-//                val order =
-//                    OrderRequest(
-//                        intent = OrderIntent.CAPTURE,
-//                        appContext = AppContext(userAction = UserAction.PAY_NOW),
-//                        purchaseUnitList =
-//                        listOf(
-//                            PurchaseUnit(
-//                                amount =
-//                                Amount(currencyCode = CurrencyCode.USD, value = "10.00")
-//                            )
-//                        )
-//                    )
-//                createOrderActions.create(order)
-//            },
-//            onApprove =
-//            OnApprove { approval ->
-//                Log.i("CaptureOrder", "OrderId: ${approval.data.orderId}")
-//            }
-//        )
-//    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)

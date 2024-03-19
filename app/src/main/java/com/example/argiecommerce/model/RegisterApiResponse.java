@@ -2,13 +2,17 @@ package com.example.argiecommerce.model;
 
 public class RegisterApiResponse {
     private int id;
-    private boolean error;
-    private String message;
-    private User user;
+    private String fullName;
+    private String phone;
+    private String email;
 
-    public RegisterApiResponse(boolean error, String message) {
-        this.error = error;
-        this.message = message;
+    public RegisterApiResponse() {
+    }
+
+    public RegisterApiResponse(String fullName, String phone, String email) {
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
     }
 
     public int getId() {
@@ -19,27 +23,27 @@ public class RegisterApiResponse {
         this.id = id;
     }
 
-    public boolean isError() {
-        return error;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setError(boolean error) {
-        this.error = error;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getMessage() {
-        return message;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public User getUser() {
-        return user;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

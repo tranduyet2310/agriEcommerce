@@ -141,4 +141,5 @@
     <string name="estimate_yield">Sản lượng dự kiến:</string>
     <string name="intro_shop">Giới thiệu về Shop</string>
     <string name="garden_intro">Giới thiệu về vườn</string>
+    <string name="loading">Đang tải ...</string>
 </resources>
