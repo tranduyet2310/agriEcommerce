@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/home_selector"
@@ -20,4 +21,9 @@
         android:id="@+id/profileFragment"
         android:icon="@drawable/user_selector"
         android:title="@string/menu_Profile" />
+<!--    <item-->
+<!--        android:id="@+id/loginFragment"-->
+<!--        android:icon="@drawable/user_selector"-->
+<!--        android:title="@string/login"-->
+<!--        app:showAsAction="never"/>-->
 </menu>

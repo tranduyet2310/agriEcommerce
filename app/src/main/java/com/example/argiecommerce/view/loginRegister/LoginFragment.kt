@@ -20,6 +20,7 @@ import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.LoginViewModel
+import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -33,6 +34,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
     }
 
+    private lateinit var userViewModel: UserViewModel
     private lateinit var alertDialog: AlertDialog
 
     override fun onCreateView(
@@ -40,6 +42,9 @@ class LoginFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+
         return binding.root
     }
 
@@ -115,6 +120,9 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     alertDialog.dismiss()
                     val loginUtils = LoginUtils(requireContext())
                     loginUtils.saveUserInfo(state.data)
+                    val user = loginUtils.getUserInfo()
+                    userViewModel.user = user
+
                     Snackbar.make(requireView(), "Đăng nhập thành công", Snackbar.LENGTH_SHORT)
                         .show()
                     navController.navigate(R.id.action_loginFragment_to_homeFragment)

@@ -1,6 +1,11 @@
 package com.example.argiecommerce.model;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class User implements Parcelable {
     private int id;
     private String fullName;
     private String phone;
@@ -19,13 +24,35 @@ public class User {
         this.avatar = avatar;
     }
 
-    public User(int id, String fullName, String phone, String email, String password) {
+    public User(int id, String fullName, String phone, String email, String password, String avatar) {
         this.id = id;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.avatar = avatar;
     }
+
+    protected User(Parcel in) {
+        id = in.readInt();
+        fullName = in.readString();
+        phone = in.readString();
+        email = in.readString();
+        password = in.readString();
+        avatar = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -73,5 +100,20 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(fullName);
+        dest.writeString(phone);
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeString(avatar);
     }
 }

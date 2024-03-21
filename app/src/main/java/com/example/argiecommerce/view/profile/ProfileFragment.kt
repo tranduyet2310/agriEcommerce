@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentProfileBinding
 import com.example.argiecommerce.model.User
+import com.example.argiecommerce.viewmodel.UserViewModel
 
 
 class ProfileFragment : Fragment(), View.OnClickListener {
@@ -19,21 +21,29 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
 
-    private lateinit var user: User
+    private var user: User? =null
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        viewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        user = viewModel.user
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        // demo
-//        user = User("client", "demo@gmail.com", "0123456")
+
+        if(user == null){
+            navController.navigate(R.id.action_profileFragment_to_loginFragment)
+        }
+
         binding.linearLogOut.setOnClickListener(this)
         binding.switchNotification.setOnClickListener(this)
         binding.constraintProfile.setOnClickListener(this)

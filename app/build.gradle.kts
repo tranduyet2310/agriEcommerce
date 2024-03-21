@@ -51,7 +51,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-//    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     // Design Support
     implementation("com.google.android.material:material:1.8.0")
@@ -74,8 +73,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
     implementation ("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     // Paging
-    val paging_version = "2.0.0"
+    val paging_version = "3.1.1"
     implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-common:$paging_version")
     // Glide
     val glide_version = "4.12.0"
     implementation("com.github.bumptech.glide:glide:$glide_version")

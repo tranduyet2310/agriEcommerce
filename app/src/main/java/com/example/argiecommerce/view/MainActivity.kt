@@ -2,9 +2,11 @@ package com.example.argiecommerce.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -17,17 +19,34 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.example.argiecommerce.model.User
+import com.example.argiecommerce.utils.Constants.USER
+import com.example.argiecommerce.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
     private var isHomeFragment: Boolean = false
+    private var user: User? = null
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+        val intent = intent
+        if(intent != null && intent.hasExtra(USER)){
+            user = intent.getParcelableExtra(USER) as? User
+        } else {
+            // Lấy dữ liệu từ login
+            user = viewModel.user
+        }
+        // Truyền dữ liệu tới các fragment
+        viewModel.user = user
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
@@ -48,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.specialtyFragment,
                 R.id.standardFragment,
                 R.id.categoryFragment,
-                R.id.profileFragment, R.id.seeAllFragment -> {
+                R.id.profileFragment, R.id.seeAllFragment, R.id.loginFragment -> {
                     isHomeFragment = false; supportActionBar?.hide()
                 }
 

@@ -43,7 +43,11 @@
         android:id="@+id/categoryFragment"
         android:name="com.example.argiecommerce.view.category.CategoryFragment"
         android:label="Danh mục"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.argiecommerce.view.home.HomeFragment"
@@ -310,6 +314,9 @@
         <action
             android:id="@+id/action_seeAllFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_seeAllFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"

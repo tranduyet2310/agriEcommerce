@@ -6,30 +6,8 @@ public class LoginApiResponse {
     private String tokenType = "Bearer";
     private String email;
     private String password;
-    private String message;
-    private boolean error;
+
     public LoginApiResponse() {
-    }
-
-    public LoginApiResponse(String message) {
-        this.message = message;
-        this.error = true;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public boolean isError() {
-        return error;
-    }
-
-    public void setError(boolean error) {
-        this.error = error;
     }
 
     public int getId() {

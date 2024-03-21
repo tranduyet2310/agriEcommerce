@@ -142,4 +142,6 @@
     <string name="intro_shop">Giới thiệu về Shop</string>
     <string name="garden_intro">Giới thiệu về vườn</string>
     <string name="loading">Đang tải ...</string>
+    <string name="login">Đăng nhập</string>
+    <string name="not_found">Không tìm thấy kết quả</string>
 </resources>

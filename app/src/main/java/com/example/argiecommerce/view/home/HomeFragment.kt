@@ -1,11 +1,13 @@
 package com.example.argiecommerce.view.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,10 +18,17 @@ import com.example.argiecommerce.adapter.CategoryAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.adapter.HorizontalProductAdapter
 import com.example.argiecommerce.databinding.FragmentHomeBinding
+import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.CategoryItem
+import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.utils.ImageUtils
+import com.example.argiecommerce.utils.LoginUtils
+import com.example.argiecommerce.utils.ProgressDialog
+import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.utils.Utils
+import com.example.argiecommerce.viewmodel.CategoryViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment(), View.OnClickListener,
     VerticalProductAdapter.DemoAdapterOnClickListener,
@@ -41,20 +50,20 @@ class HomeFragment : Fragment(), View.OnClickListener,
     private lateinit var recentProductAdapter: HorizontalProductAdapter
     private lateinit var suggestedProductAdapter: VerticalProductAdapter
 
-    private lateinit var imageList: Array<Int>
-    private lateinit var titleList: Array<String>
+    private val categoryViewModel: CategoryViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(CategoryViewModel::class.java)
+    }
+    private lateinit var alertDialog: AlertDialog
+
     private lateinit var categoryAdapter: CategoryAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        imageList = ImageUtils.getImages.getCategoryItem()
-        titleList = Utils.getText.getCategoryItemTitle()
-
         setUpViews()
-
         getCategoryData()
         getSuggestedProduct()
         getFlashSaleProduct()
@@ -62,8 +71,7 @@ class HomeFragment : Fragment(), View.OnClickListener,
         getSpecialtyProduct()
         getRecentProduct()
 
-
-        setFlipImages(ImageUtils.getImages.getSlides())
+        setFlipImages()
 
         return binding.root
     }
@@ -79,27 +87,10 @@ class HomeFragment : Fragment(), View.OnClickListener,
         binding.content.tvSeeAllSuggestedProduct.setOnClickListener(this)
         binding.tvSearch.setOnClickListener(this)
 
-        categoryAdapter.onClick = {
-            val b = Bundle().apply { putString("category", it.categoryTitle) }
-            navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
-        }
-
-
     }
 
 
-    private fun setFlipImages(images: List<Int>) {
-//        for (image in images) {
-//            val imageView = ImageView(requireContext())
-//            imageView.setBackgroundResource(image)
-//            binding.content.imageSlider.addView(imageView)
-//        }
-//
-//        binding.content.imageSlider.flipInterval = 2000
-//        binding.content.imageSlider.isAutoStart = true
-//        binding.content.imageSlider.setInAnimation(requireContext(), R.anim.slide_in_right)
-//        binding.content.imageSlider.setOutAnimation(requireContext(), R.anim.slide_out_left)
-
+    private fun setFlipImages() {
         val imageList = ArrayList<SlideModel>();
         imageList.add(SlideModel(R.drawable.viewfilpper_1))
         imageList.add(SlideModel(R.drawable.viewfilpper_2))
@@ -191,12 +182,8 @@ class HomeFragment : Fragment(), View.OnClickListener,
     }
 
     private fun getCategoryData() {
-        for (i in imageList.indices) {
-            val categoryItem = CategoryItem(imageList[i], titleList[i])
-            categoryItemList.add(categoryItem)
-        }
-        categoryAdapter = CategoryAdapter(categoryItemList)
-        binding.content.listOfCategory.adapter = categoryAdapter
+        categoryViewModel.getCategoryResponseData()
+            .observe(requireActivity(), { state -> processCategoryResponse(state) })
     }
 
     private fun getSuggestedProduct() {
@@ -243,5 +230,39 @@ class HomeFragment : Fragment(), View.OnClickListener,
     override fun onClick(product: Product) {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(product)
         navController.navigate(action)
+    }
+
+    private fun processCategoryResponse(state: ScreenState<List<CategoryApiResponse>?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                val progressDialog = ProgressDialog()
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    categoryAdapter = CategoryAdapter(requireContext(), state.data)
+                    categoryAdapter.onClick = {
+                        val b = Bundle().apply { putString("category", it.categoryName) }
+                        navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
+                    }
+                    binding.content.listOfCategory.adapter = categoryAdapter
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    displayErrorSnackbar(state.message)
+                }
+            }
+        }
+    }
+
+    private fun displayErrorSnackbar(errorMessage: String) {
+        Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
+            .apply { setAction("Thử lại 👍") { dismiss() } }
+            .show()
     }
 }

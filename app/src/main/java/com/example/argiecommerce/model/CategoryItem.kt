@@ -1,3 +1,6 @@
 package com.example.argiecommerce.model
 
-data class CategoryItem(var categoryImage: Int, var categoryTitle: String)
+data class CategoryItem(
+    var categoryImage: Int,
+    var categoryTitle: String
+)

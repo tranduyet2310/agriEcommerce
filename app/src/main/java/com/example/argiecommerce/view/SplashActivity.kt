@@ -1,13 +1,14 @@
 package com.example.argiecommerce.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
-import android.widget.TextView
-import androidx.core.text.HtmlCompat
-import com.example.argiecommerce.R
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.argiecommerce.databinding.ActivitySplashBinding
+import com.example.argiecommerce.model.User
+import com.example.argiecommerce.utils.Constants
+import com.example.argiecommerce.utils.Constants.USER
+import com.example.argiecommerce.utils.LoginUtils
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
@@ -24,7 +25,17 @@ class SplashActivity : AppCompatActivity() {
                 } catch (e: InterruptedException) {
                     throw RuntimeException(e)
                 } finally {
+                    val loginUtils = LoginUtils(applicationContext)
                     val intent = Intent(applicationContext, MainActivity::class.java)
+                    var user: User? = null
+
+                    if (loginUtils.isLoggedIn()){
+                        user = loginUtils.getUserInfo()
+                        intent.putExtra(USER, user)
+                    } else {
+                        intent.putExtra(USER, user)
+                    }
+
                     startActivity(intent)
                     finish()
                 }

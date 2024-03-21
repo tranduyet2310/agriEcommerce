@@ -1,20 +1,25 @@
 package com.example.argiecommerce.adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.FitCenter
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
-import com.example.argiecommerce.model.CategoryItem
+import com.example.argiecommerce.model.CategoryApiResponse
 
-class CategoryAdapter(private val dataList: ArrayList<CategoryItem>) :
-    RecyclerView.Adapter<CategoryAdapter.ViewHolderClass>() {
-
-    var onClick: ((CategoryItem) -> Unit)? = null
+class CategoryAdapter(
+    private val context: Context,
+    private val dataList: List<CategoryApiResponse>
+) : RecyclerView.Adapter<CategoryAdapter.ViewHolderClass>() {
+    var onClick: ((CategoryApiResponse) -> Unit)? = null
     var pos: Int = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val itemView =
@@ -27,14 +32,25 @@ class CategoryAdapter(private val dataList: ArrayList<CategoryItem>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-        val categoryItem = dataList[position]
-        holder.image.setImageResource(categoryItem.categoryImage)
-        holder.title.text = categoryItem.categoryTitle
+        val category = dataList[position]
+
+        var requestOptions = RequestOptions()
+        requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))
+
+        Glide.with(context)
+            .load(category.categoryImage)
+            .apply(requestOptions)
+            .skipMemoryCache(true)
+            .into(holder.image)
+
+        holder.title.text = category.categoryName
+
         holder.itemView.setOnClickListener {
-            onClick?.invoke(categoryItem)
+            onClick?.invoke(category)
             pos = position
             notifyDataSetChanged()
         }
+
         if (pos == position) {
             holder.itemView.setBackgroundColor(Color.parseColor("#289C62"))
             holder.title.setTextColor(Color.WHITE)
@@ -45,7 +61,7 @@ class CategoryAdapter(private val dataList: ArrayList<CategoryItem>) :
     }
 
     class ViewHolderClass(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val image: ImageView = itemView.findViewById(R.id.image_category)
-        val title: TextView = itemView.findViewById(R.id.tvCategoryTitle)
+        var image: ImageView = itemView.findViewById(R.id.image_category)
+        var title: TextView = itemView.findViewById(R.id.tvCategoryTitle)
     }
 }

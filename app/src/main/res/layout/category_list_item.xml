@@ -4,6 +4,7 @@
     android:layout_width="75dp"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen12dp"
+    android:paddingTop="10dp"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout

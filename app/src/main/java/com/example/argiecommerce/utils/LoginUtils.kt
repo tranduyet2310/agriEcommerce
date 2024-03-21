@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants
+import com.example.argiecommerce.utils.Constants.AVATAR
 import com.example.argiecommerce.utils.Constants.EMAIL
 import com.example.argiecommerce.utils.Constants.ID
 import com.example.argiecommerce.utils.Constants.NAME
@@ -50,6 +51,7 @@ class LoginUtils(private val mCtx: Context) {
         editor.putString(EMAIL, user.getEmail())
         editor.putString(PASSWORD, user.getPassword())
         editor.putString(PHONE, user.getPhone())
+        editor.putString(AVATAR, user.getAvatar())
         editor.apply()
     }
 
@@ -61,6 +63,7 @@ class LoginUtils(private val mCtx: Context) {
             sharedPreferences.getString(PHONE, null),
             sharedPreferences.getString(EMAIL, null),
             sharedPreferences.getString(PASSWORD, null),
+            sharedPreferences.getString(AVATAR, "")
         )
     }
 
