@@ -15,6 +15,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentDetailsBinding
 import com.example.argiecommerce.model.Product
+import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 
 
 class DetailsFragment : Fragment(), View.OnClickListener {
@@ -34,8 +35,8 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
         val product: Product = args.productValue
         setupProductImage(product);
-        binding.details.priceOfProduct.text = String.format("%,.0f", product.productPrice)
-        binding.details.priceOfProductDiscount.text = String.format("%,.0f", product.productPrice)
+        binding.details.priceOfProduct.text = product.standardPrice.formatPrice()
+        binding.details.priceOfProductDiscount.text = product.discountPrice.formatPrice()
         binding.details.tvRatingMiniView.text = "4.5"
 
         return binding.root

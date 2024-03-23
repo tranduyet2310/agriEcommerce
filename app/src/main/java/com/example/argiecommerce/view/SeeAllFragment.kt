@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.SpecialProductAdapter
+import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentSeeAllBinding
 import com.example.argiecommerce.model.Product
 
@@ -21,7 +21,7 @@ class SeeAllFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
 
-    private val demoAdapter: SpecialProductAdapter by lazy { SpecialProductAdapter(createSampleData()) }
+    private val demoAdapter: VerticalProductAdapter by lazy { VerticalProductAdapter(requireContext(), createSampleData()) }
 
     val args: SeeAllFragmentArgs by navArgs()
     override fun onCreateView(
@@ -65,25 +65,25 @@ class SeeAllFragment : Fragment() {
 
     fun createSampleData(): ArrayList<Product>{
         val dataList = arrayListOf<Product>()
-        val demo0 = Product("Apple", 50000.00, 50, "HTX HN", "Vegetable")
-        val demo1 = Product("Orange", 150000.00, 50, "HTX HN", "Vegetable")
-        val demo2 = Product("Strawberry", 1050000.00, 50, "HTX HN", "Vegetable")
-        val demo3 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
-        val demo4 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
-        val demo5 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
-
-        demo0.productImage = R.drawable.product_demo.toString()
-        demo1.productImage = R.drawable.viewfilpper_1.toString()
-        demo2.productImage = R.drawable.viewfilpper_2.toString()
-        demo3.productImage = R.drawable.viewfilpper_3.toString()
-        demo4.productImage = R.drawable.viewfilpper_4.toString()
-        demo5.productImage = R.drawable.viewfilpper_5.toString()
-        dataList.add(demo0)
-        dataList.add(demo1)
-        dataList.add(demo2)
-        dataList.add(demo3)
-        dataList.add(demo4)
-        dataList.add(demo5)
+//        val demo0 = Product("Apple", 50000.00, 50, "HTX HN", "Vegetable")
+//        val demo1 = Product("Orange", 150000.00, 50, "HTX HN", "Vegetable")
+//        val demo2 = Product("Strawberry", 1050000.00, 50, "HTX HN", "Vegetable")
+//        val demo3 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
+//        val demo4 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
+//        val demo5 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
+//
+//        demo0.productImage = R.drawable.product_demo.toString()
+//        demo1.productImage = R.drawable.viewfilpper_1.toString()
+//        demo2.productImage = R.drawable.viewfilpper_2.toString()
+//        demo3.productImage = R.drawable.viewfilpper_3.toString()
+//        demo4.productImage = R.drawable.viewfilpper_4.toString()
+//        demo5.productImage = R.drawable.viewfilpper_5.toString()
+//        dataList.add(demo0)
+//        dataList.add(demo1)
+//        dataList.add(demo2)
+//        dataList.add(demo3)
+//        dataList.add(demo4)
+//        dataList.add(demo5)
         return dataList
     }
 }

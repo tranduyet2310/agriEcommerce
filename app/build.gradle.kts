@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs")
     id("kotlinx-serialization")
+    id("kotlin-kapt")
 }
 
 android {
@@ -79,7 +80,7 @@ dependencies {
     // Glide
     val glide_version = "4.12.0"
     implementation("com.github.bumptech.glide:glide:$glide_version")
-    annotationProcessor("com.github.bumptech.glide:compiler:$glide_version")
+    kapt("com.github.bumptech.glide:compiler:$glide_version")
     // Circle ImageView
     val CircleImgVersion = "3.1.0"
     implementation("de.hdodenhof:circleimageview:$CircleImgVersion")

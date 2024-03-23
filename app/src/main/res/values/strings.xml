@@ -46,7 +46,8 @@
     <string name="ocop_product">Sản phẩm <font color="#FF0000">O</font><font color="#008000">C</font><font color="#0000FF">O</font><font color="#FFD700">P</font></string>
     <string name="specialty_products">Đặc sản vùng miền</string>
     <string name="today_suggestion">Gợi ý hôm nay</string>
-    <string name="recent_product">Sản phẩm gần đây</string>
+    <string name="comming_product">Sản phẩm sắp ra mắt</string>
+    <string name="upcomming">Sắp ra mắt</string>
     <string name="what_is_product_look_for">Nhập tên sản phẩm cần tìm</string>
     <string name="recent_search">Tìm kiếm gần đây</string>
     <string name="clear_all">Xoá tất cả</string>
@@ -141,7 +142,7 @@
     <string name="estimate_yield">Sản lượng dự kiến:</string>
     <string name="intro_shop">Giới thiệu về Shop</string>
     <string name="garden_intro">Giới thiệu về vườn</string>
-    <string name="loading">Đang tải ...</string>
+    <string name="loading">Đang tải …</string>
     <string name="login">Đăng nhập</string>
     <string name="not_found">Không tìm thấy kết quả</string>
 </resources>

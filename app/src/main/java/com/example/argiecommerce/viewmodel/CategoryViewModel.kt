@@ -9,7 +9,7 @@ import com.example.argiecommerce.utils.ScreenState
 class CategoryViewModel(
     private val categoryRepository: CategoryRepository = CategoryRepository()
 ) : ViewModel() {
-    fun getCategoryResponseData(): LiveData<ScreenState<List<CategoryApiResponse>?>> {
+    fun getCategoryResponseData(): LiveData<ScreenState<ArrayList<CategoryApiResponse>?>> {
         return categoryRepository.getCategoryResponseDate()
     }
 }

@@ -41,6 +41,14 @@
         </FrameLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/append_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        app:indicatorColor="@color/greenLight"
+        android:indeterminate="true" />
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

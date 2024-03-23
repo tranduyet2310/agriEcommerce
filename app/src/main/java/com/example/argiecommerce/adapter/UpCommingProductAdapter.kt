@@ -1,35 +1,36 @@
 package com.example.argiecommerce.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
+import com.example.argiecommerce.databinding.FlashSaleProductListItemBinding
 import com.example.argiecommerce.databinding.ProductListItemBinding
+import com.example.argiecommerce.databinding.SpecialProductListItemBinding
+import com.example.argiecommerce.databinding.UpcomingProductListItemBinding
 import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.utils.GlideApp
+import com.example.argiecommerce.utils.Utils
+import com.example.argiecommerce.utils.Utils.Companion.calculateDiscountPercentage
 import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 
-class VerticalProductAdapter(
+class UpCommingProductAdapter(
     private val context: Context,
     private val dataList: ArrayList<Product>
-) : RecyclerView.Adapter<VerticalProductAdapter.ViewHolderClass>() {
+) : RecyclerView.Adapter<UpCommingProductAdapter.ViewHolderClass>() {
+
     var onClick: ((Product) -> Unit)? = null
-    class ViewHolderClass(
-        private val binding: ProductListItemBinding,
-        private val context: Context
-    ) :
+
+    class ViewHolderClass(val binding: UpcomingProductListItemBinding, val context: Context) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private lateinit var product: Product
+
         init {
             binding.imgFavourite.setOnClickListener(this)
             binding.imgCart.setOnClickListener(this)
@@ -39,7 +40,7 @@ class VerticalProductAdapter(
         fun bind(product: Product) {
             binding.apply {
                 tvProductName.text = product.productName
-                tvProductPrice.text = product.standardPrice.formatPrice()
+                tvProductPrice.text = context.resources.getString(R.string.upcomming)
 
                 var requestOptions = RequestOptions()
                 requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))
@@ -92,8 +93,11 @@ class VerticalProductAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         return ViewHolderClass(
-            ProductListItemBinding.inflate(LayoutInflater.from(parent.context)),
-            context
+            UpcomingProductListItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ), context
         )
     }
 

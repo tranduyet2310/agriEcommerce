@@ -14,10 +14,11 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
 import com.example.argiecommerce.model.CategoryApiResponse
+import com.example.argiecommerce.utils.GlideApp
 
 class CategoryAdapter(
     private val context: Context,
-    private val dataList: List<CategoryApiResponse>
+    private val dataList: ArrayList<CategoryApiResponse>
 ) : RecyclerView.Adapter<CategoryAdapter.ViewHolderClass>() {
     var onClick: ((CategoryApiResponse) -> Unit)? = null
     var pos: Int = -1
@@ -37,7 +38,7 @@ class CategoryAdapter(
         var requestOptions = RequestOptions()
         requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))
 
-        Glide.with(context)
+        GlideApp.with(context)
             .load(category.categoryImage)
             .apply(requestOptions)
             .skipMemoryCache(true)

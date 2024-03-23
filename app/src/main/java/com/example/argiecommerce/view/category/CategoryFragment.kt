@@ -80,7 +80,7 @@ class CategoryFragment : Fragment() {
         }
     }
 
-    private fun processCategoryResponse(state: ScreenState<List<CategoryApiResponse>?>) {
+    private fun processCategoryResponse(state: ScreenState<ArrayList<CategoryApiResponse>?>) {
         when (state) {
             is ScreenState.Loading -> {
                 val progressDialog = ProgressDialog()

@@ -1,14 +1,23 @@
 package com.example.argiecommerce.utils
 
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 
 class Utils {
-    object getText{
-        fun getCategoryItemTitle(): Array<String>{
-            return arrayOf(
-                "Đồ uống", "Rau củ", "Hoa quả", "Gia vị",
-                "Đặc sản", "Thực phẩm khô", "Tiêu chuẩn","VietGAP", "GlobalG.A.P", "OCOP"
-            )
+    companion object {
+        fun Long.formatPrice(): String {
+            val symbols = DecimalFormatSymbols().apply {
+                groupingSeparator = '.'
+                decimalSeparator = ','
+            }
+            val formatter = DecimalFormat("#,###", symbols)
+            return formatter.format(this)
+        }
+
+        fun calculateDiscountPercentage(originalPrice: Long, discountedPrice: Long): Long {
+            val discountPercentage: Double =
+                ((originalPrice - discountedPrice) * 1.0 / originalPrice) * 100
+            return Math.round(discountPercentage)
         }
     }
 }

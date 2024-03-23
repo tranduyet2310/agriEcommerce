@@ -11,22 +11,22 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CategoryRepository {
-    fun getCategoryResponseDate(): LiveData<ScreenState<List<CategoryApiResponse>?>> {
-        val mutableLiveData = MutableLiveData<ScreenState<List<CategoryApiResponse>?>>()
+    fun getCategoryResponseDate(): LiveData<ScreenState<ArrayList<CategoryApiResponse>?>> {
+        val mutableLiveData = MutableLiveData<ScreenState<ArrayList<CategoryApiResponse>?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
         RetrofitClient.getInstance().getApi().getAllCategories()
-            .enqueue(object : Callback<List<CategoryApiResponse>> {
+            .enqueue(object : Callback<ArrayList<CategoryApiResponse>> {
                 override fun onResponse(
-                    call: Call<List<CategoryApiResponse>>,
-                    response: Response<List<CategoryApiResponse>>
+                    call: Call<ArrayList<CategoryApiResponse>>,
+                    response: Response<ArrayList<CategoryApiResponse>>
                 ) {
                     if (response.isSuccessful) {
                         mutableLiveData.postValue(ScreenState.Success(response.body()))
                     }
                 }
 
-                override fun onFailure(call: Call<List<CategoryApiResponse>>, t: Throwable) {
+                override fun onFailure(call: Call<ArrayList<CategoryApiResponse>>, t: Throwable) {
                     val message = t.message.toString()
                     mutableLiveData.postValue(ScreenState.Error(message, null))
                 }
