@@ -39,7 +39,17 @@ class VerticalProductAdapter(
         fun bind(product: Product) {
             binding.apply {
                 tvProductName.text = product.productName
-                tvProductPrice.text = product.standardPrice.formatPrice()
+                if (product.discountPrice > 0){
+                    tvProductPrice.text = product.discountPrice.formatPrice()
+                } else {
+                    tvProductPrice.text = product.standardPrice.formatPrice()
+                }
+
+                if (product.isNew){
+                    tvUpcoming.visibility = View.VISIBLE
+                    tvProductPrice.visibility = View.INVISIBLE
+                    tvUpcoming.text = context.resources.getString(R.string.upcomming)
+                }
 
                 var requestOptions = RequestOptions()
                 requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))

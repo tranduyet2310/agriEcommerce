@@ -53,7 +53,9 @@ class CategoryFragment : Fragment() {
         navController = Navigation.findNavController(view)
 
         subcategoryAdapter.onClick = {
-            val b = Bundle().apply { putString("category", it) }
+            val b = Bundle().apply {
+                putString("category", it)
+            }
             navController.navigate(R.id.action_categoryFragment_to_seeAllFragment, b)
         }
     }

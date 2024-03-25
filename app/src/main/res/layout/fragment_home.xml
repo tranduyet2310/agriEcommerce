@@ -10,6 +10,30 @@
         android:id="@+id/content"
         layout="@layout/main_content" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/oopsLayout">
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/oops"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/yellowAgri"
+            android:layout_marginTop="10dp"
+            android:text="@string/something_went_wrong"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
     <com.google.android.material.appbar.AppBarLayout
         style="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_width="match_parent"

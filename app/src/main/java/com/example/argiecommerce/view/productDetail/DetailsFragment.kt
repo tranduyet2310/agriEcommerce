@@ -34,20 +34,41 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
         val product: Product = args.productValue
+
         setupProductImage(product);
-        binding.details.priceOfProduct.text = product.standardPrice.formatPrice()
-        binding.details.priceOfProductDiscount.text = product.discountPrice.formatPrice()
-        binding.details.tvRatingMiniView.text = "4.5"
+        setupProductInfo(product);
+        setupSupplierInfo(product);
 
         return binding.root
     }
 
+    private fun setupSupplierInfo(product: Product) {
+        binding.details.tvProvinceOfProvider.text = product.supplierProvince
+        binding.details.tvNameOfProvider.text = product.productSupplier
+    }
+
+    private fun setupProductInfo(product: Product) {
+        if(product.discountPrice > 0){
+            binding.details.priceOfProduct.text = product.discountPrice.formatPrice()
+            binding.details.priceOfProductDiscount.text = product.standardPrice.formatPrice()
+        } else {
+            binding.details.priceOfProduct.text = product.standardPrice.formatPrice()
+            binding.details.priceOfProductDiscount.visibility = View.GONE
+            binding.details.divider.visibility = View.GONE
+        }
+
+        binding.details.tvRatingMiniView.text = "4.5"
+
+        binding.details.nameOfProduct.text = product.productName
+        binding.details.tvInfoDetailsOfProduct.text = product.description
+        binding.details.tvProductSold.text = product.sold.toString()
+    }
+
     private fun setupProductImage(product: Product) {
         val imageList = ArrayList<SlideModel>();
-        imageList.add(SlideModel(R.drawable.product_demo))
-        imageList.add(SlideModel(R.drawable.product_demo))
-        imageList.add(SlideModel(R.drawable.product_demo))
-
+        for (image in product.productImage){
+            imageList.add(SlideModel(image.imageUrl))
+        }
         binding.details.imageOfProduct.setImageList(imageList, ScaleTypes.FIT)
     }
 
@@ -84,7 +105,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun seeMoreInfoProduct() {
-        if (isExpanded){
+        if (isExpanded) {
             binding.details.tvInfoDetailsOfProduct.maxLines = 5
             binding.details.tvInfoDetailsOfProduct.ellipsize = TextUtils.TruncateAt.END
             binding.details.btnSeeMoreInfoProduct.text = buildString {

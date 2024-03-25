@@ -310,13 +310,23 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="category"
-            app:argType="string" />
+            app:argType="com.example.argiecommerce.model.CategoryApiResponse"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_seeAllFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
         <action
             android:id="@+id/action_seeAllFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+        <argument
+            android:name="subcategory"
+            app:argType="com.example.argiecommerce.model.Subcategory"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"

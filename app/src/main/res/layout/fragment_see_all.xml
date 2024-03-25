@@ -6,15 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".view.SeeAllFragment">
 
-
-
     <TextView
         android:id="@+id/title_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/darkGreen"
         android:fontFamily="@font/smooch_regular"
         android:gravity="center"
-        android:background="@color/darkGreen"
         android:text="@string/specialty"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -26,21 +24,49 @@
         android:id="@+id/imgBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_back_white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/seeAllProductRecyclerView"
         android:layout_marginStart="@dimen/dimen10dp"
-        android:importantForAccessibility="no" />
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_arrow_back_white"
+        app:layout_constraintBottom_toTopOf="@id/seeAllProductRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/seeAllProductRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="visible"
         android:background="@color/lightBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_category" />
+
+    <LinearLayout
+        android:id="@+id/notFoundLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_category">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/question_mark" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/not_found"
+            android:textColor="@color/orange"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -106,4 +106,6 @@ dependencies {
     // Okhttp
     implementation ("com.squareup.okhttp3:okhttp:3.12.1")
     implementation ("com.squareup.okhttp3:logging-interceptor:3.6.0")
+    // network connection
+    implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
 }

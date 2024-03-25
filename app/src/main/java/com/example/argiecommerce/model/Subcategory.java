@@ -1,6 +1,9 @@
 package com.example.argiecommerce.model;
 
-public class Subcategory {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Subcategory implements Parcelable {
     private int id;
     private String subcategoryName;
     private String categoryName;
@@ -13,6 +16,36 @@ public class Subcategory {
         this.subcategoryName = subcategoryName;
         this.categoryName = categoryName;
     }
+
+    protected Subcategory(Parcel in) {
+        id = in.readInt();
+        subcategoryName = in.readString();
+        categoryName = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(subcategoryName);
+        dest.writeString(categoryName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Subcategory> CREATOR = new Creator<Subcategory>() {
+        @Override
+        public Subcategory createFromParcel(Parcel in) {
+            return new Subcategory(in);
+        }
+
+        @Override
+        public Subcategory[] newArray(int size) {
+            return new Subcategory[size];
+        }
+    };
 
     public int getId() {
         return id;

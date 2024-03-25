@@ -61,7 +61,7 @@
     <string name="add_to_favourite">Add to Favourite</string>
     <string name="title_demo">Táo - Chanh - Dứa - Nho</string>
     <string name="rating_star">Rating Star</string>
-    <string name="have_sold">Đã bán 0</string>
+    <string name="have_sold">Đã bán</string>
     <string name="favourite_product">Favourite Product</string>
     <string name="hn">Hà Nội</string>
     <string name="htx_demo">HTX Demo</string>
@@ -147,4 +147,5 @@
     <string name="not_found">Không tìm thấy kết quả</string>
     <string name="error_connection">Lỗi kết nối 😵</string>
     <string name="retry">Thử lại</string>
+    <string name="something_went_wrong">Đã xảy ra sự cố. Vui lòng thử lại</string>
 </resources>

@@ -1,9 +1,7 @@
 package com.example.argiecommerce.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.RegisterApiResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.network.RetrofitClient

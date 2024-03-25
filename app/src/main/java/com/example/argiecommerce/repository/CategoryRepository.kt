@@ -3,7 +3,6 @@ package com.example.argiecommerce.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.argiecommerce.model.CategoryApiResponse
-import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.ScreenState
 import retrofit2.Call

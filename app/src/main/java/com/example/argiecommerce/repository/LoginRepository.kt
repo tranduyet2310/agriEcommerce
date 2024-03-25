@@ -1,11 +1,9 @@
 package com.example.argiecommerce.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
-import com.example.argiecommerce.network.Api
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.ScreenState
 import retrofit2.Call

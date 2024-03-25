@@ -1,19 +1,30 @@
 package com.example.argiecommerce.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
+import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentSeeAllBinding
-import com.example.argiecommerce.model.Product
+import com.example.argiecommerce.model.ProductApiRequest
+import com.example.argiecommerce.utils.Constants.FLASH_SALE
+import com.example.argiecommerce.utils.Constants.PRODUCT_KEY
+import com.example.argiecommerce.utils.Constants.RECENT_PRODUCT
+import com.example.argiecommerce.viewmodel.ProductViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 class SeeAllFragment : Fragment() {
@@ -21,7 +32,15 @@ class SeeAllFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
 
-    private val demoAdapter: VerticalProductAdapter by lazy { VerticalProductAdapter(requireContext()) }
+    private val productAdapter: VerticalProductAdapter by lazy {
+        VerticalProductAdapter(
+            requireContext()
+        )
+    }
+
+    private val productViewModel: ProductViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
+    }
 
     val args: SeeAllFragmentArgs by navArgs()
     override fun onCreateView(
@@ -30,30 +49,136 @@ class SeeAllFragment : Fragment() {
     ): View {
         _binding = FragmentSeeAllBinding.inflate(inflater, container, false)
 
-        val title: String = args.category
-
-        binding.seeAllProductRecyclerView.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2 ,
-                GridLayoutManager.VERTICAL, false)
-            adapter = demoAdapter
-            setHasFixedSize(true)
-        }
+        val category = args.category
+        val subcategory = args.subcategory
+        val title = args.title
 
         binding.titleCategory.text = title
 
+        setupRecyclerView()
+
+        if (category != null) {
+            getProductByCategory(category.id.toLong())
+        } else if (subcategory != null) {
+            getProductBySubcateogry(subcategory.id.toLong())
+        } else if (title.equals(FLASH_SALE)){
+            getProductsWithDiscount()
+        }  else if(title.equals(RECENT_PRODUCT)){
+            getUpcomingProducts()
+        }
+
         return binding.root
+    }
+
+    private fun getUpcomingProducts() {
+        val productApiRequest = ProductApiRequest()
+        lifecycleScope.launch {
+            productViewModel.getUpcomingProducts(productApiRequest).collectLatest { pagingData ->
+                productAdapter.addLoadStateListener { loadState ->
+                    if (loadState.source.refresh is LoadState.NotLoading &&
+                        loadState.append.endOfPaginationReached &&
+                        productAdapter.itemCount < 1
+                    ) {
+                        binding.notFoundLayout.visibility = View.VISIBLE
+                        binding.seeAllProductRecyclerView.visibility = View.INVISIBLE
+                    } else {
+                        binding.notFoundLayout.visibility = View.GONE
+                        binding.seeAllProductRecyclerView.visibility = View.VISIBLE
+                    }
+                }
+                productAdapter.submitData(pagingData)
+            }
+        }
+    }
+
+    private fun getProductsWithDiscount() {
+        val productApiRequest = ProductApiRequest()
+        lifecycleScope.launch {
+            productViewModel.getProductsWithDiscount(productApiRequest).collectLatest { pagingData ->
+                productAdapter.addLoadStateListener { loadState ->
+                    if (loadState.source.refresh is LoadState.NotLoading &&
+                        loadState.append.endOfPaginationReached &&
+                        productAdapter.itemCount < 1
+                    ) {
+                        binding.notFoundLayout.visibility = View.VISIBLE
+                        binding.seeAllProductRecyclerView.visibility = View.INVISIBLE
+                    } else {
+                        binding.notFoundLayout.visibility = View.GONE
+                        binding.seeAllProductRecyclerView.visibility = View.VISIBLE
+                    }
+                }
+                productAdapter.submitData(pagingData)
+            }
+        }
+    }
+
+    private fun getProductBySubcateogry(subcategoryId: Long) {
+        val productApiRequest = ProductApiRequest(subcategoryId)
+        lifecycleScope.launch {
+            productViewModel.getProductBySubCategory(productApiRequest).collectLatest { pagingData ->
+                productAdapter.addLoadStateListener { loadState ->
+                    if (loadState.source.refresh is LoadState.NotLoading &&
+                        loadState.append.endOfPaginationReached &&
+                        productAdapter.itemCount < 1
+                    ) {
+                        binding.notFoundLayout.visibility = View.VISIBLE
+                        binding.seeAllProductRecyclerView.visibility = View.INVISIBLE
+                    } else {
+                        binding.notFoundLayout.visibility = View.GONE
+                        binding.seeAllProductRecyclerView.visibility = View.VISIBLE
+                    }
+                }
+                productAdapter.submitData(pagingData)
+            }
+        }
+    }
+
+    private fun getProductByCategory(categoryId: Long) {
+        val productApiRequest = ProductApiRequest(categoryId)
+        lifecycleScope.launch {
+            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
+                productAdapter.addLoadStateListener { loadState ->
+                    if (loadState.source.refresh is LoadState.NotLoading &&
+                        loadState.append.endOfPaginationReached &&
+                        productAdapter.itemCount < 1
+                    ) {
+                        binding.notFoundLayout.visibility = View.VISIBLE
+                        binding.seeAllProductRecyclerView.visibility = View.INVISIBLE
+                    } else {
+                        binding.notFoundLayout.visibility = View.GONE
+                        binding.seeAllProductRecyclerView.visibility = View.VISIBLE
+                    }
+                }
+                productAdapter.submitData(pagingData)
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.seeAllProductRecyclerView.apply {
+            layoutManager = GridLayoutManager(
+                requireContext(), 2,
+                GridLayoutManager.VERTICAL, false
+            )
+            setHasFixedSize(true)
+            adapter = productAdapter.withLoadStateHeaderAndFooter(
+                header = ProductLoadingAdapter { productAdapter.retry() },
+                footer = ProductLoadingAdapter { productAdapter.retry() }
+            )
+
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        demoAdapter.onClick = {
-            val b = Bundle().apply { putParcelable("product_value", it) }
+        productAdapter.onClick = {
+            val b = Bundle().apply { putParcelable(PRODUCT_KEY, it) }
             findNavController().navigate(R.id.action_seeAllFragment_to_detailsFragment, b)
         }
 
-        binding.imgBack.setOnClickListener{
+        binding.imgBack.setOnClickListener {
             navController.navigateUp()
         }
     }
@@ -63,27 +188,4 @@ class SeeAllFragment : Fragment() {
         _binding = null
     }
 
-    fun createSampleData(): ArrayList<Product>{
-        val dataList = arrayListOf<Product>()
-//        val demo0 = Product("Apple", 50000.00, 50, "HTX HN", "Vegetable")
-//        val demo1 = Product("Orange", 150000.00, 50, "HTX HN", "Vegetable")
-//        val demo2 = Product("Strawberry", 1050000.00, 50, "HTX HN", "Vegetable")
-//        val demo3 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
-//        val demo4 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
-//        val demo5 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
-//
-//        demo0.productImage = R.drawable.product_demo.toString()
-//        demo1.productImage = R.drawable.viewfilpper_1.toString()
-//        demo2.productImage = R.drawable.viewfilpper_2.toString()
-//        demo3.productImage = R.drawable.viewfilpper_3.toString()
-//        demo4.productImage = R.drawable.viewfilpper_4.toString()
-//        demo5.productImage = R.drawable.viewfilpper_5.toString()
-//        dataList.add(demo0)
-//        dataList.add(demo1)
-//        dataList.add(demo2)
-//        dataList.add(demo3)
-//        dataList.add(demo4)
-//        dataList.add(demo5)
-        return dataList
-    }
 }

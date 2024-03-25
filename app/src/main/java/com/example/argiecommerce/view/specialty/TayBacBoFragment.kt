@@ -1,7 +1,7 @@
 package com.example.argiecommerce.view.specialty
 
 
-class BacBoFragment : BaseSpecialtyFragment() {
+class TayBacBoFragment : BaseSpecialtyFragment() {
 
 //    private var _binding: FragmentBacBoBinding? = null
 //    private val binding get() = _binding!!

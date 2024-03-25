@@ -42,13 +42,15 @@ public class Product implements Parcelable {
     private String supplierProvince;
     @SerializedName("supplierId")
     private long supplierId;
+    @SerializedName("sold")
+    private long sold;
     private int isFavourite;
     private int isInCart;
 
     public Product() {
     }
 
-    public Product(long productId, String productName, String description, Long standardPrice, Long discountPrice, int productQuantity, String productCategory, String productSubcategory, String warehouseName, String productSupplier, List<Image> productImage, boolean isActive, boolean isAvailable, boolean isNew, String supplierProvince, long supplierId) {
+    public Product(long productId, String productName, String description, Long standardPrice, Long discountPrice, int productQuantity, String productCategory, String productSubcategory, String warehouseName, String productSupplier, List<Image> productImage, boolean isActive, boolean isAvailable, boolean isNew, String supplierProvince, long supplierId, long sold, int isFavourite, int isInCart) {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
@@ -65,6 +67,9 @@ public class Product implements Parcelable {
         this.isNew = isNew;
         this.supplierProvince = supplierProvince;
         this.supplierId = supplierId;
+        this.sold = sold;
+        this.isFavourite = isFavourite;
+        this.isInCart = isInCart;
     }
 
     protected Product(Parcel in) {
@@ -91,6 +96,7 @@ public class Product implements Parcelable {
         isNew = in.readByte() != 0;
         supplierProvince = in.readString();
         supplierId = in.readLong();
+        sold = in.readLong();
         isFavourite = in.readInt();
         isInCart = in.readInt();
     }
@@ -235,6 +241,14 @@ public class Product implements Parcelable {
         this.supplierId = supplierId;
     }
 
+    public long getSold() {
+        return sold;
+    }
+
+    public void setSold(long sold) {
+        this.sold = sold;
+    }
+
     public int getIsFavourite() {
         return isFavourite;
     }
@@ -283,6 +297,7 @@ public class Product implements Parcelable {
         dest.writeByte((byte) (isNew ? 1 : 0));
         dest.writeString(supplierProvince);
         dest.writeLong(supplierId);
+        dest.writeLong(sold);
         dest.writeInt(isFavourite);
         dest.writeInt(isInCart);
     }

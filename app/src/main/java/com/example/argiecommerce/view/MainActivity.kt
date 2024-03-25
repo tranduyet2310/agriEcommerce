@@ -84,11 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if (isHomeFragment) {
-            menu?.findItem(R.id.action_cart)?.isVisible = true
-        } else {
-            menu?.findItem(R.id.action_cart)?.isVisible = false
-        }
+        menu?.findItem(R.id.action_cart)?.isVisible = isHomeFragment
         return super.onPrepareOptionsMenu(menu)
     }
 

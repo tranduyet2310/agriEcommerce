@@ -19,11 +19,14 @@ public class Constants {
     public static final String USER = "user";
     //
     public static final String SUGGESTED_PRODUCT = "Gợi ý hôm nay";
-    public static final String RECENT_PRODUCT = "Sản phẩm gần đây";
+    public static final String RECENT_PRODUCT = "Sản phẩm sắp ra mắt";
     public static final String SPECIALTY_PRODUCT = "Đặc sản vùng miền";
     public static final String OCOP_PRODUCT = "Sản phẩm đạt chuẩn";
     public static final String FLASH_SALE = "Flash Sale";
     public static final String CATEGORY_KEY = "category";
+    public static final String SUBCATEGORY_KEY = "subcategory";
+    public static final String TITLE_KEY = "title";
+    public static final String PRODUCT_KEY = "product_value";
     // pagination
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";

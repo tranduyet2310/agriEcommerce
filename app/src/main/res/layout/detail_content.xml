@@ -135,7 +135,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvProductSold"
+            android:id="@+id/titleProductSold"
             style="@style/h5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -145,6 +145,18 @@
             app:layout_constraintBottom_toBottomOf="@id/linear_layout_star"
             app:layout_constraintStart_toEndOf="@id/linear_layout_star"
             app:layout_constraintTop_toTopOf="@id/linear_layout_star" />
+
+        <TextView
+            android:id="@+id/tvProductSold"
+            style="@style/h5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/dimen8dp"
+            android:text="@string/_4"
+            app:layout_constraintBottom_toBottomOf="@id/titleProductSold"
+            app:layout_constraintStart_toEndOf="@id/titleProductSold"
+            app:layout_constraintTop_toTopOf="@id/titleProductSold" />
 
         <ImageView
             android:id="@+id/imgFavourite"

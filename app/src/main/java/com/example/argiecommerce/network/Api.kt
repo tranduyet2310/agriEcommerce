@@ -24,9 +24,31 @@ interface Api {
     @GET("/api/categories")
     fun getAllCategories(): Call<ArrayList<CategoryApiResponse>>
 
-    @GET("/api/products/")
+    @GET("/api/products/category")
     suspend fun getProductByCategoryId(
         @Query("id") id: Long,
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<ProductApiResponse>
+
+    @GET("/api/products/subcategory")
+    suspend fun getProductBySubcategoryId(
+        @Query("id") id: Long,
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<ProductApiResponse>
+
+    @GET("/api/products/discount")
+    suspend fun getProductsWithDiscount(
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<ProductApiResponse>
+
+    @GET("/api/products/upcoming")
+    suspend fun getUpcomingProducts(
         @Query("pageNo") pageNo: String,
         @Query("sortBy") sortBy: String,
         @Query("sortDir") sortDir: String

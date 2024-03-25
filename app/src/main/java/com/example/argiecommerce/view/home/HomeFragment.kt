@@ -24,12 +24,16 @@ import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentHomeBinding
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.ProductApiRequest
+import com.example.argiecommerce.model.Subcategory
 import com.example.argiecommerce.utils.Constants.CATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.FLASH_SALE
 import com.example.argiecommerce.utils.Constants.OCOP_PRODUCT
 import com.example.argiecommerce.utils.Constants.RECENT_PRODUCT
 import com.example.argiecommerce.utils.Constants.SPECIALTY_PRODUCT
+import com.example.argiecommerce.utils.Constants.SUBCATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.SUGGESTED_PRODUCT
+import com.example.argiecommerce.utils.Constants.TITLE_KEY
+import com.example.argiecommerce.utils.NetworkMonitorUtil
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.CategoryViewModel
@@ -60,6 +64,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var categoryItemList: ArrayList<CategoryApiResponse>
 
+    private lateinit var networkMonitor: NetworkMonitorUtil
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,13 +75,28 @@ class HomeFragment : Fragment(), View.OnClickListener {
         setupRecyclerViews()
         setupFlipImages()
 
-        getCategoryData()
-        getFlashSaleProduct()
-        getOcopProduct()
-        getSpecialtyProduct()
-        getRecentProduct()
-        getSuggestedProduct()
+        networkMonitor.result = { isAvailable, type ->
+            requireActivity().runOnUiThread {
+                when (isAvailable) {
+                    true -> {
+                        binding.oopsLayout.visibility = View.GONE
+                        binding.content.scroll.visibility = View.VISIBLE
 
+                        getCategoryData()
+                        getFlashSaleProduct()
+                        getOcopProduct()
+                        getSpecialtyProduct()
+                        getRecentProduct()
+                        getSuggestedProduct()
+                    }
+
+                    false -> {
+                        binding.oopsLayout.visibility = View.VISIBLE
+                        binding.content.scroll.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        }
         return binding.root
     }
 
@@ -113,7 +134,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         categoryItemList = arrayListOf()
         categoryAdapter = CategoryAdapter(requireContext(), categoryItemList)
         categoryAdapter.onClick = {
-            val b = Bundle().apply { putString(CATEGORY_KEY, it.categoryName) }
+            val b = Bundle().apply {
+                putParcelable(CATEGORY_KEY, it)
+                putParcelable(SUBCATEGORY_KEY, null)
+                putString(TITLE_KEY, it.categoryName)
+            }
             navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
         }
         binding.content.listOfCategory.adapter = categoryAdapter
@@ -210,27 +235,83 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun goToSuggestedProductFragment() {
-        val b = Bundle().apply { putString(CATEGORY_KEY, SUGGESTED_PRODUCT) }
-        navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
-    }
+        var c: CategoryApiResponse? = null
+        var sb: Subcategory? = null
 
-    private fun goToRecentProductFragment() {
-        val b = Bundle().apply { putString(CATEGORY_KEY, RECENT_PRODUCT) }
+        for (category in categoryItemList) {
+            for (subcategory in category.subCategoryList) {
+                if (subcategory.subcategoryName.equals("Táo")) {
+                    sb = subcategory
+                    c = category
+                }
+            }
+        }
+
+        val b = Bundle().apply {
+            putParcelable(CATEGORY_KEY, c)
+            putParcelable(SUBCATEGORY_KEY, sb)
+            putString(TITLE_KEY, SUGGESTED_PRODUCT)
+        }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
     private fun goToSpecialtyFragment() {
-        val b = Bundle().apply { putString(CATEGORY_KEY, SPECIALTY_PRODUCT) }
+        var c: CategoryApiResponse? = null
+        var sb: Subcategory? = null
+
+        for (category in categoryItemList) {
+            for (subcategory in category.subCategoryList) {
+                if (subcategory.subcategoryName.equals("Táo khô")) {
+                    sb = subcategory
+                    c = category
+                }
+            }
+        }
+
+        val b = Bundle().apply {
+            putParcelable(CATEGORY_KEY, c)
+            putParcelable(SUBCATEGORY_KEY, sb)
+            putString(TITLE_KEY, SPECIALTY_PRODUCT)
+        }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
     private fun goToStandardFragment() {
-        val b = Bundle().apply { putString(CATEGORY_KEY, OCOP_PRODUCT) }
+        var c: CategoryApiResponse? = null
+        var sb: Subcategory? = null
+
+        for (category in categoryItemList) {
+            for (subcategory in category.subCategoryList) {
+                if (subcategory.subcategoryName.equals("Rau cải thìa")) {
+                    sb = subcategory
+                    c = category
+                }
+            }
+        }
+
+        val b = Bundle().apply {
+            putParcelable(CATEGORY_KEY, c)
+            putParcelable(SUBCATEGORY_KEY, sb)
+            putString(TITLE_KEY, OCOP_PRODUCT)
+        }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
     private fun goToFlashSaleFragment() {
-        val b = Bundle().apply { putString(CATEGORY_KEY, FLASH_SALE) }
+        val b = Bundle().apply {
+            putParcelable(CATEGORY_KEY, null)
+            putParcelable(SUBCATEGORY_KEY, null)
+            putString(TITLE_KEY, FLASH_SALE)
+        }
+        navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
+    }
+
+    private fun goToRecentProductFragment() {
+        val b = Bundle().apply {
+            putParcelable(CATEGORY_KEY, null)
+            putParcelable(SUBCATEGORY_KEY, null)
+            putString(TITLE_KEY, RECENT_PRODUCT)
+        }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
 
@@ -252,39 +333,43 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun getRecentProduct() {
-        val productApiRequest = ProductApiRequest(5)
+
+    private fun getSpecialtyProduct() {
+        val productApiRequest = ProductApiRequest(9)
         lifecycleScope.launch {
-            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
+            productViewModel.getProductBySubCategory(productApiRequest)
+                .collectLatest { pagingData ->
+                    specialtyProductAdapter.submitData(pagingData)
+                }
+        }
+    }
+
+    private fun getOcopProduct() {
+        val productApiRequest = ProductApiRequest(2)
+        lifecycleScope.launch {
+            productViewModel.getProductBySubCategory(productApiRequest)
+                .collectLatest { pagingData ->
+                    ocopProductAdapter.submitData(pagingData)
+                }
+        }
+    }
+
+    private fun getRecentProduct() {
+        val productApiRequest = ProductApiRequest()
+        lifecycleScope.launch {
+            productViewModel.getUpcomingProducts(productApiRequest).collectLatest { pagingData ->
                 recentProductAdapter.submitData(pagingData)
             }
         }
     }
 
-    private fun getSpecialtyProduct() {
-        val productApiRequest = ProductApiRequest(4)
-        lifecycleScope.launch {
-            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
-                specialtyProductAdapter.submitData(pagingData)
-            }
-        }
-    }
-
-    private fun getOcopProduct() {
-        val productApiRequest = ProductApiRequest(3)
-        lifecycleScope.launch {
-            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
-                ocopProductAdapter.submitData(pagingData)
-            }
-        }
-    }
-
     private fun getFlashSaleProduct() {
-        val productApiRequest = ProductApiRequest(1)
+        val productApiRequest = ProductApiRequest()
         lifecycleScope.launch {
-            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
-                flashSaleProductAdapter.submitData(pagingData)
-            }
+            productViewModel.getProductsWithDiscount(productApiRequest)
+                .collectLatest { pagingData ->
+                    flashSaleProductAdapter.submitData(pagingData)
+                }
         }
     }
 
@@ -298,6 +383,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             is ScreenState.Success -> {
                 if (state.data != null) {
                     alertDialog.dismiss()
+                    categoryItemList.clear()
                     categoryItemList.addAll(state.data)
                     categoryAdapter.notifyDataSetChanged()
                 }
@@ -316,5 +402,20 @@ class HomeFragment : Fragment(), View.OnClickListener {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
             .apply { setAction("Thử lại 👍") { dismiss() } }
             .show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        networkMonitor.register()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        networkMonitor.unregister()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        networkMonitor = NetworkMonitorUtil(requireContext())
     }
 }
