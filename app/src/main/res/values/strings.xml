@@ -145,4 +145,6 @@
     <string name="loading">Đang tải …</string>
     <string name="login">Đăng nhập</string>
     <string name="not_found">Không tìm thấy kết quả</string>
+    <string name="error_connection">Lỗi kết nối 😵</string>
+    <string name="retry">Thử lại</string>
 </resources>

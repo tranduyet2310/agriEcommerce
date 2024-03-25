@@ -16,7 +16,7 @@ import com.example.argiecommerce.model.Product
 open class BaseSpecialtyFragment : Fragment(R.layout.fragment_base_specialty) {
 
     private lateinit var binding: FragmentBaseSpecialtyBinding
-    protected val demoAdapter: VerticalProductAdapter by lazy { VerticalProductAdapter(requireContext(),createSampleData()) }
+    protected val demoAdapter: VerticalProductAdapter by lazy { VerticalProductAdapter(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

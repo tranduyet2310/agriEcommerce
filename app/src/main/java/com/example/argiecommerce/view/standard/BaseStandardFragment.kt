@@ -17,7 +17,7 @@ open class BaseStandardFragment : Fragment(R.layout.fragment_base_standard) {
 
     private lateinit var binding: FragmentBaseStandardBinding
     protected val demoAdapter: VerticalProductAdapter by lazy {
-        VerticalProductAdapter(requireContext(), createSampleData())
+        VerticalProductAdapter(requireContext())
     }
 
     override fun onCreateView(

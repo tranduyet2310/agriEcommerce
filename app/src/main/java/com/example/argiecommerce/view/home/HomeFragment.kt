@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,13 +17,13 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.CategoryAdapter
 import com.example.argiecommerce.adapter.FlashSaleProductAdapter
 import com.example.argiecommerce.adapter.HorizontalProductAdapter
+import com.example.argiecommerce.adapter.HorizontalProductLoadingAdapter
+import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.adapter.UpCommingProductAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentHomeBinding
 import com.example.argiecommerce.model.CategoryApiResponse
-import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiRequest
-import com.example.argiecommerce.model.ProductApiResponse
 import com.example.argiecommerce.utils.Constants.CATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.FLASH_SALE
 import com.example.argiecommerce.utils.Constants.OCOP_PRODUCT
@@ -34,18 +35,13 @@ import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.CategoryViewModel
 import com.example.argiecommerce.viewmodel.ProductViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
-
-    private lateinit var categoryItemList: ArrayList<CategoryApiResponse>
-    private lateinit var flashSaleProductList: ArrayList<Product>
-    private lateinit var ocopProductList: ArrayList<Product>
-    private lateinit var specialtyProductList: ArrayList<Product>
-    private lateinit var recentProductList: ArrayList<Product>
-    private lateinit var suggestedProductList: ArrayList<Product>
 
     private lateinit var flashSaleProductAdapter: FlashSaleProductAdapter
     private lateinit var ocopProductAdapter: HorizontalProductAdapter
@@ -62,6 +58,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var alertDialog: AlertDialog
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var categoryItemList: ArrayList<CategoryApiResponse>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,8 +66,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        setUpViews()
-        setFlipImages()
+        setupRecyclerViews()
+        setupFlipImages()
 
         getCategoryData()
         getFlashSaleProduct()
@@ -94,8 +91,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.tvSearch.setOnClickListener(this)
     }
 
-    private fun setFlipImages() {
-        val imageList = ArrayList<SlideModel>();
+    private fun setupFlipImages() {
+        val imageList = ArrayList<SlideModel>()
         imageList.add(SlideModel(R.drawable.viewfilpper_1))
         imageList.add(SlideModel(R.drawable.viewfilpper_2))
         imageList.add(SlideModel(R.drawable.viewfilpper_3))
@@ -108,7 +105,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.imageSlider.setImageList(imageList, ScaleTypes.FIT)
     }
 
-    private fun setUpViews() {
+    private fun setupRecyclerViews() {
         // Category
         binding.content.listOfCategory.layoutManager =
             GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
@@ -125,61 +122,75 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.listOfSuggestedProduct.layoutManager =
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         binding.content.listOfSuggestedProduct.setHasFixedSize(true)
-        suggestedProductList = arrayListOf()
-        suggestedProductAdapter = VerticalProductAdapter(requireContext(), suggestedProductList)
+        suggestedProductAdapter = VerticalProductAdapter(requireContext())
         suggestedProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
         }
-        binding.content.listOfSuggestedProduct.adapter = suggestedProductAdapter
+        binding.content.listOfSuggestedProduct.adapter =
+            suggestedProductAdapter.withLoadStateHeaderAndFooter(
+                header = ProductLoadingAdapter { suggestedProductAdapter.retry() },
+                footer = ProductLoadingAdapter { suggestedProductAdapter.retry() }
+            )
 
         // Flash Sale
         binding.content.listOfFlashSale.layoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfFlashSale.setHasFixedSize(true)
-        flashSaleProductList = arrayListOf()
-        flashSaleProductAdapter = FlashSaleProductAdapter(requireContext(), flashSaleProductList)
+        flashSaleProductAdapter = FlashSaleProductAdapter(requireContext())
         flashSaleProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
         }
-        binding.content.listOfFlashSale.adapter = flashSaleProductAdapter
+        binding.content.listOfFlashSale.adapter =
+            flashSaleProductAdapter.withLoadStateHeaderAndFooter(
+                header = HorizontalProductLoadingAdapter { flashSaleProductAdapter.retry() },
+                footer = HorizontalProductLoadingAdapter { flashSaleProductAdapter.retry() }
+            )
 
         // Ocop Product
         binding.content.listOfOcopProduct.layoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfOcopProduct.setHasFixedSize(true)
-        ocopProductList = arrayListOf()
-        ocopProductAdapter = HorizontalProductAdapter(requireContext(), ocopProductList)
+        ocopProductAdapter = HorizontalProductAdapter(requireContext())
         ocopProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
         }
-        binding.content.listOfOcopProduct.adapter = ocopProductAdapter
+        binding.content.listOfOcopProduct.adapter = ocopProductAdapter.withLoadStateHeaderAndFooter(
+            header = HorizontalProductLoadingAdapter { ocopProductAdapter.retry() },
+            footer = HorizontalProductLoadingAdapter { ocopProductAdapter.retry() }
+        )
 
         // Specialty Product
         binding.content.listOfSpecialtyProduct.layoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfSpecialtyProduct.setHasFixedSize(true)
-        specialtyProductList = arrayListOf()
-        specialtyProductAdapter = HorizontalProductAdapter(requireContext(), specialtyProductList)
+        specialtyProductAdapter = HorizontalProductAdapter(requireContext())
         specialtyProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
         }
-        binding.content.listOfSpecialtyProduct.adapter = specialtyProductAdapter
+        binding.content.listOfSpecialtyProduct.adapter =
+            specialtyProductAdapter.withLoadStateHeaderAndFooter(
+                header = HorizontalProductLoadingAdapter { specialtyProductAdapter.retry() },
+                footer = HorizontalProductLoadingAdapter { specialtyProductAdapter.retry() }
+            )
 
         // Recent Product
         binding.content.listOfRecentProduct.layoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfRecentProduct.setHasFixedSize(true)
-        recentProductList = arrayListOf()
-        recentProductAdapter = UpCommingProductAdapter(requireContext(), recentProductList)
+        recentProductAdapter = UpCommingProductAdapter(requireContext())
         recentProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
         }
-        binding.content.listOfRecentProduct.adapter = recentProductAdapter
+        binding.content.listOfRecentProduct.adapter =
+            recentProductAdapter.withLoadStateHeaderAndFooter(
+                header = HorizontalProductLoadingAdapter { recentProductAdapter.retry() },
+                footer = HorizontalProductLoadingAdapter { recentProductAdapter.retry() }
+            )
     }
 
     override fun onDestroyView() {
@@ -234,42 +245,47 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun getSuggestedProduct() {
         val productApiRequest = ProductApiRequest(2)
-        productViewModel.getProductByCategoryId(productApiRequest)
-            .observe(
-                requireActivity(),
-                { state -> processProductResponse(state, productApiRequest.id) })
+        lifecycleScope.launch {
+            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
+                suggestedProductAdapter.submitData(pagingData)
+            }
+        }
     }
 
     private fun getRecentProduct() {
         val productApiRequest = ProductApiRequest(5)
-        productViewModel.getProductByCategoryId(productApiRequest)
-            .observe(
-                requireActivity(),
-                { state -> processProductResponse(state, productApiRequest.id) })
+        lifecycleScope.launch {
+            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
+                recentProductAdapter.submitData(pagingData)
+            }
+        }
     }
 
     private fun getSpecialtyProduct() {
         val productApiRequest = ProductApiRequest(4)
-        productViewModel.getProductByCategoryId(productApiRequest)
-            .observe(
-                requireActivity(),
-                { state -> processProductResponse(state, productApiRequest.id) })
+        lifecycleScope.launch {
+            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
+                specialtyProductAdapter.submitData(pagingData)
+            }
+        }
     }
 
     private fun getOcopProduct() {
         val productApiRequest = ProductApiRequest(3)
-        productViewModel.getProductByCategoryId(productApiRequest)
-            .observe(
-                requireActivity(),
-                { state -> processProductResponse(state, productApiRequest.id) })
+        lifecycleScope.launch {
+            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
+                ocopProductAdapter.submitData(pagingData)
+            }
+        }
     }
 
     private fun getFlashSaleProduct() {
         val productApiRequest = ProductApiRequest(1)
-        productViewModel.getProductByCategoryId(productApiRequest)
-            .observe(
-                requireActivity(),
-                { state -> processProductResponse(state, productApiRequest.id) })
+        lifecycleScope.launch {
+            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
+                flashSaleProductAdapter.submitData(pagingData)
+            }
+        }
     }
 
     private fun processCategoryResponse(state: ScreenState<ArrayList<CategoryApiResponse>?>) {
@@ -294,59 +310,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
-    }
-
-    private fun processProductResponse(state: ScreenState<ProductApiResponse?>, id: Long) {
-        when (state) {
-            is ScreenState.Loading -> {
-                binding.appendProgress.visibility = View.VISIBLE
-            }
-
-            is ScreenState.Success -> {
-                if (state.data != null) {
-                    binding.appendProgress.visibility = View.GONE
-                    when (id) {
-                        1L -> setupFlashSaleAdapter(state.data.content)
-                        2L -> setupSuggestedAdapter(state.data.content)
-                        3L -> setupOcopAdapter(state.data.content)
-                        4L -> setupSpecialtyAdapter(state.data.content)
-                        5L -> setupRecentAdapter(state.data.content)
-                    }
-                }
-            }
-
-            is ScreenState.Error -> {
-                binding.appendProgress.visibility = View.GONE
-                if (state.message != null) {
-                    displayErrorSnackbar(state.message)
-                }
-            }
-        }
-    }
-
-    private fun setupFlashSaleAdapter(content: ArrayList<Product>) {
-        flashSaleProductList.addAll(content)
-        flashSaleProductAdapter.notifyDataSetChanged()
-    }
-
-    private fun setupSuggestedAdapter(data: ArrayList<Product>) {
-        suggestedProductList.addAll(data)
-        suggestedProductAdapter.notifyDataSetChanged()
-    }
-
-    private fun setupOcopAdapter(data: ArrayList<Product>) {
-        ocopProductList.addAll(data)
-        ocopProductAdapter.notifyDataSetChanged()
-    }
-
-    private fun setupSpecialtyAdapter(data: ArrayList<Product>) {
-        specialtyProductList.addAll(data)
-        specialtyProductAdapter.notifyDataSetChanged()
-    }
-
-    private fun setupRecentAdapter(data: ArrayList<Product>) {
-        recentProductList.addAll(data)
-        recentProductAdapter.notifyDataSetChanged()
     }
 
     private fun displayErrorSnackbar(errorMessage: String) {

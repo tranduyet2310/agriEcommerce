@@ -5,29 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
-import com.example.argiecommerce.databinding.FlashSaleProductListItemBinding
-import com.example.argiecommerce.databinding.ProductListItemBinding
-import com.example.argiecommerce.databinding.SpecialProductListItemBinding
 import com.example.argiecommerce.databinding.UpcomingProductListItemBinding
 import com.example.argiecommerce.model.Product
+import com.example.argiecommerce.utils.DiffUtilCallBack
 import com.example.argiecommerce.utils.GlideApp
-import com.example.argiecommerce.utils.Utils
-import com.example.argiecommerce.utils.Utils.Companion.calculateDiscountPercentage
-import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 
 class UpCommingProductAdapter(
-    private val context: Context,
-    private val dataList: ArrayList<Product>
-) : RecyclerView.Adapter<UpCommingProductAdapter.ViewHolderClass>() {
+    private val context: Context
+) : PagingDataAdapter<Product, UpCommingProductAdapter.ViewHolderClass>(DiffUtilCallBack()) {
 
     var onClick: ((Product) -> Unit)? = null
 
-    class ViewHolderClass(val binding: UpcomingProductListItemBinding, val context: Context) :
+    class ViewHolderClass(
+        private val binding: UpcomingProductListItemBinding,
+        private val context: Context
+    ) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private lateinit var product: Product
 
@@ -58,7 +56,6 @@ class UpCommingProductAdapter(
         }
 
         override fun onClick(v: View?) {
-            val position = bindingAdapterPosition
             when (v?.id) {
                 R.id.imgCart -> toggleProductsInCart()
                 R.id.imgFavourite -> toggleFavourite()
@@ -101,15 +98,12 @@ class UpCommingProductAdapter(
         )
     }
 
-    override fun getItemCount(): Int {
-        return dataList.size
-    }
-
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-        val currentItem = dataList[position]
-        holder.bind(currentItem)
-        holder.itemView.setOnClickListener {
-            onClick?.invoke(currentItem)
+        getItem(position)?.let { currentItem ->
+            holder.bind(currentItem)
+            holder.itemView.setOnClickListener {
+                onClick?.invoke(currentItem)
+            }
         }
     }
 }

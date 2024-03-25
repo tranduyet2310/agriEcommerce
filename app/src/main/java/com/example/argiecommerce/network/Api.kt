@@ -8,6 +8,7 @@ import com.example.argiecommerce.model.ProductApiResponse
 import com.example.argiecommerce.model.RegisterApiResponse
 import com.example.argiecommerce.model.User
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -24,11 +25,10 @@ interface Api {
     fun getAllCategories(): Call<ArrayList<CategoryApiResponse>>
 
     @GET("/api/products/")
-    fun getProductByCategoryId(
+    suspend fun getProductByCategoryId(
         @Query("id") id: Long,
         @Query("pageNo") pageNo: String,
-        @Query("pageSize") pageSize: String,
         @Query("sortBy") sortBy: String,
         @Query("sortDir") sortDir: String
-    ): Call<ProductApiResponse>
+    ): Response<ProductApiResponse>
 }

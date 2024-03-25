@@ -21,7 +21,7 @@ class SeeAllFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
 
-    private val demoAdapter: VerticalProductAdapter by lazy { VerticalProductAdapter(requireContext(), createSampleData()) }
+    private val demoAdapter: VerticalProductAdapter by lazy { VerticalProductAdapter(requireContext()) }
 
     val args: SeeAllFragmentArgs by navArgs()
     override fun onCreateView(

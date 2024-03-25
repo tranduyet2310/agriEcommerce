@@ -1,35 +1,35 @@
 package com.example.argiecommerce.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.ProductListItemBinding
 import com.example.argiecommerce.model.Product
+import com.example.argiecommerce.utils.DiffUtilCallBack
 import com.example.argiecommerce.utils.GlideApp
 import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 
 class VerticalProductAdapter(
-    private val context: Context,
-    private val dataList: ArrayList<Product>
-) : RecyclerView.Adapter<VerticalProductAdapter.ViewHolderClass>() {
+    private val context: Context
+) : PagingDataAdapter<Product, VerticalProductAdapter.ViewHolderClass>(DiffUtilCallBack()) {
+
     var onClick: ((Product) -> Unit)? = null
+
     class ViewHolderClass(
         private val binding: ProductListItemBinding,
         private val context: Context
     ) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private lateinit var product: Product
+
         init {
             binding.imgFavourite.setOnClickListener(this)
             binding.imgCart.setOnClickListener(this)
@@ -57,7 +57,6 @@ class VerticalProductAdapter(
         }
 
         override fun onClick(v: View?) {
-            val position = bindingAdapterPosition
             when (v?.id) {
                 R.id.imgCart -> toggleProductsInCart()
                 R.id.imgFavourite -> toggleFavourite()
@@ -97,15 +96,13 @@ class VerticalProductAdapter(
         )
     }
 
-    override fun getItemCount(): Int {
-        return dataList.size
-    }
-
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-        val currentItem = dataList[position]
-        holder.bind(currentItem)
-        holder.itemView.setOnClickListener {
-            onClick?.invoke(currentItem)
+        getItem(position)?.let { currentItem ->
+            holder.bind(currentItem)
+            holder.itemView.setOnClickListener {
+                onClick?.invoke(currentItem)
+            }
         }
+
     }
 }
