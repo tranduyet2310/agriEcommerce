@@ -19,10 +19,12 @@ import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentSeeAllBinding
 import com.example.argiecommerce.model.ProductApiRequest
+import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants.FLASH_SALE
 import com.example.argiecommerce.utils.Constants.PRODUCT_KEY
 import com.example.argiecommerce.utils.Constants.RECENT_PRODUCT
 import com.example.argiecommerce.viewmodel.ProductViewModel
+import com.example.argiecommerce.viewmodel.UserViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -32,16 +34,17 @@ class SeeAllFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
 
-    private val productAdapter: VerticalProductAdapter by lazy {
-        VerticalProductAdapter(
-            requireContext()
-        )
-    }
-
     private val productViewModel: ProductViewModel by lazy {
         ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
     }
+    private val productAdapter: VerticalProductAdapter by lazy {
+        VerticalProductAdapter(requireContext(), user)
+    }
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
 
+    private var user: User? = null
     val args: SeeAllFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +52,7 @@ class SeeAllFragment : Fragment() {
     ): View {
         _binding = FragmentSeeAllBinding.inflate(inflater, container, false)
 
+        user = userViewModel.user
         val category = args.category
         val subcategory = args.subcategory
         val title = args.title

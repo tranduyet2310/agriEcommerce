@@ -25,6 +25,7 @@ import com.example.argiecommerce.databinding.FragmentHomeBinding
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.model.Subcategory
+import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants.CATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.FLASH_SALE
 import com.example.argiecommerce.utils.Constants.OCOP_PRODUCT
@@ -38,6 +39,7 @@ import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.CategoryViewModel
 import com.example.argiecommerce.viewmodel.ProductViewModel
+import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -59,22 +61,32 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val productViewModel: ProductViewModel by lazy {
         ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
     }
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
 
     private lateinit var alertDialog: AlertDialog
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var categoryItemList: ArrayList<CategoryApiResponse>
 
     private lateinit var networkMonitor: NetworkMonitorUtil
-
+    private var user: User? =null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        user = userViewModel.user
+
         setupRecyclerViews()
         setupFlipImages()
+        getProductData()
 
+        return binding.root
+    }
+
+    private fun getProductData() {
         networkMonitor.result = { isAvailable, type ->
             requireActivity().runOnUiThread {
                 when (isAvailable) {
@@ -97,7 +109,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -147,7 +158,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.listOfSuggestedProduct.layoutManager =
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         binding.content.listOfSuggestedProduct.setHasFixedSize(true)
-        suggestedProductAdapter = VerticalProductAdapter(requireContext())
+        suggestedProductAdapter = VerticalProductAdapter(requireContext(), user)
         suggestedProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
@@ -162,7 +173,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.listOfFlashSale.layoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfFlashSale.setHasFixedSize(true)
-        flashSaleProductAdapter = FlashSaleProductAdapter(requireContext())
+        flashSaleProductAdapter = FlashSaleProductAdapter(requireContext(), user)
         flashSaleProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
@@ -177,7 +188,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.listOfOcopProduct.layoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfOcopProduct.setHasFixedSize(true)
-        ocopProductAdapter = HorizontalProductAdapter(requireContext())
+        ocopProductAdapter = HorizontalProductAdapter(requireContext(), user)
         ocopProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
@@ -191,7 +202,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.listOfSpecialtyProduct.layoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfSpecialtyProduct.setHasFixedSize(true)
-        specialtyProductAdapter = HorizontalProductAdapter(requireContext())
+        specialtyProductAdapter = HorizontalProductAdapter(requireContext(), user)
         specialtyProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)
@@ -206,7 +217,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.listOfRecentProduct.layoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfRecentProduct.setHasFixedSize(true)
-        recentProductAdapter = UpCommingProductAdapter(requireContext())
+        recentProductAdapter = UpCommingProductAdapter(requireContext(), user)
         recentProductAdapter.onClick = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
             navController.navigate(action)

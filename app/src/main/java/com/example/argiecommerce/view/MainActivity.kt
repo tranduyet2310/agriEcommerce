@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants.USER
+import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -90,7 +91,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_cart -> goToCartFragment()
+            R.id.action_cart -> {
+                if (user == null) {
+                    val dialog = ProgressDialog.createMessageDialog(this, getString(R.string.need_to_login))
+                    dialog.show()
+                } else goToCartFragment()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

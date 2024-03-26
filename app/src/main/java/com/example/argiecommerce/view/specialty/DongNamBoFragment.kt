@@ -17,8 +17,10 @@ import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentBaseSpecialtyBinding
 import com.example.argiecommerce.model.ProductApiRequest
+import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.viewmodel.ProductViewModel
+import com.example.argiecommerce.viewmodel.UserViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -26,18 +28,24 @@ import kotlinx.coroutines.launch
 class DongNamBoFragment : Fragment() {
     private lateinit var binding: FragmentBaseSpecialtyBinding
 
-    private val productAdapter: VerticalProductAdapter by lazy {
-        VerticalProductAdapter(requireContext())
-    }
     private val productViewModel: ProductViewModel by lazy {
         ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
     }
+    private val productAdapter: VerticalProductAdapter by lazy {
+        VerticalProductAdapter(requireContext(), user)
+    }
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
+
+    private var user: User? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBaseSpecialtyBinding.inflate(inflater)
 
+        user = userViewModel.user
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()

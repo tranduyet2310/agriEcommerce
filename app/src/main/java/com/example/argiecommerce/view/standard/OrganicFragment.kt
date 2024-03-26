@@ -15,8 +15,10 @@ import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentBaseStandardBinding
 import com.example.argiecommerce.model.ProductApiRequest
+import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.viewmodel.ProductViewModel
+import com.example.argiecommerce.viewmodel.UserViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -24,12 +26,17 @@ import kotlinx.coroutines.launch
 class OrganicFragment : Fragment() {
     private lateinit var binding: FragmentBaseStandardBinding
 
-    protected val productAdapter: VerticalProductAdapter by lazy {
-        VerticalProductAdapter(requireContext())
-    }
     private val productViewModel: ProductViewModel by lazy {
         ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
     }
+    protected val productAdapter: VerticalProductAdapter by lazy {
+        VerticalProductAdapter(requireContext(), user)
+    }
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
+
+    private var user: User? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +44,7 @@ class OrganicFragment : Fragment() {
     ): View {
         binding = FragmentBaseStandardBinding.inflate(inflater)
 
+        user = userViewModel.user
         setupRecyclerView()
         getProducts()
 

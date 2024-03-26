@@ -13,19 +13,23 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.ProductListItemBinding
 import com.example.argiecommerce.model.Product
+import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.DiffUtilCallBack
 import com.example.argiecommerce.utils.GlideApp
+import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 
 class VerticalProductAdapter(
-    private val context: Context
+    private val context: Context,
+    private val user: User?
 ) : PagingDataAdapter<Product, VerticalProductAdapter.ViewHolderClass>(DiffUtilCallBack()) {
 
     var onClick: ((Product) -> Unit)? = null
 
     class ViewHolderClass(
         private val binding: ProductListItemBinding,
-        private val context: Context
+        private val context: Context,
+        private val user: User?
     ) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private lateinit var product: Product
@@ -79,22 +83,33 @@ class VerticalProductAdapter(
         }
 
         private fun toggleFavourite() {
-            if (product.isFavourite != 1) {
-                binding.imgFavourite.setImageResource(R.drawable.ic_favorite_red)
-                product.setIsFavourite(1)
-            } else {
-                binding.imgFavourite.setImageResource(R.drawable.ic_favorite_border)
-                product.setIsFavourite(0)
+            if (user == null){
+                val dialog = ProgressDialog.createMessageDialog(context, context.resources.getString(R.string.need_to_login))
+                dialog.show()
+            } else{
+                if (product.isFavourite != 1) {
+                    binding.imgFavourite.setImageResource(R.drawable.ic_favorite_red)
+                    product.isFavourite = 1
+                } else {
+                    binding.imgFavourite.setImageResource(R.drawable.ic_favorite_border)
+                    product.isFavourite = 0
+                }
             }
+
         }
 
         private fun toggleProductsInCart() {
-            if (product.isInCart != 1) {
-                binding.imgCart.setImageResource(R.drawable.ic_shopping_cart_green)
-                product.setIsInCart(1)
-            } else {
-                binding.imgCart.setImageResource(R.drawable.ic_shopping_cart)
-                product.setIsInCart(0)
+            if (user == null){
+                val dialog = ProgressDialog.createMessageDialog(context, context.resources.getString(R.string.need_to_login))
+                dialog.show()
+            } else{
+                if (product.isInCart != 1) {
+                    binding.imgCart.setImageResource(R.drawable.ic_shopping_cart_green)
+                    product.isInCart = 1
+                } else {
+                    binding.imgCart.setImageResource(R.drawable.ic_shopping_cart)
+                    product.isInCart = 0
+                }
             }
         }
     }
@@ -102,7 +117,7 @@ class VerticalProductAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         return ViewHolderClass(
             ProductListItemBinding.inflate(LayoutInflater.from(parent.context)),
-            context
+            context, user
         )
     }
 

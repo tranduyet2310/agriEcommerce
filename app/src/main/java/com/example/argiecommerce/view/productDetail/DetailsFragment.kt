@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -15,7 +16,10 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentDetailsBinding
 import com.example.argiecommerce.model.Product
+import com.example.argiecommerce.model.User
+import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.Utils.Companion.formatPrice
+import com.example.argiecommerce.viewmodel.UserViewModel
 
 
 class DetailsFragment : Fragment(), View.OnClickListener {
@@ -26,6 +30,12 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     val args: DetailsFragmentArgs by navArgs()
 
     private var isExpanded: Boolean = false
+    private lateinit var product: Product
+
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
+    private var user: User? =null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +43,8 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
-        val product: Product = args.productValue
+        product = args.productValue
+        user = userViewModel.user
 
         setupProductImage(product);
         setupProductInfo(product);
@@ -48,7 +59,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setupProductInfo(product: Product) {
-        if(product.discountPrice > 0){
+        if (product.discountPrice > 0) {
             binding.details.priceOfProduct.text = product.discountPrice.formatPrice()
             binding.details.priceOfProductDiscount.text = product.standardPrice.formatPrice()
         } else {
@@ -62,11 +73,17 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         binding.details.nameOfProduct.text = product.productName
         binding.details.tvInfoDetailsOfProduct.text = product.description
         binding.details.tvProductSold.text = product.sold.toString()
+
+        if (product.isFavourite == 1) {
+            binding.details.imgFavourite.setImageResource(R.drawable.ic_favorite_red)
+        } else {
+            binding.details.imgFavourite.setImageResource(R.drawable.ic_favorite_border)
+        }
     }
 
     private fun setupProductImage(product: Product) {
         val imageList = ArrayList<SlideModel>();
-        for (image in product.productImage){
+        for (image in product.productImage) {
             imageList.add(SlideModel(image.imageUrl))
         }
         binding.details.imageOfProduct.setImageList(imageList, ScaleTypes.FIT)
@@ -82,6 +99,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         binding.details.tvSeeAllReviews.setOnClickListener(this)
         binding.details.btnSeeMoreInfoProduct.setOnClickListener(this)
         binding.details.btnSeeShop.setOnClickListener(this)
+        binding.details.imgFavourite.setOnClickListener(this)
     }
 
     override fun onDestroyView() {
@@ -97,6 +115,17 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             R.id.tvSeeAllReviews -> seeAllReviews()
             R.id.btnSeeMoreInfoProduct -> seeMoreInfoProduct()
             R.id.btnSeeShop -> goToSuppilerShop()
+            R.id.imgFavourite -> addFavouriteProduct()
+        }
+    }
+
+    private fun addFavouriteProduct() {
+        if (product.isFavourite != 1) {
+            binding.details.imgFavourite.setImageResource(R.drawable.ic_favorite_red)
+            product.setIsFavourite(1)
+        } else {
+            binding.details.imgFavourite.setImageResource(R.drawable.ic_favorite_border)
+            product.setIsFavourite(0)
         }
     }
 
@@ -109,14 +138,14 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             binding.details.tvInfoDetailsOfProduct.maxLines = 5
             binding.details.tvInfoDetailsOfProduct.ellipsize = TextUtils.TruncateAt.END
             binding.details.btnSeeMoreInfoProduct.text = buildString {
-                append("Xem thêm")
+                append(requireContext().resources.getString(R.string.see_more))
             }
             isExpanded = false
         } else {
             binding.details.tvInfoDetailsOfProduct.maxLines = Int.MAX_VALUE
             binding.details.tvInfoDetailsOfProduct.ellipsize = null
             binding.details.btnSeeMoreInfoProduct.text = buildString {
-                append("Thu gọn")
+                append(requireContext().resources.getString(R.string.see_less))
             }
             isExpanded = true
         }
@@ -127,15 +156,32 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun writeReview() {
-        navController.navigate(R.id.action_detailsFragment_to_writeReviewFragment)
+        if (user == null){
+            val dialog = ProgressDialog.createMessageDialog(requireContext(), requireContext().resources.getString(R.string.need_to_login))
+            dialog.show()
+        } else {
+            // Can them dieu kien da mua san pham chua
+            navController.navigate(R.id.action_detailsFragment_to_writeReviewFragment)
+        }
     }
 
     private fun addProductToCart() {
-        Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+        if (user == null){
+            val dialog = ProgressDialog.createMessageDialog(requireContext(), requireContext().resources.getString(R.string.need_to_login))
+            dialog.show()
+        } else {
+            Toast.makeText(requireContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun buyProduct() {
-        navController.navigate(R.id.action_detailsFragment_to_billingFragment)
+        if (user == null){
+            val dialog = ProgressDialog.createMessageDialog(requireContext(), requireContext().resources.getString(R.string.need_to_login))
+            dialog.show()
+        } else {
+            navController.navigate(R.id.action_detailsFragment_to_billingFragment)
+        }
+
     }
 
 

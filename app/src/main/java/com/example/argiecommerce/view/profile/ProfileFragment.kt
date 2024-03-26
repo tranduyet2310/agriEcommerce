@@ -21,8 +21,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
 
-    private var user: User? =null
-    private lateinit var viewModel: UserViewModel
+    private var user: User? = null
+
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +33,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        user = viewModel.user
+        user = userViewModel.user
 
         return binding.root
     }
@@ -40,7 +42,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        if(user == null){
+        if (user == null) {
             navController.navigate(R.id.action_profileFragment_to_loginFragment)
         }
 
@@ -59,7 +61,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.linearLogOut -> logOut()
             R.id.switchNotification -> notificationFunc()
             R.id.constraintProfile -> changeInfoAccount()

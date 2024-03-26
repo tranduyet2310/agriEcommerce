@@ -141,7 +141,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.argiecommerce.view.home.SearchFragment"
-        android:label="fragment_search"
+        android:label="Tìm kiếm sản phẩm"
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_homeFragment"
@@ -150,7 +150,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.argiecommerce.view.productDetail.DetailsFragment"
-        android:label="fragment_details"
+        android:label="Chi tiết sản phẩm"
         tools:layout="@layout/fragment_details" >
         <action
             android:id="@+id/action_detailsFragment_to_homeFragment"
@@ -183,7 +183,7 @@
     <fragment
         android:id="@+id/allReviewsFragment"
         android:name="com.example.argiecommerce.view.productDetail.AllReviewsFragment"
-        android:label="fragment_all_reviews"
+        android:label="Tất cả đánh giá"
         tools:layout="@layout/fragment_all_reviews" >
         <action
             android:id="@+id/action_allReviewsFragment_to_detailsFragment"
@@ -192,7 +192,7 @@
     <fragment
         android:id="@+id/writeReviewFragment"
         android:name="com.example.argiecommerce.view.productDetail.WriteReviewFragment"
-        android:label="fragment_write_review"
+        android:label="Viết đánh giá"
         tools:layout="@layout/fragment_write_review" >
         <action
             android:id="@+id/action_writeReviewFragment_to_detailsFragment"
@@ -201,7 +201,7 @@
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.argiecommerce.view.home.CartFragment"
-        android:label="fragment_cart"
+        android:label="Giỏ hàng"
         tools:layout="@layout/fragment_cart" >
         <action
             android:id="@+id/action_cartFragment_to_homeFragment"
@@ -216,7 +216,7 @@
     <fragment
         android:id="@+id/billingFragment"
         android:name="com.example.argiecommerce.view.profile.BillingFragment"
-        android:label="fragment_billing"
+        android:label="Thanh toán"
         tools:layout="@layout/fragment_billing" >
         <action
             android:id="@+id/action_billingFragment_to_cartFragment"
@@ -231,7 +231,7 @@
     <fragment
         android:id="@+id/addressFragment"
         android:name="com.example.argiecommerce.view.profile.AddressFragment"
-        android:label="fragment_address"
+        android:label="Thêm địa chỉ"
         tools:layout="@layout/fragment_address" >
         <action
             android:id="@+id/action_addressFragment_to_billingFragment"
@@ -240,7 +240,7 @@
     <fragment
         android:id="@+id/userAccountFragment"
         android:name="com.example.argiecommerce.view.profile.UserAccountFragment"
-        android:label="fragment_user_account"
+        android:label="Thông tin cá nhân"
         tools:layout="@layout/fragment_user_account" >
         <action
             android:id="@+id/action_userAccountFragment_to_profileFragment"
@@ -252,7 +252,7 @@
     <fragment
         android:id="@+id/userAddressFragment"
         android:name="com.example.argiecommerce.view.profile.UserAddressFragment"
-        android:label="fragment_user_address"
+        android:label="Địa chỉ"
         tools:layout="@layout/fragment_user_address" >
         <action
             android:id="@+id/action_userAddressFragment_to_addressFragment"
@@ -261,7 +261,7 @@
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.example.argiecommerce.view.profile.OrderFragment"
-        android:label="fragment_order"
+        android:label="Đơn hàng"
         tools:layout="@layout/fragment_order" >
         <action
             android:id="@+id/action_orderFragment_to_profileFragment"
@@ -273,7 +273,7 @@
     <fragment
         android:id="@+id/orderDetailFragment"
         android:name="com.example.argiecommerce.view.profile.OrderDetailFragment"
-        android:label="fragment_order_detail"
+        android:label="Chi tiết đơn hàng"
         tools:layout="@layout/fragment_order_detail" >
         <action
             android:id="@+id/action_orderDetailFragment_to_orderFragment"
@@ -282,7 +282,7 @@
     <fragment
         android:id="@+id/wishlistFragment"
         android:name="com.example.argiecommerce.view.profile.WishlistFragment"
-        android:label="fragment_wishlist"
+        android:label="Sản phẩm yêu thích"
         tools:layout="@layout/fragment_wishlist" >
         <action
             android:id="@+id/action_wishlistFragment_to_profileFragment"
@@ -294,7 +294,7 @@
     <fragment
         android:id="@+id/suppilerFragment"
         android:name="com.example.argiecommerce.view.supplier.SupplierFragment"
-        android:label="fragment_suppiler"
+        android:label="Nhà cung cấp"
         tools:layout="@layout/fragment_suppiler" >
         <action
             android:id="@+id/action_suppilerFragment_to_detailsFragment"
@@ -303,7 +303,7 @@
     <fragment
         android:id="@+id/seeAllFragment"
         android:name="com.example.argiecommerce.view.SeeAllFragment"
-        android:label="fragment_see_all"
+        android:label="Xem chi tiết"
         tools:layout="@layout/fragment_see_all" >
         <action
             android:id="@+id/action_seeAllFragment_to_homeFragment"
