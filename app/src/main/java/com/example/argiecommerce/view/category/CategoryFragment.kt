@@ -17,6 +17,10 @@ import com.example.argiecommerce.adapter.CategoryAdapter
 import com.example.argiecommerce.adapter.SubcategoryAdapter
 import com.example.argiecommerce.databinding.FragmentCategoryBinding
 import com.example.argiecommerce.model.CategoryApiResponse
+import com.example.argiecommerce.model.Subcategory
+import com.example.argiecommerce.utils.Constants.CATEGORY_KEY
+import com.example.argiecommerce.utils.Constants.SUBCATEGORY_KEY
+import com.example.argiecommerce.utils.Constants.TITLE_KEY
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.CategoryViewModel
@@ -30,7 +34,7 @@ class CategoryFragment : Fragment() {
 
     private lateinit var subcategoryAdapter: SubcategoryAdapter
     private lateinit var categoryAdapter: CategoryAdapter
-    private lateinit var categoryDetailList: ArrayList<String>
+    private lateinit var categoryDetailList: ArrayList<Subcategory>
 
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(requireActivity()).get(CategoryViewModel::class.java)
@@ -54,7 +58,9 @@ class CategoryFragment : Fragment() {
 
         subcategoryAdapter.onClick = {
             val b = Bundle().apply {
-                putString("category", it)
+                putParcelable(CATEGORY_KEY, null)
+                putParcelable(SUBCATEGORY_KEY, it)
+                putString(TITLE_KEY, it.subcategoryName)
             }
             navController.navigate(R.id.action_categoryFragment_to_seeAllFragment, b)
         }
@@ -107,7 +113,7 @@ class CategoryFragment : Fragment() {
 
                                 categoryDetailList.clear()
                                 subcategoryList.forEach {
-                                    categoryDetailList.add(it.subcategoryName)
+                                    categoryDetailList.add(it)
                                 }
                                 binding.rvCategoryDetail.adapter?.notifyDataSetChanged()
                             }

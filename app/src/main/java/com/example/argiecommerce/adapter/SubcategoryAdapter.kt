@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.argiecommerce.R
+import com.example.argiecommerce.model.Subcategory
 
-class SubcategoryAdapter(private val dataList: ArrayList<String>) :
+class SubcategoryAdapter(private val dataList: ArrayList<Subcategory>) :
     RecyclerView.Adapter<SubcategoryAdapter.ViewHolderClass>() {
 
-    var onClick: ((String) -> Unit)? = null
+    var onClick: ((Subcategory) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.category_rv_item, parent, false)
@@ -22,10 +23,10 @@ class SubcategoryAdapter(private val dataList: ArrayList<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-        val title = dataList[position]
-        holder.title.text = title
+        val subcategory = dataList[position]
+        holder.title.text = subcategory.subcategoryName
         holder.itemView.setOnClickListener {
-            onClick?.invoke(title)
+            onClick?.invoke(subcategory)
         }
     }
 

@@ -1,17 +1,22 @@
 package com.example.argiecommerce.view.supplier
 
-import com.example.argiecommerce.view.specialty.BaseSpecialtyFragment
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.argiecommerce.R
 
 
-class SpProductFragment : BaseSpecialtyFragment() {
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_suppiler_product, container, false)
-//    }
+class SpProductFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_suppiler_product, container, false)
+    }
 
 
 }

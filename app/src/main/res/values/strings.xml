@@ -166,4 +166,9 @@
     <string name="dong_nam_bo">Đông Nam Bộ hay miền Đông (6 tỉnh, thành): Thành phố Hồ Chí Minh, Đồng Nai, Bà Rịa – Vũng Tàu, Bình Dương, Bình Phước và Tây Ninh.</string>
     <string name="db_song_cuu_long_name">ĐB Sông Cửu Long</string>
     <string name="db_song_cuu_long">Đồng bằng sông Cửu Long hay Tây Nam Bộ, miền Tây (13 tỉnh, thành): Cần Thơ, Long An, Tiền Giang, Bến Tre, Vĩnh Long, Trà Vinh, Đồng Tháp, An Giang, Kiên Giang, Hậu Giang, Sóc Trăng, Bạc Liêu và Cà Mau.</string>
+
+    <string name="ocop">OCOP</string>
+    <string name="vietgap">VietGAP</string>
+    <string name="globalg.a.p">GlobalG.A.P</string>
+    <string name="organic">Organic</string>
 </resources>

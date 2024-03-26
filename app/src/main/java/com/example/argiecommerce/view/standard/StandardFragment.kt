@@ -13,7 +13,7 @@ import com.example.argiecommerce.databinding.FragmentStandardBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class StandardFragment : Fragment(), View.OnClickListener {
+class StandardFragment : Fragment() {
     private var _binding: FragmentStandardBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
@@ -43,10 +43,10 @@ class StandardFragment : Fragment(), View.OnClickListener {
         binding.viewpagerStandard.adapter = viewPager2Adapter
         TabLayoutMediator(binding.tabLayout, binding.viewpagerStandard) { tab, position ->
             when (position) {
-                0 -> tab.text = "OCOP"
-                1 -> tab.text = "VietGAP"
-                2 -> tab.text = "GlobalG.A.P"
-                3 -> tab.text = "Organic"
+                0 -> tab.text = requireContext().resources.getString(R.string.ocop)
+                1 -> tab.text = requireContext().resources.getString(R.string.vietgap)
+                2 -> tab.text = requireContext().resources.getString(R.string.globalg_a_p)
+                3 -> tab.text = requireContext().resources.getString(R.string.organic)
             }
         }.attach()
     }
@@ -56,9 +56,4 @@ class StandardFragment : Fragment(), View.OnClickListener {
         _binding = null
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-
-        }
-    }
 }
