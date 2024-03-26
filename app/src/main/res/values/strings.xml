@@ -31,7 +31,7 @@
     <string name="new_password">Mật khẩu mới</string>
     <string name="retype_new_password">Nhập lại mật khẩu mới</string>
     <string name="save_changes">Đổi mật khẩu</string>
-    <string name="cancel">Hủy</string>
+    <string name="cancel_v2">Hủy</string>
     <string name="using_strong_password">Sử dụng mật khẩu mạnh ít nhất 8 ký tự</string>
     <string name="sign_up">Đăng ký</string>
     <string name="fullNameUser">Họ tên</string>
@@ -148,4 +148,22 @@
     <string name="error_connection">Lỗi kết nối 😵</string>
     <string name="retry">Thử lại</string>
     <string name="something_went_wrong">Đã xảy ra sự cố. Vui lòng thử lại</string>
+    <string name="famous_specialty">Các đặc sản nổi tiếng:</string>
+
+    <string name="tay_bac_bo_name">Tây Bắc Bộ</string>
+    <string name="tay_bac_bo">Tây Bắc Bộ (6 tỉnh): Lào Cai, Yên Bái, Lai Châu, Điện Biên, Sơn La và Hòa Bình.</string>
+    <string name="dong_bac_bo_name">Đông Bắc Bộ</string>
+    <string name="dong_bac_bo">Đông Bắc Bộ (9 tỉnh): Hà Giang, Tuyên Quang, Phú Thọ, Thái Nguyên, Bắc Kạn, Cao Bằng, Lạng Sơn, Bắc Giang và Quảng Ninh.</string>
+    <string name="db_song_hong_name">ĐB Sông Hồng</string>
+    <string name="db_song_hong">Đồng bằng sông Hồng (10 tỉnh, thành): Thủ đô Hà Nội, Hải Phòng, Vĩnh Phúc, Bắc Ninh, Hưng Yên, Hải Dương, Thái Bình, Nam Định, Ninh Bình và Hà Nam.</string>
+    <string name="bac_trung_bo_name">Bắc Trung Bộ</string>
+    <string name="bac_trung_bo">Bắc Trung Bộ (6 tỉnh): Thanh Hóa, Nghệ An, Hà Tĩnh, Quảng Bình, Quảng Trị và Thừa Thiên Huế.</string>
+    <string name="dh_nam_trung_bo_name">DH Nam Trung Bộ</string>
+    <string name="dh_nam_trung_bo">Duyên hải Nam Trung Bộ (8 tỉnh, thành): Đà Nẵng, Quảng Nam, Quảng Ngãi, Bình Định, Phú Yên, Khánh Hòa, Ninh Thuận và Bình Thuận.</string>
+    <string name="tay_nguyen_name">Tây Nguyên</string>
+    <string name="tay_nguyen">Tây Nguyên hay Cao nguyên Nam Trung Bộ (5 tỉnh): Kon Tum, Gia Lai, Đắk Lắk, Đắk Nông và Lâm Đồng.</string>
+    <string name="dong_nam_bo_name">Đông Nam Bộ</string>
+    <string name="dong_nam_bo">Đông Nam Bộ hay miền Đông (6 tỉnh, thành): Thành phố Hồ Chí Minh, Đồng Nai, Bà Rịa – Vũng Tàu, Bình Dương, Bình Phước và Tây Ninh.</string>
+    <string name="db_song_cuu_long_name">ĐB Sông Cửu Long</string>
+    <string name="db_song_cuu_long">Đồng bằng sông Cửu Long hay Tây Nam Bộ, miền Tây (13 tỉnh, thành): Cần Thơ, Long An, Tiền Giang, Bến Tre, Vĩnh Long, Trà Vinh, Đồng Tháp, An Giang, Kiên Giang, Hậu Giang, Sóc Trăng, Bạc Liêu và Cà Mau.</string>
 </resources>

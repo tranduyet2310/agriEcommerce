@@ -74,9 +74,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
     implementation ("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     // Paging
-//    val paging_version = "3.1.1"
-//    implementation("androidx.paging:paging-runtime:$paging_version")
-//    implementation("androidx.paging:paging-common:$paging_version")
     implementation("androidx.paging:paging-runtime-ktx:3.0.0-alpha06")
     // Glide
     val glide_version = "4.12.0"

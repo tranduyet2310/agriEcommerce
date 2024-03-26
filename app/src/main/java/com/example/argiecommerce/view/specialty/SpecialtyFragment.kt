@@ -1,17 +1,18 @@
 package com.example.argiecommerce.view.specialty
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.SpecialtyViewpagerAdapter
 import com.example.argiecommerce.databinding.FragmentSpecialtyBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class SpecialtyFragment : Fragment(), View.OnClickListener {
+class SpecialtyFragment : Fragment() {
     private var _binding: FragmentSpecialtyBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
@@ -36,7 +37,6 @@ class SpecialtyFragment : Fragment(), View.OnClickListener {
             TayNguyenFragment(),
             DongNamBoFragment(),
             DbSongCuuLongFragment()
-
         )
 
         binding.viewpagerSpecialty.isUserInputEnabled = false
@@ -46,14 +46,14 @@ class SpecialtyFragment : Fragment(), View.OnClickListener {
         binding.viewpagerSpecialty.adapter = viewPager2Adapter
         TabLayoutMediator(binding.tabLayout, binding.viewpagerSpecialty) { tab, position ->
             when (position) {
-                0 -> tab.text = "Tây Bắc Bộ"
-                1 -> tab.text = "Đông Bắc Bộ"
-                2 -> tab.text = "ĐB Sông Hồng"
-                3 -> tab.text = "Bắc Trung Bộ"
-                4 -> tab.text = "DH Nam Trung Bộ"
-                5 -> tab.text = "Tây Nguyên"
-                6 -> tab.text = "Đông Nam Bộ"
-                7 -> tab.text = "ĐB Sông Cửu Long"
+                0 -> tab.text = requireContext().resources.getString(R.string.tay_bac_bo_name)
+                1 -> tab.text = requireContext().resources.getString(R.string.dong_bac_bo_name)
+                2 -> tab.text = requireContext().resources.getString(R.string.db_song_hong_name)
+                3 -> tab.text = requireContext().resources.getString(R.string.bac_trung_bo_name)
+                4 -> tab.text = requireContext().resources.getString(R.string.dh_nam_trung_bo_name)
+                5 -> tab.text = requireContext().resources.getString(R.string.tay_nguyen_name)
+                6 -> tab.text = requireContext().resources.getString(R.string.dong_nam_bo_name)
+                7 -> tab.text = requireContext().resources.getString(R.string.db_song_cuu_long_name)
             }
         }.attach()
     }
@@ -62,11 +62,4 @@ class SpecialtyFragment : Fragment(), View.OnClickListener {
         super.onDestroyView()
         _binding = null
     }
-
-    override fun onClick(v: View?) {
-        when (v?.id) {
-
-        }
-    }
-
 }

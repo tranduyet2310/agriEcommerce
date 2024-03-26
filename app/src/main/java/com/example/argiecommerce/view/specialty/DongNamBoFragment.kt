@@ -1,67 +1,111 @@
 package com.example.argiecommerce.view.specialty
 
+import android.animation.LayoutTransition
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.argiecommerce.R
+import com.example.argiecommerce.adapter.ProductLoadingAdapter
+import com.example.argiecommerce.adapter.VerticalProductAdapter
+import com.example.argiecommerce.databinding.FragmentBaseSpecialtyBinding
+import com.example.argiecommerce.model.ProductApiRequest
+import com.example.argiecommerce.utils.Constants
+import com.example.argiecommerce.viewmodel.ProductViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class DongNamBoFragment : BaseSpecialtyFragment() {
-//    private var _binding: FragmentDongNamBoBinding? = null
-//    private val binding get() = _binding!!
-//
-//    //    private lateinit var navController: NavController
-//    private lateinit var recyclerView: RecyclerView
-//    private lateinit var dataList: ArrayList<Product>
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        _binding = FragmentDongNamBoBinding.inflate(inflater, container, false)
-//
-//        recyclerView = binding.dNBRecyclerView
-//        recyclerView.layoutManager =
-//            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-//        recyclerView.setHasFixedSize(true)
-//        dataList = arrayListOf()
-//        getSampleData()
-//
-//
-//        return binding.root
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-////        navController = Navigation.findNavController(view)
-//
-//
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
-//
-//    override fun onClick(v: View?) {
-//        when (v?.id) {
-//
-//        }
-//    }
-//
-//    private fun getSampleData() {
-//        val demo0 = Product("Apple", 50000.00, 50, "HTX HN", "Vegetable")
-//        val demo1 = Product("Orange", 150000.00, 50, "HTX HN", "Vegetable")
-//        val demo2 = Product("Strawberry", 1050000.00, 50, "HTX HN", "Vegetable")
-//        val demo3 = Product("Coconut", 9550000.00, 50, "HTX HN", "Vegetable")
-//
-//        demo0.productImage = R.drawable.product_demo.toString()
-//        demo1.productImage = R.drawable.product_demo.toString()
-//        demo2.productImage = R.drawable.product_demo.toString()
-//        demo3.productImage = R.drawable.product_demo.toString()
-//        dataList.add(demo0)
-//        dataList.add(demo1)
-//        dataList.add(demo2)
-//        dataList.add(demo3)
-//
-//        binding.dNBRecyclerView.adapter = DemoAdapter(dataList, this)
-//    }
-//
-//    override fun onClick(product: Product) {
-//        Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
-//    }
+
+class DongNamBoFragment : Fragment() {
+    private lateinit var binding: FragmentBaseSpecialtyBinding
+
+    private val productAdapter: VerticalProductAdapter by lazy {
+        VerticalProductAdapter(requireContext())
+    }
+    private val productViewModel: ProductViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentBaseSpecialtyBinding.inflate(inflater)
+
+        setupRecyclerView()
+        setupAreaLayout()
+        setupAreaData()
+        getProducts()
+
+        return binding.root
+    }
+
+    private fun getProducts() {
+        val productApiRequest = ProductApiRequest(7)
+        lifecycleScope.launch {
+            productViewModel.getProductBySubCategory(productApiRequest)
+                .collectLatest { pagingData ->
+                    productAdapter.addLoadStateListener { loadState ->
+                        if (loadState.source.refresh is LoadState.NotLoading &&
+                            loadState.append.endOfPaginationReached &&
+                            productAdapter.itemCount < 1
+                        ) {
+                            binding.notFoundLayout.visibility = View.VISIBLE
+                            binding.allProductRecyclerView.visibility = View.INVISIBLE
+                        } else {
+                            binding.notFoundLayout.visibility = View.GONE
+                            binding.allProductRecyclerView.visibility = View.VISIBLE
+                        }
+                    }
+                    productAdapter.submitData(pagingData)
+                }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.allProductRecyclerView.apply {
+            layoutManager = GridLayoutManager(
+                requireContext(), 2,
+                GridLayoutManager.VERTICAL, false
+            )
+            setHasFixedSize(true)
+            adapter = productAdapter.withLoadStateHeaderAndFooter(
+                header = ProductLoadingAdapter { productAdapter.retry() },
+                footer = ProductLoadingAdapter { productAdapter.retry() }
+            )
+        }
+    }
+
+    private fun setupAreaData() {
+        binding.titleArea.text = requireContext().resources.getString(R.string.dong_nam_bo_name)
+        binding.imageArea.setImageResource(R.drawable.dong_nam_bo)
+        binding.areaInfo.text = requireContext().resources.getString(R.string.dong_nam_bo)
+    }
+
+    private fun setupAreaLayout() {
+        binding.layouts.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        binding.expandable.setOnClickListener {
+            val visibility =
+                if (binding.imageArea.visibility == View.GONE) View.VISIBLE else View.GONE
+            binding.imageArea.visibility = visibility
+            binding.scrollAreaInfo.visibility = visibility
+            binding.titleProductInArea.visibility = visibility
+            binding.scrollProductArea.visibility = visibility
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        productAdapter.onClick = {
+            val b = Bundle().apply { putParcelable(Constants.PRODUCT_KEY, it) }
+            findNavController().navigate(R.id.action_specialtyFragment_to_detailsFragment, b)
+        }
+    }
 }

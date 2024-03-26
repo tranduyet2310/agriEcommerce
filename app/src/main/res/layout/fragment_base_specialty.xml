@@ -4,28 +4,146 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.specialty.BaseSpecialtyFragment">
 
-    <ProgressBar
-        android:id="@+id/offerProductsProgressBar"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/expandable"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminateTint="#97AABD"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:contentPadding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/layouts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <TextView
+                android:id="@+id/titleArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="@string/land_area"
+                android:textAllCaps="true"
+                android:textColor="@color/greenAgri"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageArea"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_below="@id/titleArea"
+                android:layout_alignParentStart="true"
+                android:importantForAccessibility="no"
+                android:src="@drawable/tay_bac"
+                android:visibility="gone" />
+
+            <ScrollView
+                android:id="@+id/scrollAreaInfo"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_below="@id/titleArea"
+                android:layout_toEndOf="@id/imageArea"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/areaInfo"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/inter_medium"
+                    android:maxLines="20"
+                    android:padding="5dp"
+                    android:text="@string/infor_product_text"
+                    android:textColor="@color/blackAgri"
+                    android:textSize="12sp" />
+
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/titleProductInArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageArea"
+                android:fontFamily="@font/inter_semibold"
+                android:padding="3dp"
+                android:text="@string/famous_specialty"
+                android:textColor="@color/blackAgri"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <ScrollView
+                android:id="@+id/scrollProductArea"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/titleProductInArea"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/productsInArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="20"
+                    android:text="@string/infor_product_text"
+                    android:textColor="@color/blackAgri"
+                    android:textSize="14sp" />
+
+            </ScrollView>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allProductRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:background="@color/lightGray"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/expandable"
         tools:listitem="@layout/product_list_item" />
+
+    <LinearLayout
+        android:id="@+id/notFoundLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expandable"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/question_mark" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/not_found"
+            android:textColor="@color/orange"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
