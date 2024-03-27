@@ -28,7 +28,7 @@ public class Product implements Parcelable {
     private String productSubcategory;
     @SerializedName("warehouseName")
     private String warehouseName;
-    @SerializedName("supplierContactName")
+    @SerializedName("supplierShopName")
     private String productSupplier;
     @SerializedName("images")
     private List<Image> productImage;

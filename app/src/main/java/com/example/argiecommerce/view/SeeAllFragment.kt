@@ -19,11 +19,13 @@ import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentSeeAllBinding
 import com.example.argiecommerce.model.ProductApiRequest
+import com.example.argiecommerce.model.SearchApiRequest
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants.FLASH_SALE
 import com.example.argiecommerce.utils.Constants.PRODUCT_KEY
 import com.example.argiecommerce.utils.Constants.RECENT_PRODUCT
 import com.example.argiecommerce.viewmodel.ProductViewModel
+import com.example.argiecommerce.viewmodel.SearchViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,6 +46,10 @@ class SeeAllFragment : Fragment() {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
 
+    private val searchViewModel: SearchViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
+    }
+
     private var user: User? = null
     val args: SeeAllFragmentArgs by navArgs()
     override fun onCreateView(
@@ -56,6 +62,7 @@ class SeeAllFragment : Fragment() {
         val category = args.category
         val subcategory = args.subcategory
         val title = args.title
+        val search = args.search
 
         binding.titleCategory.text = title
 
@@ -69,9 +76,32 @@ class SeeAllFragment : Fragment() {
             getProductsWithDiscount()
         }  else if(title.equals(RECENT_PRODUCT)){
             getUpcomingProducts()
+        } else if (search != null){
+            searchProduct(search)
         }
 
         return binding.root
+    }
+
+    private fun searchProduct(keyword: String) {
+        val searchApiRequest = SearchApiRequest(keyword)
+        lifecycleScope.launch {
+            searchViewModel.searchForProduct(searchApiRequest).collectLatest { pagingData ->
+                productAdapter.addLoadStateListener { loadState ->
+                    if (loadState.source.refresh is LoadState.NotLoading &&
+                        loadState.append.endOfPaginationReached &&
+                        productAdapter.itemCount < 1
+                    ) {
+                        binding.notFoundLayout.visibility = View.VISIBLE
+                        binding.seeAllProductRecyclerView.visibility = View.INVISIBLE
+                    } else {
+                        binding.notFoundLayout.visibility = View.GONE
+                        binding.seeAllProductRecyclerView.visibility = View.VISIBLE
+                    }
+                }
+                productAdapter.submitData(pagingData)
+            }
+        }
     }
 
     private fun getUpcomingProducts() {

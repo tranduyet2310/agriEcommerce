@@ -53,4 +53,12 @@ interface Api {
         @Query("sortBy") sortBy: String,
         @Query("sortDir") sortDir: String
     ): Response<ProductApiResponse>
+
+    @GET("/api/products/search")
+    suspend fun searchProduct(
+        @Query("query") query: String,
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<ProductApiResponse>
 }

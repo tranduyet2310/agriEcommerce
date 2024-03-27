@@ -30,6 +30,7 @@ import com.example.argiecommerce.utils.Constants.CATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.FLASH_SALE
 import com.example.argiecommerce.utils.Constants.OCOP_PRODUCT
 import com.example.argiecommerce.utils.Constants.RECENT_PRODUCT
+import com.example.argiecommerce.utils.Constants.SEARCH_KEY
 import com.example.argiecommerce.utils.Constants.SPECIALTY_PRODUCT
 import com.example.argiecommerce.utils.Constants.SUBCATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.SUGGESTED_PRODUCT
@@ -149,6 +150,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 putParcelable(CATEGORY_KEY, it)
                 putParcelable(SUBCATEGORY_KEY, null)
                 putString(TITLE_KEY, it.categoryName)
+                putString(SEARCH_KEY, null)
             }
             navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
         }
@@ -262,6 +264,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             putParcelable(CATEGORY_KEY, c)
             putParcelable(SUBCATEGORY_KEY, sb)
             putString(TITLE_KEY, SUGGESTED_PRODUCT)
+            putString(SEARCH_KEY, null)
         }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
@@ -283,6 +286,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             putParcelable(CATEGORY_KEY, c)
             putParcelable(SUBCATEGORY_KEY, sb)
             putString(TITLE_KEY, SPECIALTY_PRODUCT)
+            putString(SEARCH_KEY, null)
         }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
@@ -304,6 +308,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             putParcelable(CATEGORY_KEY, c)
             putParcelable(SUBCATEGORY_KEY, sb)
             putString(TITLE_KEY, OCOP_PRODUCT)
+            putString(SEARCH_KEY, null)
         }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
@@ -313,6 +318,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             putParcelable(CATEGORY_KEY, null)
             putParcelable(SUBCATEGORY_KEY, null)
             putString(TITLE_KEY, FLASH_SALE)
+            putString(SEARCH_KEY, null)
         }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }
@@ -322,6 +328,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             putParcelable(CATEGORY_KEY, null)
             putParcelable(SUBCATEGORY_KEY, null)
             putString(TITLE_KEY, RECENT_PRODUCT)
+            putString(SEARCH_KEY, null)
         }
         navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
     }

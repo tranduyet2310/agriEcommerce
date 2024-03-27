@@ -175,4 +175,8 @@
 
     <string name="see_less">Thu gọn</string>
     <string name="need_to_login">Bạn cần đăng nhập để thực hiện chức năng này</string>
+
+    <string name="remove_successfully">Xóa thành công</string>
+
+    <string name="search_result">Kết quả tìm kiếm</string>
 </resources>

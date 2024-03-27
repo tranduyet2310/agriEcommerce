@@ -6,7 +6,7 @@ public class Constants {
     public static final String RETURN_URL = "com.example.argiecommerce://paypalpay";
     public static final String PAYPAL_SECRET = "EM6H-oZ0onpePCu1buAgKHqFeVu3cn-Ujm8vXDLPTMvX2-7mIKh0xdPQhLXzieaQAtE3QIuvxFanCqMd";
     // API
-    public static final String LOCALHOST = "http://192.168.55.110:8080/";
+    public static final String LOCALHOST = "http://172.20.10.3:8080/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
     public static final String ID = "id";
@@ -27,9 +27,12 @@ public class Constants {
     public static final String SUBCATEGORY_KEY = "subcategory";
     public static final String TITLE_KEY = "title";
     public static final String PRODUCT_KEY = "product_value";
+    public static final String SEARCH_KEY = "search";
     // pagination
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";
     public static final String DEFAULT_SORT_BY = "id";
     public static final String DEFAULT_SORT_DIRECTION = "asc";
+    //
+    public static final String HISTORY_DATA = "history_data";
 }
