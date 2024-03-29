@@ -1,7 +1,7 @@
 package com.example.argiecommerce.model;
 
 public class RegisterApiResponse {
-    private int id;
+    private long id;
     private String fullName;
     private String phone;
     private String email;
@@ -15,11 +15,11 @@ public class RegisterApiResponse {
         this.email = email;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

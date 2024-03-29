@@ -25,31 +25,28 @@ class VerticalProductAdapter(
 ) : PagingDataAdapter<Product, VerticalProductAdapter.ViewHolderClass>(DiffUtilCallBack()) {
 
     var onClick: ((Product) -> Unit)? = null
+    var onCartClick: ((Product) -> Unit)? = null
+    var onFavouriteClick: ((Product) -> Unit)? = null
+    var onShareClick: ((Product) -> Unit)? = null
 
     class ViewHolderClass(
         private val binding: ProductListItemBinding,
-        private val context: Context,
-        private val user: User?
-    ) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        private lateinit var product: Product
-
-        init {
-            binding.imgFavourite.setOnClickListener(this)
-            binding.imgCart.setOnClickListener(this)
-            binding.imgShare.setOnClickListener(this)
-        }
+        private val context: Context
+    ) : RecyclerView.ViewHolder(binding.root) {
+        val imgCart = binding.imgCart
+        val imgFavourite = binding.imgFavourite
+        val imgShare = binding.imgShare
 
         fun bind(product: Product) {
             binding.apply {
                 tvProductName.text = product.productName
-                if (product.discountPrice > 0){
+                if (product.discountPrice > 0) {
                     tvProductPrice.text = product.discountPrice.formatPrice()
                 } else {
                     tvProductPrice.text = product.standardPrice.formatPrice()
                 }
 
-                if (product.isNew){
+                if (product.isNew) {
                     tvUpcoming.visibility = View.VISIBLE
                     tvProductPrice.visibility = View.INVISIBLE
                     tvUpcoming.text = context.resources.getString(R.string.upcomming)
@@ -66,58 +63,26 @@ class VerticalProductAdapter(
                     .skipMemoryCache(true)
                     .into(binding.imgProductImage)
 
-            }
-            this.product = product
-        }
-
-        override fun onClick(v: View?) {
-            when (v?.id) {
-                R.id.imgCart -> toggleProductsInCart()
-                R.id.imgFavourite -> toggleFavourite()
-                R.id.imgShare -> shareProduct()
-            }
-        }
-
-        private fun shareProduct() {
-            Toast.makeText(itemView.context, "Clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        private fun toggleFavourite() {
-            if (user == null){
-                val dialog = ProgressDialog.createMessageDialog(context, context.resources.getString(R.string.need_to_login))
-                dialog.show()
-            } else{
-                if (product.isFavourite != 1) {
-                    binding.imgFavourite.setImageResource(R.drawable.ic_favorite_red)
-                    product.isFavourite = 1
+                if (product.isInCart == 1) {
+                    imgCart.setImageResource(R.drawable.ic_shopping_cart_green)
                 } else {
-                    binding.imgFavourite.setImageResource(R.drawable.ic_favorite_border)
-                    product.isFavourite = 0
+                    imgCart.setImageResource(R.drawable.ic_shopping_cart)
                 }
-            }
 
-        }
-
-        private fun toggleProductsInCart() {
-            if (user == null){
-                val dialog = ProgressDialog.createMessageDialog(context, context.resources.getString(R.string.need_to_login))
-                dialog.show()
-            } else{
-                if (product.isInCart != 1) {
-                    binding.imgCart.setImageResource(R.drawable.ic_shopping_cart_green)
-                    product.isInCart = 1
+                if (product.isFavourite == 1) {
+                   imgFavourite.setImageResource(R.drawable.ic_favorite_red)
                 } else {
-                    binding.imgCart.setImageResource(R.drawable.ic_shopping_cart)
-                    product.isInCart = 0
+                    imgFavourite.setImageResource(R.drawable.ic_favorite_border)
                 }
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         return ViewHolderClass(
             ProductListItemBinding.inflate(LayoutInflater.from(parent.context)),
-            context, user
+            context
         )
     }
 
@@ -126,6 +91,48 @@ class VerticalProductAdapter(
             holder.bind(currentItem)
             holder.itemView.setOnClickListener {
                 onClick?.invoke(currentItem)
+            }
+
+            holder.imgCart.setOnClickListener {
+                if (user == null) {
+                    val dialog = ProgressDialog.createMessageDialog(
+                        context,
+                        context.resources.getString(R.string.need_to_login)
+                    )
+                    dialog.show()
+                } else {
+                    if (currentItem.isInCart != 1) {
+                        holder.imgCart.setImageResource(R.drawable.ic_shopping_cart_green)
+                        currentItem.isInCart = 1
+                    } else {
+                        holder.imgCart.setImageResource(R.drawable.ic_shopping_cart)
+                        currentItem.isInCart = 0
+                    }
+                }
+                onCartClick?.invoke(currentItem)
+            }
+
+            holder.imgFavourite.setOnClickListener {
+                if (user == null) {
+                    val dialog = ProgressDialog.createMessageDialog(
+                        context,
+                        context.resources.getString(R.string.need_to_login)
+                    )
+                    dialog.show()
+                } else {
+                    if (currentItem.isFavourite != 1) {
+                        holder.imgFavourite.setImageResource(R.drawable.ic_favorite_red)
+                        currentItem.isFavourite = 1
+                    } else {
+                        holder.imgFavourite.setImageResource(R.drawable.ic_favorite_border)
+                        currentItem.isFavourite = 0
+                    }
+                }
+                onFavouriteClick?.invoke(currentItem)
+            }
+
+            holder.imgShare.setOnClickListener {
+                onShareClick?.invoke(currentItem)
             }
         }
 

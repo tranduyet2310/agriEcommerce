@@ -1,94 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.profile.UserAddressFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <View
+        android:id="@+id/topLine"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/white_background"
+        android:backgroundTint="#97AABD"
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/topLine"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/white_background"
-            android:backgroundTint="#97AABD"
-            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tvShoppingAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/shipping_address"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:drawableLeftCompat="@drawable/ic_location"
+        app:drawableTint="@color/black"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@id/topLine" />
 
-        <TextView
-            android:id="@+id/tvShoppingAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/inter_semibold"
-            android:text="@string/shipping_address"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:drawableLeftCompat="@drawable/ic_location"
-            app:drawableTint="@color/black"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@id/topLine" />
+    <ImageView
+        android:id="@+id/imageAddAddress"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@id/tvShoppingAddress"
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintTop_toTopOf="@id/tvShoppingAddress"
+        app:tint="#000759" />
 
-        <ImageView
-            android:id="@+id/imageAddAddress"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:importantForAccessibility="no"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="@id/tvShoppingAddress"
-            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
-            app:layout_constraintTop_toTopOf="@id/tvShoppingAddress"
-            app:tint="#000759" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvUserAddress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@id/tvShoppingAddress"
+        tools:listitem="@layout/user_address_list_item" />
 
-        <FrameLayout
-            android:id="@+id/rvFrame"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintEnd_toStartOf="@id/rightGuideline"
-            app:layout_constraintTop_toBottomOf="@id/tvShoppingAddress">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvUserAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                tools:listitem="@layout/user_address_list_item" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
 
-            <ProgressBar
-                android:id="@+id/progressbarAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminateTint="@color/darkGreen"
-                android:visibility="gone" />
-
-        </FrameLayout>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/leftGuideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.04" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/rightGuideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.96" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,11 +7,14 @@ import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiResponse
 import com.example.argiecommerce.model.RegisterApiResponse
 import com.example.argiecommerce.model.User
+import com.example.argiecommerce.model.UserAddress
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
@@ -23,6 +26,19 @@ interface Api {
 
     @GET("/api/categories")
     fun getAllCategories(): Call<ArrayList<CategoryApiResponse>>
+
+//    @GET("api/users/{id}")
+//    fun getUserInfo(@Path("id") userId: Int)
+
+    @POST("/api/users/{userId}/addresses")
+    fun createNewAddress(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Body userAddress: UserAddress
+    ): Call<UserAddress>
+
+    @GET("/api/users/{userId}/addresses")
+    fun getAddressByUserId(@Path("userId") userId: Long): Call<ArrayList<UserAddress>>
 
     @GET("/api/products/category")
     suspend fun getProductByCategoryId(

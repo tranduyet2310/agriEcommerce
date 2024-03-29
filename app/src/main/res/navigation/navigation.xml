@@ -302,6 +302,15 @@
         <action
             android:id="@+id/action_suppilerFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_suppilerFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_suppilerFragment_to_contactDialogFragment"
+            app:destination="@id/contactDialogFragment" />
+        <action
+            android:id="@+id/action_suppilerFragment_to_cropsDialogFragment"
+            app:destination="@id/cropsDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllFragment"
@@ -344,4 +353,18 @@
             android:id="@+id/action_paymentFragment_to_billingFragment"
             app:destination="@id/billingFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/contactDialogFragment"
+        android:name="com.example.argiecommerce.view.ContactDialogFragment"
+        android:label="fragment_contact_dialog"
+        tools:layout="@layout/fragment_contact_dialog" >
+        <action
+            android:id="@+id/action_contactDialogFragment_to_suppilerFragment"
+            app:destination="@id/suppilerFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/cropsDialogFragment"
+        android:name="com.example.argiecommerce.view.supplier.CropsDialogFragment"
+        android:label="Thông tin canh tác"
+        tools:layout="@layout/fragment_crops_dialog" />
 </navigation>

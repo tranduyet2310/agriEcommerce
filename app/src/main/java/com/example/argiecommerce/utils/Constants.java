@@ -6,9 +6,10 @@ public class Constants {
     public static final String RETURN_URL = "com.example.argiecommerce://paypalpay";
     public static final String PAYPAL_SECRET = "EM6H-oZ0onpePCu1buAgKHqFeVu3cn-Ujm8vXDLPTMvX2-7mIKh0xdPQhLXzieaQAtE3QIuvxFanCqMd";
     // API
-    public static final String LOCALHOST = "http://172.20.10.3:8080/";
+    public static final String LOCALHOST = "http://192.168.55.107:8080/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
+    public static final String HISTORY_DATA = "history_data";
     public static final String ID = "id";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
@@ -33,6 +34,13 @@ public class Constants {
     public static final String DEFAULT_PAGE_SIZE = "20";
     public static final String DEFAULT_SORT_BY = "id";
     public static final String DEFAULT_SORT_DIRECTION = "asc";
-    //
-    public static final String HISTORY_DATA = "history_data";
+    // Response Message
+    public static final String LOGIN_MESSAGE = "Email/Password không đúng";
+    public static final String LOGIN_SUCCESS = "Đăng nhập thành công";
+    public static final String RETRY = "Thử lại 👍";
+    public static final String PASSWORD_REQUIRED = "Yêu cầu nhập mật khẩu";
+    public static final String EMAIL_REQUIRED = "Yêu cầu nhập email";
+    public static final String MAX_ADDRESS = "Đã đạt tối đa 5 địa chỉ nhận hàng";
+    public static final String ADDRESS_CREATED = "Thêm địa chỉ mới thành công";
+    public static final String SERVER_ERROR = "Lỗi phía máy chủ";
 }

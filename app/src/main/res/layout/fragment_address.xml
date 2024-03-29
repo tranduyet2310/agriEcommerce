@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/topLine" />
 
     <EditText
-        android:id="@+id/edtAddressTitle"
+        android:id="@+id/edtAddressDetail"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
@@ -66,7 +66,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/rightGuideline"
         app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/edtAddressTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/edtAddressDetail" />
 
     <LinearLayout
         android:id="@+id/linear"

@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_cart -> {
-                if (user == null) {
+                if (viewModel.user == null) {
                     val dialog = ProgressDialog.createMessageDialog(this, getString(R.string.need_to_login))
                     dialog.show()
                 } else goToCartFragment()

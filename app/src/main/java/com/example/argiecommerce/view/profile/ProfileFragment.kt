@@ -1,6 +1,7 @@
 package com.example.argiecommerce.view.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentProfileBinding
 import com.example.argiecommerce.model.User
+import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.viewmodel.UserViewModel
 
 
@@ -26,6 +28,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,6 +101,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun logOut() {
+        val loginUtils = LoginUtils(requireContext())
+        loginUtils.clearAll()
+        userViewModel.user = null
         navController.navigate(R.id.action_profileFragment_to_loginFragment)
     }
 

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class User implements Parcelable {
-    private int id;
+    private long id;
     private String fullName;
     private String phone;
     private String email;
@@ -14,6 +14,11 @@ public class User implements Parcelable {
     private String avatar;
 
     public User() {
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public User(String fullName, String phone, String email, String password, String avatar) {
@@ -24,7 +29,7 @@ public class User implements Parcelable {
         this.avatar = avatar;
     }
 
-    public User(int id, String fullName, String phone, String email, String password, String avatar) {
+    public User(long id, String fullName, String phone, String email, String password, String avatar) {
         this.id = id;
         this.fullName = fullName;
         this.phone = phone;
@@ -34,12 +39,27 @@ public class User implements Parcelable {
     }
 
     protected User(Parcel in) {
-        id = in.readInt();
+        id = in.readLong();
         fullName = in.readString();
         phone = in.readString();
         email = in.readString();
         password = in.readString();
         avatar = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(fullName);
+        dest.writeString(phone);
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeString(avatar);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -54,11 +74,11 @@ public class User implements Parcelable {
         }
     };
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -100,20 +120,5 @@ public class User implements Parcelable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(fullName);
-        dest.writeString(phone);
-        dest.writeString(email);
-        dest.writeString(password);
-        dest.writeString(avatar);
     }
 }

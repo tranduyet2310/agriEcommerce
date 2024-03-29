@@ -16,6 +16,11 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentLoginBinding
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
+import com.example.argiecommerce.model.User
+import com.example.argiecommerce.utils.Constants.EMAIL_REQUIRED
+import com.example.argiecommerce.utils.Constants.LOGIN_SUCCESS
+import com.example.argiecommerce.utils.Constants.PASSWORD_REQUIRED
+import com.example.argiecommerce.utils.Constants.RETRY
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -33,9 +38,12 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private val loginViewModel: LoginViewModel by lazy {
         ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
     }
-
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(requireContext())
+    }
     private lateinit var userViewModel: UserViewModel
     private lateinit var alertDialog: AlertDialog
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,13 +94,15 @@ class LoginFragment : Fragment(), View.OnClickListener {
         val email = binding.inputEmail.text.toString()
         val password = binding.inputPassword.text.toString()
         if (email.isEmpty()) {
-            binding.textFieldEmail.error = "Yêu cầu nhập email"
+            binding.textFieldEmail.error = EMAIL_REQUIRED
             return
         }
         if (password.isEmpty()) {
-            binding.textFieldPassword.error = "Yêu cầu nhập mật khẩu"
+            binding.textFieldPassword.error = PASSWORD_REQUIRED
             return
         }
+
+        user = User(email, password)
         val loginRequest = LoginRequest(email, password)
         loginViewModel.getLoginResponseLiveData(loginRequest)
             .observe(requireActivity(), { state -> processLoginResponse(state) })
@@ -104,7 +114,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction("Thử lại 👍") { dismiss() } }
+            .apply { setAction(RETRY) { dismiss() } }
             .show()
     }
 
@@ -118,12 +128,11 @@ class LoginFragment : Fragment(), View.OnClickListener {
             is ScreenState.Success -> {
                 if (state.data != null) {
                     alertDialog.dismiss()
-                    val loginUtils = LoginUtils(requireContext())
-                    loginUtils.saveUserInfo(state.data)
-                    val user = loginUtils.getUserInfo()
-                    userViewModel.user = user
+                    loginUtils.saveUserInfo(state.data, user)
+                    val savedUser = loginUtils.getUserInfo()
+                    userViewModel.user = savedUser
 
-                    Snackbar.make(requireView(), "Đăng nhập thành công", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(requireView(), LOGIN_SUCCESS, Snackbar.LENGTH_SHORT)
                         .show()
                     navController.navigate(R.id.action_loginFragment_to_homeFragment)
                 }

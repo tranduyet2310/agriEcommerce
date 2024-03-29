@@ -26,27 +26,27 @@ class LoginUtils(private val mCtx: Context) {
 //        }
 //    }
 
-    fun saveUserInfo(response: LoginApiResponse) {
+    fun saveUserInfo(response: LoginApiResponse, user: User) {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
-        editor.putInt(ID, response.getId())
-        editor.putString(EMAIL, response.getEmail())
-        editor.putString(PASSWORD, response.getPassword())
-        editor.putString(TOKEN, response.getAccessToken())
+        editor.putLong(ID, response.getUserId())
+        editor.putString(EMAIL, user.getEmail())
+        editor.putString(PASSWORD, user.getPassword())
+        editor.putString(TOKEN, "Bearer ${response.getAccessToken()}")
         editor.apply()
     }
 
     fun isLoggedIn(): Boolean {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-        return sharedPreferences.getInt("id", -1) != -1
+        return sharedPreferences.getLong(ID, -1L) != -1L
     }
 
     fun saveUserInfo(user: User) {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
-        editor.putInt(ID, user.getId())
+        editor.putLong(ID, user.getId())
         editor.putString(NAME, user.getFullName())
         editor.putString(EMAIL, user.getEmail())
         editor.putString(PASSWORD, user.getPassword())
@@ -58,7 +58,7 @@ class LoginUtils(private val mCtx: Context) {
     fun getUserInfo(): User {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         return User(
-            sharedPreferences.getInt(ID, -1),
+            sharedPreferences.getLong(ID, -1L),
             sharedPreferences.getString(NAME, null),
             sharedPreferences.getString(PHONE, null),
             sharedPreferences.getString(EMAIL, null),

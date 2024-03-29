@@ -31,6 +31,8 @@ class SupplierFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
 
         binding.tvSearch.setOnClickListener(this)
+        binding.suppilerLayout.imgSuppilerContact.setOnClickListener(this)
+        binding.suppilerLayout.tvSuppilerName.setOnClickListener(this)
 
         val specialtiesFragment = arrayListOf<Fragment>(
             SpIntroFragment(),
@@ -57,6 +59,7 @@ class SupplierFragment : Fragment(), View.OnClickListener {
                 4 -> tab.text = "Shop"
             }
         }.attach()
+
     }
 
     override fun onDestroyView() {
@@ -67,10 +70,20 @@ class SupplierFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tvSearch -> goToSearchFragment()
+            R.id.imgSuppilerContact -> openRegisterDialog()
+            R.id.tvSuppilerName -> openInfoDialog()
         }
     }
 
+    private fun openInfoDialog() {
+        navController.navigate(R.id.action_suppilerFragment_to_cropsDialogFragment)
+    }
+
+    private fun openRegisterDialog() {
+        navController.navigate(R.id.action_suppilerFragment_to_contactDialogFragment)
+    }
+
     private fun goToSearchFragment() {
-        navController.navigate(R.id.action_homeFragment_to_searchFragment)
+        navController.navigate(R.id.action_suppilerFragment_to_searchFragment)
     }
 }

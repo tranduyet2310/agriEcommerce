@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
 import com.example.argiecommerce.network.RetrofitClient
+import com.example.argiecommerce.utils.Constants.LOGIN_MESSAGE
 import com.example.argiecommerce.utils.ScreenState
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,8 +25,7 @@ class LoginRepository {
                     if (response.isSuccessful) {
                         mutableLiveData.postValue(ScreenState.Success(response.body()))
                     } else {
-                        val message = "Email/Password không đúng"
-                        mutableLiveData.postValue(ScreenState.Error(message, null))
+                        mutableLiveData.postValue(ScreenState.Error(LOGIN_MESSAGE, null))
                     }
                 }
 

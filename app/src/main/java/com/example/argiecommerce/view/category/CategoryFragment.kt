@@ -19,6 +19,7 @@ import com.example.argiecommerce.databinding.FragmentCategoryBinding
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.Subcategory
 import com.example.argiecommerce.utils.Constants.CATEGORY_KEY
+import com.example.argiecommerce.utils.Constants.SEARCH_KEY
 import com.example.argiecommerce.utils.Constants.SUBCATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.TITLE_KEY
 import com.example.argiecommerce.utils.ProgressDialog
@@ -61,6 +62,7 @@ class CategoryFragment : Fragment() {
                 putParcelable(CATEGORY_KEY, null)
                 putParcelable(SUBCATEGORY_KEY, it)
                 putString(TITLE_KEY, it.subcategoryName)
+                putString(SEARCH_KEY, null)
             }
             navController.navigate(R.id.action_categoryFragment_to_seeAllFragment, b)
         }

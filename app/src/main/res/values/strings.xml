@@ -179,4 +179,18 @@
     <string name="remove_successfully">Xóa thành công</string>
 
     <string name="search_result">Kết quả tìm kiếm</string>
+    <string name="add_favourite_product">Đã thêm vào danh sách yêu thích ❤️</string>
+    <string name="add_into_cart">Đã thêm vào giỏ hàng 🎉</string>
+
+    <string name="connect_with">Tham gia liên kết</string>
+    <string name="description">Mô tả</string>
+    <string name="yield">Sản lượng</string>
+    <string name="investment">Vốn đầu tư</string>
+    <string name="estimate_investment">Vốn đầu tư ban đầu dự kiến</string>
+    <string name="agree_with_policy">Tôi đồng ý với điều khoản và chính sách</string>
+    <string name="culture">Thông tin canh tác</string>
+    <string name="state">Trạng thái</string>
+    <string name="crops_type">Loại cây</string>
+    <string name="estimate_total">Tổng sản lượng:</string>
+    <string name="has_receive">Đã tiếp nhận</string>
 </resources>

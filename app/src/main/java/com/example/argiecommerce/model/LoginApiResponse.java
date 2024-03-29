@@ -1,21 +1,11 @@
 package com.example.argiecommerce.model;
 
 public class LoginApiResponse {
-    private int id;
     private String accessToken;
     private String tokenType = "Bearer";
-    private String email;
-    private String password;
+    private long userId;
 
     public LoginApiResponse() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getAccessToken() {
@@ -34,19 +24,11 @@ public class LoginApiResponse {
         this.tokenType = tokenType;
     }
 
-    public String getEmail() {
-        return email;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

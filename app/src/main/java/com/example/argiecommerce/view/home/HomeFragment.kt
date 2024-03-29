@@ -2,6 +2,7 @@ package com.example.argiecommerce.view.home
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.adapter.UpCommingProductAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentHomeBinding
+import com.example.argiecommerce.model.CartProduct
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.model.Subcategory
@@ -30,6 +32,7 @@ import com.example.argiecommerce.utils.Constants.CATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.FLASH_SALE
 import com.example.argiecommerce.utils.Constants.OCOP_PRODUCT
 import com.example.argiecommerce.utils.Constants.RECENT_PRODUCT
+import com.example.argiecommerce.utils.Constants.RETRY
 import com.example.argiecommerce.utils.Constants.SEARCH_KEY
 import com.example.argiecommerce.utils.Constants.SPECIALTY_PRODUCT
 import com.example.argiecommerce.utils.Constants.SUBCATEGORY_KEY
@@ -38,6 +41,7 @@ import com.example.argiecommerce.utils.Constants.TITLE_KEY
 import com.example.argiecommerce.utils.NetworkMonitorUtil
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.viewmodel.CartViewModel
 import com.example.argiecommerce.viewmodel.CategoryViewModel
 import com.example.argiecommerce.viewmodel.ProductViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
@@ -66,12 +70,17 @@ class HomeFragment : Fragment(), View.OnClickListener {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
 
+    private val cartViewModel: CartViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(CartViewModel::class.java)
+    }
+
     private lateinit var alertDialog: AlertDialog
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var categoryItemList: ArrayList<CategoryApiResponse>
 
     private lateinit var networkMonitor: NetworkMonitorUtil
-    private var user: User? =null
+    private var user: User? = null
+    private var productList: ArrayList<CartProduct> = arrayListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,10 +88,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         user = userViewModel.user
-
         setupRecyclerViews()
         setupFlipImages()
         getProductData()
+        cartViewModel.products = productList
 
         return binding.root
     }
@@ -122,6 +131,71 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.tvSeeAllRecentProduct.setOnClickListener(this)
         binding.content.tvSeeAllSuggestedProduct.setOnClickListener(this)
         binding.tvSearch.setOnClickListener(this)
+
+        setupRecyclerListener()
+    }
+
+    private fun setupRecyclerListener() {
+        suggestedProductAdapter.onCartClick = {
+            if (it.isInCart == 1) {
+                productList.add(CartProduct(it))
+                cartViewModel.products = productList
+                Snackbar.make(
+                    requireView(),
+                    requireContext().resources.getString(R.string.add_into_cart),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                productList.remove(CartProduct(it))
+                cartViewModel.products = productList
+            }
+
+        }
+        suggestedProductAdapter.onFavouriteClick = {
+            if (it.isFavourite == 1)
+                Snackbar.make(
+                    requireView(),
+                    requireContext().resources.getString(R.string.add_favourite_product),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+        }
+        suggestedProductAdapter.onShareClick = {
+
+        }
+        suggestedProductAdapter.onClick = {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
+            navController.navigate(action)
+        }
+
+        categoryAdapter.onClick = {
+            val b = Bundle().apply {
+                putParcelable(CATEGORY_KEY, it)
+                putParcelable(SUBCATEGORY_KEY, null)
+                putString(TITLE_KEY, it.categoryName)
+                putString(SEARCH_KEY, null)
+            }
+            navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
+        }
+
+        flashSaleProductAdapter.onClick = {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
+            navController.navigate(action)
+        }
+
+        ocopProductAdapter.onClick = {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
+            navController.navigate(action)
+        }
+
+        specialtyProductAdapter.onClick = {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
+            navController.navigate(action)
+        }
+
+        recentProductAdapter.onClick = {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
+            navController.navigate(action)
+        }
     }
 
     private fun setupFlipImages() {
@@ -145,15 +219,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.content.listOfCategory.setHasFixedSize(true)
         categoryItemList = arrayListOf()
         categoryAdapter = CategoryAdapter(requireContext(), categoryItemList)
-        categoryAdapter.onClick = {
-            val b = Bundle().apply {
-                putParcelable(CATEGORY_KEY, it)
-                putParcelable(SUBCATEGORY_KEY, null)
-                putString(TITLE_KEY, it.categoryName)
-                putString(SEARCH_KEY, null)
-            }
-            navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
-        }
         binding.content.listOfCategory.adapter = categoryAdapter
 
         // Suggested Product
@@ -161,10 +226,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         binding.content.listOfSuggestedProduct.setHasFixedSize(true)
         suggestedProductAdapter = VerticalProductAdapter(requireContext(), user)
-        suggestedProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
-        }
         binding.content.listOfSuggestedProduct.adapter =
             suggestedProductAdapter.withLoadStateHeaderAndFooter(
                 header = ProductLoadingAdapter { suggestedProductAdapter.retry() },
@@ -176,10 +237,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfFlashSale.setHasFixedSize(true)
         flashSaleProductAdapter = FlashSaleProductAdapter(requireContext(), user)
-        flashSaleProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
-        }
         binding.content.listOfFlashSale.adapter =
             flashSaleProductAdapter.withLoadStateHeaderAndFooter(
                 header = HorizontalProductLoadingAdapter { flashSaleProductAdapter.retry() },
@@ -191,10 +248,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfOcopProduct.setHasFixedSize(true)
         ocopProductAdapter = HorizontalProductAdapter(requireContext(), user)
-        ocopProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
-        }
         binding.content.listOfOcopProduct.adapter = ocopProductAdapter.withLoadStateHeaderAndFooter(
             header = HorizontalProductLoadingAdapter { ocopProductAdapter.retry() },
             footer = HorizontalProductLoadingAdapter { ocopProductAdapter.retry() }
@@ -205,10 +258,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfSpecialtyProduct.setHasFixedSize(true)
         specialtyProductAdapter = HorizontalProductAdapter(requireContext(), user)
-        specialtyProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
-        }
         binding.content.listOfSpecialtyProduct.adapter =
             specialtyProductAdapter.withLoadStateHeaderAndFooter(
                 header = HorizontalProductLoadingAdapter { specialtyProductAdapter.retry() },
@@ -220,10 +269,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding.content.listOfRecentProduct.setHasFixedSize(true)
         recentProductAdapter = UpCommingProductAdapter(requireContext(), user)
-        recentProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
-        }
         binding.content.listOfRecentProduct.adapter =
             recentProductAdapter.withLoadStateHeaderAndFooter(
                 header = HorizontalProductLoadingAdapter { recentProductAdapter.retry() },
@@ -418,7 +463,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction("Thử lại 👍") { dismiss() } }
+            .apply { setAction(RETRY) { dismiss() } }
             .show()
     }
 
