@@ -1,4 +1,4 @@
-package com.example.argiecommerce.view
+package com.example.argiecommerce.view.supplier
 
 import android.app.Dialog
 import android.content.DialogInterface

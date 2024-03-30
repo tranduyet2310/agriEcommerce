@@ -3,7 +3,6 @@ package com.example.argiecommerce.network
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
-import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiResponse
 import com.example.argiecommerce.model.RegisterApiResponse
 import com.example.argiecommerce.model.User
@@ -11,9 +10,11 @@ import com.example.argiecommerce.model.UserAddress
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -39,6 +40,21 @@ interface Api {
 
     @GET("/api/users/{userId}/addresses")
     fun getAddressByUserId(@Path("userId") userId: Long): Call<ArrayList<UserAddress>>
+
+    @PUT("/api/users/{userId}/addresses/{id}")
+    fun updateUserAddress(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Path("id") addressId: Long,
+        @Body userAddress: UserAddress
+    ): Call<UserAddress>
+
+    @DELETE("/api/users/{userId}/addresses/{id}")
+    fun deleteUserAddress(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Path("id") addressId: Long
+    ): Call<String>
 
     @GET("/api/products/category")
     suspend fun getProductByCategoryId(

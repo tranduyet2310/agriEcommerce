@@ -1,8 +1,11 @@
 package com.example.argiecommerce.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class UserAddress {
+public class UserAddress implements Parcelable {
     @SerializedName("id")
     private long id;
     @SerializedName("contactName")
@@ -23,6 +26,15 @@ public class UserAddress {
     public UserAddress() {
     }
 
+    public UserAddress(String contactName, String phone, String province, String district, String commune, String details) {
+        this.contactName = contactName;
+        this.phone = phone;
+        this.province = province;
+        this.district = district;
+        this.commune = commune;
+        this.details = details;
+    }
+
     public UserAddress(long id, String contactName, String phone, String province, String district, String commune, String details, String userFullName) {
         this.id = id;
         this.contactName = contactName;
@@ -33,6 +45,46 @@ public class UserAddress {
         this.details = details;
         this.userFullName = userFullName;
     }
+
+    protected UserAddress(Parcel in) {
+        id = in.readLong();
+        contactName = in.readString();
+        phone = in.readString();
+        province = in.readString();
+        district = in.readString();
+        commune = in.readString();
+        details = in.readString();
+        userFullName = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(contactName);
+        dest.writeString(phone);
+        dest.writeString(province);
+        dest.writeString(district);
+        dest.writeString(commune);
+        dest.writeString(details);
+        dest.writeString(userFullName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<UserAddress> CREATOR = new Creator<UserAddress>() {
+        @Override
+        public UserAddress createFromParcel(Parcel in) {
+            return new UserAddress(in);
+        }
+
+        @Override
+        public UserAddress[] newArray(int size) {
+            return new UserAddress[size];
+        }
+    };
 
     public long getId() {
         return id;

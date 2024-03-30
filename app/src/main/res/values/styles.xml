@@ -49,4 +49,10 @@
     <style name="RadioLabelText">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
     </style>
+
+    <style name="FullScreenDialogStyle">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
 </resources>

@@ -2,7 +2,6 @@ package com.example.argiecommerce.view.profile
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import com.example.argiecommerce.databinding.FragmentAddressBinding
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.utils.Constants.ADDRESS_CREATED
+import com.example.argiecommerce.utils.Constants.FIELD_REQUIRED
 import com.example.argiecommerce.utils.Constants.RETRY
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -79,19 +79,22 @@ class AddressFragment : Fragment(), View.OnClickListener {
     }
 
     private fun saveToDatabase() {
-        val userAddress = UserAddress()
-        userAddress.contactName = binding.edtFullName.text.toString().trim()
-        userAddress.phone = binding.edtPhone.text.toString().trim()
-        userAddress.province = binding.edtCity.text.toString().trim()
-        userAddress.district = binding.edtState.text.toString().trim()
-        userAddress.commune = binding.edtStreet.text.toString().trim()
-        userAddress.details = binding.edtAddressDetail.text.toString().trim()
+        val contactName = binding.edtFullName.text.toString().trim()
+        val phone = binding.edtPhone.text.toString().trim()
+        val province = binding.edtCity.text.toString().trim()
+        val district = binding.edtState.text.toString().trim()
+        val commune = binding.edtStreet.text.toString().trim()
+        val details = binding.edtAddressDetail.text.toString().trim()
 
-        val token = loginUtils.getUserToken()
-
-        userAddressViewModel.createNewAddress(token, user!!.id, userAddress)
-            .observe(requireActivity(), { state -> processUserAddress(state) })
-
+        if (contactName.isEmpty() || phone.isEmpty() || province.isEmpty() ||
+            district.isEmpty() || contactName.isEmpty() || details.isEmpty()) {
+            displayErrorSnackbar(FIELD_REQUIRED)
+        } else {
+            val userAddress = UserAddress(contactName, phone, province, district, commune, details)
+            val token = loginUtils.getUserToken()
+            userAddressViewModel.createNewAddress(token, user!!.id, userAddress)
+                .observe(requireActivity(), { state -> processUserAddress(state) })
+        }
     }
 
     private fun processUserAddress(state: ScreenState<UserAddress?>) {

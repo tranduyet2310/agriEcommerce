@@ -260,6 +260,9 @@
         <action
             android:id="@+id/action_userAddressFragment_to_addressFragment"
             app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_userAddressFragment_to_addressDialog"
+            app:destination="@id/addressDialog" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
@@ -355,7 +358,7 @@
     </fragment>
     <dialog
         android:id="@+id/contactDialogFragment"
-        android:name="com.example.argiecommerce.view.ContactDialogFragment"
+        android:name="com.example.argiecommerce.view.supplier.ContactDialogFragment"
         android:label="fragment_contact_dialog"
         tools:layout="@layout/fragment_contact_dialog" >
         <action
@@ -367,4 +370,14 @@
         android:name="com.example.argiecommerce.view.supplier.CropsDialogFragment"
         android:label="Thông tin canh tác"
         tools:layout="@layout/fragment_crops_dialog" />
+    <dialog
+        android:id="@+id/addressDialog"
+        android:name="com.example.argiecommerce.view.profile.AddressDialog"
+        android:label="AddressDialog" >
+        <action
+            android:id="@+id/action_addressDialog_to_userAddressFragment"
+            app:destination="@id/userAddressFragment"
+            app:popUpTo="@id/userAddressFragment"
+            app:popUpToInclusive="true"/>
+    </dialog>
 </navigation>

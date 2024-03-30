@@ -1,86 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     tools:context=".view.profile.AddressFragment">
 
-    <View
-        android:id="@+id/topLine"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="35dp"
-        android:background="@drawable/white_background"
-        android:backgroundTint="#97AABD"
-        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
-        app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="@string/address"
-        android:textSize="@dimen/dimen16sp"
-        app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@id/topLine" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
 
-    <EditText
-        android:id="@+id/edtAddressDetail"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/white_background"
-        android:fontFamily="@font/inter_medium"
-        android:gravity="start|center_vertical"
-        android:hint="@string/address_location"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:singleLine="true"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
-        app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/address" />
+        <TextView
+            android:id="@+id/tvFailed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/update_failed"
+            android:textColor="@color/redAgri"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/topLine"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edtStreet"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/white_background"
-        android:fontFamily="@font/inter_medium"
-        android:gravity="start|center_vertical"
-        android:hint="@string/street"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:singleLine="true"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
-        app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/edtAddressDetail" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/topLine"
+            android:id="@+id/imgClose"
+            android:importantForAccessibility="no" />
 
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/edtStreet">
+        <View
+            android:id="@+id/topLine"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/white_background"
+            android:backgroundTint="#97AABD"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/address"
+            android:textSize="@dimen/dimen16sp"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@id/topLine" />
+
+        <EditText
+            android:id="@+id/edtAddressDetail"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/white_background"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="start|center_vertical"
+            android:hint="@string/address_location"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/address" />
+
+        <EditText
+            android:id="@+id/edtStreet"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/white_background"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="start|center_vertical"
+            android:hint="@string/street"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/edtAddressDetail" />
+
 
         <EditText
             android:id="@+id/edtCity"
-            android:layout_width="378dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -95,11 +119,14 @@
             android:paddingEnd="20dp"
             android:singleLine="true"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/middleGuideline"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@id/edtStreet" />
 
         <EditText
             android:id="@+id/edtState"
-            android:layout_width="378dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
@@ -114,126 +141,137 @@
             android:paddingEnd="20dp"
             android:singleLine="true"
             android:textSize="14sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/middleGuideline"
+            app:layout_constraintTop_toBottomOf="@id/edtStreet" />
 
-    <TextView
-        android:id="@+id/contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen10dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="@string/contact"
-        android:textSize="@dimen/dimen16sp"
-        app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/linear" />
+        <TextView
+            android:id="@+id/contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/contact"
+            android:textSize="@dimen/dimen16sp"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/edtCity" />
 
 
-    <EditText
-        android:id="@+id/edtFullName"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/white_background"
-        android:fontFamily="@font/inter_medium"
-        android:gravity="start|center_vertical"
-        android:hint="@string/full_name"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:singleLine="true"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
-        app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@id/contact" />
-
-    <EditText
-        android:id="@+id/edtPhone"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/white_background"
-        android:fontFamily="@font/inter_medium"
-        android:gravity="start|center_vertical"
-        android:hint="@string/phone_number"
-        android:importantForAutofill="no"
-        android:inputType="phone"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:singleLine="true"
-        android:textSize="@dimen/dimen14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
-        app:layout_constraintStart_toStartOf="@+id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/edtFullName" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        app:layout_constraintTop_toBottomOf="@id/edtPhone"
-        app:layout_constraintVertical_bias="0.494">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonDelelte"
+        <EditText
+            android:id="@+id/edtFullName"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
+            android:layout_marginTop="10dp"
             android:background="@drawable/white_background"
-            android:fontFamily="@font/inter_regular"
-            android:text="@string/delete"
-            android:textAllCaps="false"
-            android:textColor="#666666"
-            android:textSize="16sp"
-            android:visibility="visible" />
+            android:fontFamily="@font/inter_medium"
+            android:gravity="start|center_vertical"
+            android:hint="@string/full_name"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@id/contact" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonSave"
+        <EditText
+            android:id="@+id/edtPhone"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/blue_background"
-            android:fontFamily="@font/inter_regular"
-            android:text="@string/save"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:visibility="visible" />
-    </LinearLayout>
+            android:layout_marginTop="5dp"
+            android:background="@drawable/white_background"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="start|center_vertical"
+            android:hint="@string/phone_number"
+            android:importantForAutofill="no"
+            android:inputType="phone"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:singleLine="true"
+            android:textSize="@dimen/dimen14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/edtFullName" />
 
-    <ProgressBar
-        android:id="@+id/progressbarAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
-        android:indeterminateTint="#666666"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@id/edtPhone"
+            app:layout_constraintVertical_bias="0.494">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/leftGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.04136253" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonDelelte"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_background"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/delete"
+                android:textAllCaps="false"
+                android:textColor="#666666"
+                android:textSize="16sp"
+                android:visibility="visible" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/rightGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.96" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonSave"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/blue_background"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/save"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="visible" />
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progressbarAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="45dp"
+            android:indeterminateTint="#666666"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/rightGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/middleGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

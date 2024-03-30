@@ -2,10 +2,10 @@ package com.example.argiecommerce.view.profile
 
 import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.UserAddressAdapter
 import com.example.argiecommerce.databinding.FragmentUserAddressBinding
-import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.utils.Constants
@@ -99,6 +98,10 @@ class UserAddressFragment : Fragment() {
         navController = Navigation.findNavController(view)
         binding.imageAddAddress.setOnClickListener {
             navController.navigate(R.id.action_userAddressFragment_to_addressFragment)
+        }
+        userAddressAdapter.onClick = {
+            userViewModel.userAddress = it
+            navController.navigate(R.id.action_userAddressFragment_to_addressDialog)
         }
     }
 

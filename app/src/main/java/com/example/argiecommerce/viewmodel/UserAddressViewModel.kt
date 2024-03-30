@@ -20,4 +20,21 @@ class UserAddressViewModel(
     fun getAddressByUserId(userId: Long): LiveData<ScreenState<ArrayList<UserAddress>?>> {
         return userAddressRepository.getAddressByUserId(userId)
     }
+
+    fun updateAddress(
+        token: String,
+        userId: Long,
+        addressId: Long,
+        userAddress: UserAddress
+    ): LiveData<ScreenState<UserAddress?>> {
+        return userAddressRepository.updateUserAddress(token, userId, addressId, userAddress)
+    }
+
+    fun deleteAddress(
+        token: String,
+        userId: Long,
+        addressId: Long
+    ): LiveData<ScreenState<String?>> {
+        return userAddressRepository.deleteUserAddress(token, userId, addressId)
+    }
 }

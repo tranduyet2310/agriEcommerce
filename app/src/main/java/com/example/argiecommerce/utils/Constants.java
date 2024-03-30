@@ -42,5 +42,8 @@ public class Constants {
     public static final String EMAIL_REQUIRED = "Yêu cầu nhập email";
     public static final String MAX_ADDRESS = "Đã đạt tối đa 5 địa chỉ nhận hàng";
     public static final String ADDRESS_CREATED = "Thêm địa chỉ mới thành công";
+    public static final String ADDRESS_ID_NOT_FOUND = "Không tìm thấy địa chỉ";
+    public static final String ADDRESS_ERROR = "User/Address không tồn tại";
     public static final String SERVER_ERROR = "Lỗi phía máy chủ";
+    public static final String FIELD_REQUIRED = "Yêu cầu nhập đủ thông tin";
 }
