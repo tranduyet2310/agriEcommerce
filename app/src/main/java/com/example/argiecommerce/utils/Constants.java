@@ -46,4 +46,6 @@ public class Constants {
     public static final String ADDRESS_ERROR = "User/Address không tồn tại";
     public static final String SERVER_ERROR = "Lỗi phía máy chủ";
     public static final String FIELD_REQUIRED = "Yêu cầu nhập đủ thông tin";
+    //
+     public static final int MIN_PASSWORD_LENGTH = 8;
 }

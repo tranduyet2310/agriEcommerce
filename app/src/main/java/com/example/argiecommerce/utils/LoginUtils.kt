@@ -63,7 +63,7 @@ class LoginUtils(private val mCtx: Context) {
             sharedPreferences.getString(PHONE, null),
             sharedPreferences.getString(EMAIL, null),
             sharedPreferences.getString(PASSWORD, null),
-            sharedPreferences.getString(AVATAR, "")
+            sharedPreferences.getString(AVATAR, null)
         )
     }
 

@@ -54,7 +54,7 @@
                     android:id="@+id/imageUser"
                     android:layout_width="43dp"
                     android:layout_height="43dp"
-                    android:src="@color/black"
+                    android:src="@drawable/user"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="3dp"
-                    android:text="@string/admin"
+                    android:text="@string/user"
                     android:textColor="#4b4f60"
                     android:textSize="15sp"
                     android:textStyle="bold"

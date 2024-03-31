@@ -19,8 +19,8 @@ class AuthenticationFragment : Fragment(), View.OnClickListener {
         private const val TAG = "AuthenticationFragment"
     }
 
-    private var _binding: FragmentAuthenticationBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentAuthenticationBinding
+
     private lateinit var navController: NavController
 
     private lateinit var correctOtpCode: String
@@ -30,7 +30,7 @@ class AuthenticationFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAuthenticationBinding.inflate(inflater, container, false)
+        binding = FragmentAuthenticationBinding.inflate(inflater, container, false)
 
        correctOtpCode = "123456"
 
@@ -43,11 +43,6 @@ class AuthenticationFragment : Fragment(), View.OnClickListener {
 
         binding.btnContinue.setOnClickListener(this)
         binding.reSend.setOnClickListener(this)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onClick(v: View?) {

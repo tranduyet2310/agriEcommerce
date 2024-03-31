@@ -1,5 +1,6 @@
 package com.example.argiecommerce.view.profile
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,8 +14,16 @@ import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentProfileBinding
 import com.example.argiecommerce.model.User
+import com.example.argiecommerce.model.UserAddress
+import com.example.argiecommerce.model.UserApiResponse
+import com.example.argiecommerce.utils.Constants
+import com.example.argiecommerce.utils.GlideApp
 import com.example.argiecommerce.utils.LoginUtils
+import com.example.argiecommerce.utils.ProgressDialog
+import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.viewmodel.UserInfoViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class ProfileFragment : Fragment(), View.OnClickListener {
@@ -28,9 +37,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
-
-
-
+    private val userInfoViewModel: UserInfoViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserInfoViewModel::class.java)
+    }
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(requireContext())
+    }
+    private lateinit var alertDialog: AlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +52,17 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         user = userViewModel.user
 
+        if (user != null) getUserInfo()
+        if (user?.avatar != null) showUserAvatar(user!!.avatar)
+        if (user?.fullName != null) binding.tvUserName.text = user!!.fullName
+
         return binding.root
+    }
+
+    private fun getUserInfo() {
+        userInfoViewModel.getUserInfo(user!!.id).observe(
+            requireActivity(), { state -> processUserInfo(state) }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -107,5 +130,43 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         navController.navigate(R.id.action_profileFragment_to_loginFragment)
     }
 
+    private fun processUserInfo(state: ScreenState<UserApiResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                val progressDialog = ProgressDialog()
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
 
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    val userApiResponse = state.data
+                    user!!.fullName = userApiResponse.fullName
+                    user!!.avatar = userApiResponse.avatar
+                    user!!.phone = userApiResponse.phone
+                    loginUtils.saveUserInfo(user!!)
+                    userViewModel.user = user
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    displayErrorSnackbar(state.message)
+                }
+            }
+        }
+    }
+
+    private fun showUserAvatar(imageUrl: String) {
+        GlideApp.with(requireContext())
+            .load(imageUrl)
+            .into(binding.imageUser)
+    }
+
+    private fun displayErrorSnackbar(errorMessage: String) {
+        Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
+            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .show()
+    }
 }
