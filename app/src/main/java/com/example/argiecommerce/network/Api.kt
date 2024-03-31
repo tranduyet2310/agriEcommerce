@@ -1,8 +1,10 @@
 package com.example.argiecommerce.network
 
 import com.example.argiecommerce.model.CategoryApiResponse
+import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
+import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.PasswordRequest
 import com.example.argiecommerce.model.ProductApiResponse
 import com.example.argiecommerce.model.RegisterApiResponse
@@ -33,6 +35,23 @@ interface Api {
 
     @GET("/api/categories")
     fun getAllCategories(): Call<ArrayList<CategoryApiResponse>>
+
+    @GET("api/favorites/{userId}/list")
+    fun getFavoriteProducts(@Path("userId") userId: Long): Call<ArrayList<FavoriteResponse>>
+
+    @DELETE("/api/favorites/{userId}/{productId}")
+    fun deleteFavoriteProduct(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Path("productId") productId: Long,
+    ): Call<MessageResponse>
+
+    @POST("/api/favorites/{userId}/add/{productId}")
+    fun createFavProduct(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Path("productId") productId: Long,
+    ): Call<FavoriteResponse>
 
     @GET("api/users/{id}")
     fun getUserInfo(@Path("id") userId: Long): Call<UserApiResponse>

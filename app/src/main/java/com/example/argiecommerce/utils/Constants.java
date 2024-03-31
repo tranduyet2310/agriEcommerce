@@ -6,7 +6,7 @@ public class Constants {
     public static final String RETURN_URL = "com.example.argiecommerce://paypalpay";
     public static final String PAYPAL_SECRET = "EM6H-oZ0onpePCu1buAgKHqFeVu3cn-Ujm8vXDLPTMvX2-7mIKh0xdPQhLXzieaQAtE3QIuvxFanCqMd";
     // API
-    public static final String LOCALHOST = "http://192.168.55.107:8080/";
+    public static final String LOCALHOST = "http://192.168.55.102:8080/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
     public static final String HISTORY_DATA = "history_data";

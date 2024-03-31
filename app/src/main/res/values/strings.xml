@@ -122,7 +122,7 @@
     <string name="no_order">Không có đơn hàng nào!</string>
     <string name="product">Sản phẩm</string>
     <string name="your_wishlist_is_empty">Danh sách đang trống</string>
-    <string name="an_empty_wishlist_does_not_look_good">Hãy thêm sản phẩm nào đó ^^</string>
+    <string name="an_empty_wishlist_does_not_look_good">Hãy thêm sản phẩm nào đó 😘</string>
     <string name="specialty">Đặc sản vùng miền</string>
     <string name="standard">Nông sản đạt chuẩn</string>
     <string name="_4_5_5_0">4.5/5.0</string>
@@ -201,4 +201,5 @@
     <string name="update_info">Cập nhật thông tin thành công</string>
     <string name="current_pass_not_correct">Mật khẩu hiện tại không chính xác</string>
     <string name="retype_pass_not_correct">Mật khẩu mới không khớp</string>
+    <string name="delete_fav_product">Đã xóa sản phẩm khỏi danh sách yêu thích</string>
 </resources>

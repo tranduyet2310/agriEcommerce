@@ -25,6 +25,8 @@ import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentHomeBinding
 import com.example.argiecommerce.model.CartProduct
 import com.example.argiecommerce.model.CategoryApiResponse
+import com.example.argiecommerce.model.FavoriteResponse
+import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.model.Subcategory
 import com.example.argiecommerce.model.User
@@ -38,11 +40,13 @@ import com.example.argiecommerce.utils.Constants.SPECIALTY_PRODUCT
 import com.example.argiecommerce.utils.Constants.SUBCATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.SUGGESTED_PRODUCT
 import com.example.argiecommerce.utils.Constants.TITLE_KEY
+import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.NetworkMonitorUtil
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.CartViewModel
 import com.example.argiecommerce.viewmodel.CategoryViewModel
+import com.example.argiecommerce.viewmodel.FavoriteViewModel
 import com.example.argiecommerce.viewmodel.ProductViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -69,16 +73,23 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
-
     private val cartViewModel: CartViewModel by lazy {
         ViewModelProvider(requireActivity()).get(CartViewModel::class.java)
+    }
+    private val favoriteViewModel: FavoriteViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(FavoriteViewModel::class.java)
     }
 
     private lateinit var alertDialog: AlertDialog
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var categoryItemList: ArrayList<CategoryApiResponse>
-
     private lateinit var networkMonitor: NetworkMonitorUtil
+    private val progressDialog: ProgressDialog by lazy {
+        ProgressDialog()
+    }
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(requireContext())
+    }
     private var user: User? = null
     private var productList: ArrayList<CartProduct> = arrayListOf()
     override fun onCreateView(
@@ -96,6 +107,34 @@ class HomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
+
+        binding.content.tvSeeAllFlashSale.setOnClickListener(this)
+        binding.content.tvSeeAllOcopProduct.setOnClickListener(this)
+        binding.content.tvSeeAllSpecialtyProduct.setOnClickListener(this)
+        binding.content.tvSeeAllRecentProduct.setOnClickListener(this)
+        binding.content.tvSeeAllSuggestedProduct.setOnClickListener(this)
+        binding.tvSearch.setOnClickListener(this)
+
+        setupRecyclerListener()
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.tvSearch -> goToSearchFragment()
+            R.id.tvSeeAllFlashSale -> goToFlashSaleFragment()
+            R.id.tvSeeAllOcopProduct -> goToStandardFragment()
+            R.id.tvSeeAllSpecialtyProduct -> goToSpecialtyFragment()
+            R.id.tvSeeAllRecentProduct -> goToRecentProductFragment()
+            R.id.tvSeeAllSuggestedProduct -> goToSuggestedProductFragment()
+        }
+    }
     private fun getProductData() {
         networkMonitor.result = { isAvailable, type ->
             requireActivity().runOnUiThread {
@@ -121,52 +160,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-
-        binding.content.tvSeeAllFlashSale.setOnClickListener(this)
-        binding.content.tvSeeAllOcopProduct.setOnClickListener(this)
-        binding.content.tvSeeAllSpecialtyProduct.setOnClickListener(this)
-        binding.content.tvSeeAllRecentProduct.setOnClickListener(this)
-        binding.content.tvSeeAllSuggestedProduct.setOnClickListener(this)
-        binding.tvSearch.setOnClickListener(this)
-
-        setupRecyclerListener()
-    }
-
     private fun setupRecyclerListener() {
-        suggestedProductAdapter.onCartClick = {
-            if (it.isInCart == 1) {
-                productList.add(CartProduct(it))
-                cartViewModel.products = productList
-                Snackbar.make(
-                    requireView(),
-                    requireContext().resources.getString(R.string.add_into_cart),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            } else {
-                productList.remove(CartProduct(it))
-                cartViewModel.products = productList
-            }
-
-        }
-        suggestedProductAdapter.onFavouriteClick = {
-            if (it.isFavourite == 1)
-                Snackbar.make(
-                    requireView(),
-                    requireContext().resources.getString(R.string.add_favourite_product),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-        }
-        suggestedProductAdapter.onShareClick = {
-
-        }
-        suggestedProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
-        }
-
         categoryAdapter.onClick = {
             val b = Bundle().apply {
                 putParcelable(CATEGORY_KEY, it)
@@ -177,25 +171,95 @@ class HomeFragment : Fragment(), View.OnClickListener {
             navController.navigate(R.id.action_homeFragment_to_seeAllFragment, b)
         }
 
+        suggestedProductAdapter.onCartClick = {
+            addToCart(it)
+        }
+        suggestedProductAdapter.onFavouriteClick = {
+            addFavoriteProduct(it)
+        }
+        suggestedProductAdapter.onShareClick = {
+            shareProduct(it)
+        }
+        suggestedProductAdapter.onClick = {
+            goToDetailFragment(it)
+        }
+
         flashSaleProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
+            goToDetailFragment(it)
+        }
+        flashSaleProductAdapter.onCartClick = {
+            addToCart(it)
+        }
+        flashSaleProductAdapter.onFavouriteClick = {
+            addFavoriteProduct(it)
+        }
+        flashSaleProductAdapter.onShareClick = {
+            shareProduct(it)
         }
 
         ocopProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
+            goToDetailFragment(it)
+        }
+        ocopProductAdapter.onCartClick = {
+            addToCart(it)
+        }
+        ocopProductAdapter.onFavouriteClick = {
+            addFavoriteProduct(it)
+        }
+        ocopProductAdapter.onShareClick = {
+            shareProduct(it)
         }
 
         specialtyProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
+            goToDetailFragment(it)
+        }
+        specialtyProductAdapter.onCartClick = {
+            addToCart(it)
+        }
+        specialtyProductAdapter.onFavouriteClick = {
+            addFavoriteProduct(it)
+        }
+        specialtyProductAdapter.onShareClick = {
+            shareProduct(it)
         }
 
         recentProductAdapter.onClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(it)
-            navController.navigate(action)
+            goToDetailFragment(it)
         }
+        recentProductAdapter.onCartClick = {
+            addToCart(it)
+        }
+        recentProductAdapter.onFavouriteClick = {
+            addFavoriteProduct(it)
+        }
+        recentProductAdapter.onShareClick = {
+            shareProduct(it)
+        }
+    }
+
+    private fun addFavoriteProduct(product: Product) {
+        if (product.isFavourite == 1) {
+            val token = loginUtils.getUserToken()
+            favoriteViewModel.createFavoriteProduct(token, user!!.id, product.productId).observe(
+                requireActivity(), { state -> processFavProductResponse(state) }
+            )
+        }
+    }
+
+    private fun addToCart(product: Product) {
+        if (product.isInCart == 1) {
+            productList.add(CartProduct(product))
+            cartViewModel.products = productList
+            Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_into_cart), Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun shareProduct(product: Product){
+        Snackbar.make(requireView(), "Chia sẻ thành công", Snackbar.LENGTH_SHORT).show()
+    }
+    private fun goToDetailFragment(product: Product){
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(product)
+        navController.navigate(action)
     }
 
     private fun setupFlipImages() {
@@ -214,81 +278,66 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun setupRecyclerViews() {
         // Category
-        binding.content.listOfCategory.layoutManager =
-            GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
-        binding.content.listOfCategory.setHasFixedSize(true)
-        categoryItemList = arrayListOf()
-        categoryAdapter = CategoryAdapter(requireContext(), categoryItemList)
-        binding.content.listOfCategory.adapter = categoryAdapter
+        binding.content.listOfCategory.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            categoryItemList = arrayListOf()
+            categoryAdapter = CategoryAdapter(requireContext(), categoryItemList)
+            adapter = categoryAdapter
+        }
 
         // Suggested Product
-        binding.content.listOfSuggestedProduct.layoutManager =
-            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-        binding.content.listOfSuggestedProduct.setHasFixedSize(true)
-        suggestedProductAdapter = VerticalProductAdapter(requireContext(), user)
-        binding.content.listOfSuggestedProduct.adapter =
-            suggestedProductAdapter.withLoadStateHeaderAndFooter(
+        binding.content.listOfSuggestedProduct.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            suggestedProductAdapter = VerticalProductAdapter(requireContext(), user)
+            adapter = suggestedProductAdapter.withLoadStateHeaderAndFooter(
                 header = ProductLoadingAdapter { suggestedProductAdapter.retry() },
                 footer = ProductLoadingAdapter { suggestedProductAdapter.retry() }
             )
+        }
 
         // Flash Sale
-        binding.content.listOfFlashSale.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding.content.listOfFlashSale.setHasFixedSize(true)
-        flashSaleProductAdapter = FlashSaleProductAdapter(requireContext(), user)
-        binding.content.listOfFlashSale.adapter =
-            flashSaleProductAdapter.withLoadStateHeaderAndFooter(
+        binding.content.listOfFlashSale.apply {
+            layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            flashSaleProductAdapter = FlashSaleProductAdapter(requireContext(), user)
+            adapter = flashSaleProductAdapter.withLoadStateHeaderAndFooter(
                 header = HorizontalProductLoadingAdapter { flashSaleProductAdapter.retry() },
                 footer = HorizontalProductLoadingAdapter { flashSaleProductAdapter.retry() }
             )
+        }
 
         // Ocop Product
-        binding.content.listOfOcopProduct.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding.content.listOfOcopProduct.setHasFixedSize(true)
-        ocopProductAdapter = HorizontalProductAdapter(requireContext(), user)
-        binding.content.listOfOcopProduct.adapter = ocopProductAdapter.withLoadStateHeaderAndFooter(
-            header = HorizontalProductLoadingAdapter { ocopProductAdapter.retry() },
-            footer = HorizontalProductLoadingAdapter { ocopProductAdapter.retry() }
-        )
+        binding.content.listOfOcopProduct.apply {
+            layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            ocopProductAdapter = HorizontalProductAdapter(requireContext(), user)
+            adapter= ocopProductAdapter.withLoadStateHeaderAndFooter(
+                header = HorizontalProductLoadingAdapter { ocopProductAdapter.retry() },
+                footer = HorizontalProductLoadingAdapter { ocopProductAdapter.retry() }
+            )
+        }
 
         // Specialty Product
-        binding.content.listOfSpecialtyProduct.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding.content.listOfSpecialtyProduct.setHasFixedSize(true)
-        specialtyProductAdapter = HorizontalProductAdapter(requireContext(), user)
-        binding.content.listOfSpecialtyProduct.adapter =
-            specialtyProductAdapter.withLoadStateHeaderAndFooter(
+        binding.content.listOfSpecialtyProduct.apply {
+            layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            specialtyProductAdapter = HorizontalProductAdapter(requireContext(), user)
+            adapter = specialtyProductAdapter.withLoadStateHeaderAndFooter(
                 header = HorizontalProductLoadingAdapter { specialtyProductAdapter.retry() },
                 footer = HorizontalProductLoadingAdapter { specialtyProductAdapter.retry() }
             )
+        }
 
-        // Recent Product
-        binding.content.listOfRecentProduct.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding.content.listOfRecentProduct.setHasFixedSize(true)
-        recentProductAdapter = UpCommingProductAdapter(requireContext(), user)
-        binding.content.listOfRecentProduct.adapter =
-            recentProductAdapter.withLoadStateHeaderAndFooter(
+        binding.content.listOfRecentProduct.apply {
+            layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            recentProductAdapter = UpCommingProductAdapter(requireContext(), user)
+            adapter = recentProductAdapter.withLoadStateHeaderAndFooter(
                 header = HorizontalProductLoadingAdapter { recentProductAdapter.retry() },
                 footer = HorizontalProductLoadingAdapter { recentProductAdapter.retry() }
             )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.tvSearch -> goToSearchFragment()
-            R.id.tvSeeAllFlashSale -> goToFlashSaleFragment()
-            R.id.tvSeeAllOcopProduct -> goToStandardFragment()
-            R.id.tvSeeAllSpecialtyProduct -> goToSpecialtyFragment()
-            R.id.tvSeeAllRecentProduct -> goToRecentProductFragment()
-            R.id.tvSeeAllSuggestedProduct -> goToSuggestedProductFragment()
         }
     }
 
@@ -383,8 +432,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getCategoryData() {
-        categoryViewModel.getCategoryResponseData()
-            .observe(requireActivity(), { state -> processCategoryResponse(state) })
+        categoryViewModel.getCategoryResponseData().observe(requireActivity(), { state -> processCategoryResponse(state) })
     }
 
     private fun getSuggestedProduct() {
@@ -396,24 +444,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-
     private fun getSpecialtyProduct() {
         val productApiRequest = ProductApiRequest(9)
         lifecycleScope.launch {
-            productViewModel.getProductBySubCategory(productApiRequest)
-                .collectLatest { pagingData ->
+            productViewModel.getProductBySubCategory(productApiRequest).collectLatest { pagingData ->
                     specialtyProductAdapter.submitData(pagingData)
-                }
+            }
         }
     }
 
     private fun getOcopProduct() {
         val productApiRequest = ProductApiRequest(2)
         lifecycleScope.launch {
-            productViewModel.getProductBySubCategory(productApiRequest)
-                .collectLatest { pagingData ->
+            productViewModel.getProductBySubCategory(productApiRequest).collectLatest { pagingData ->
                     ocopProductAdapter.submitData(pagingData)
-                }
+            }
         }
     }
 
@@ -439,7 +484,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private fun processCategoryResponse(state: ScreenState<ArrayList<CategoryApiResponse>?>) {
         when (state) {
             is ScreenState.Loading -> {
-                val progressDialog = ProgressDialog()
                 alertDialog = progressDialog.createAlertDialog(requireActivity())
             }
 
@@ -449,6 +493,28 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     categoryItemList.clear()
                     categoryItemList.addAll(state.data)
                     categoryAdapter.notifyDataSetChanged()
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    displayErrorSnackbar(state.message)
+                }
+            }
+        }
+    }
+
+    private fun processFavProductResponse(state: ScreenState<FavoriteResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_favourite_product), Snackbar.LENGTH_SHORT).show()
                 }
             }
 

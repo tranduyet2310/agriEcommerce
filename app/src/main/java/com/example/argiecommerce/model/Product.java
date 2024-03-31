@@ -4,10 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Product implements Parcelable {
     @SerializedName("id")
@@ -301,4 +303,31 @@ public class Product implements Parcelable {
         dest.writeInt(isFavourite);
         dest.writeInt(isInCart);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return productId == product.productId
+                && productQuantity == product.productQuantity
+                && isActive == product.isActive
+                && isAvailable == product.isAvailable
+                && isNew == product.isNew
+                && supplierId == product.supplierId
+                && sold == product.sold
+                && isFavourite == product.isFavourite
+                && isInCart == product.isInCart
+                && Objects.equals(productName, product.productName)
+                && Objects.equals(description, product.description)
+                && Objects.equals(standardPrice, product.standardPrice)
+                && Objects.equals(discountPrice, product.discountPrice)
+                && Objects.equals(productCategory, product.productCategory)
+                && Objects.equals(productSubcategory, product.productSubcategory)
+                && Objects.equals(warehouseName, product.warehouseName)
+                && Objects.equals(productSupplier, product.productSupplier)
+                && Objects.equals(productImage, product.productImage)
+                && Objects.equals(supplierProvince, product.supplierProvince);
+    }
+
 }

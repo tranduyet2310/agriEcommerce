@@ -3,6 +3,8 @@ package com.example.argiecommerce.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
 public class CartProduct implements Parcelable {
     private Product product;
     private int quantity;
@@ -57,5 +59,13 @@ public class CartProduct implements Parcelable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartProduct)) return false;
+        CartProduct that = (CartProduct) o;
+        return getQuantity() == that.getQuantity() && Objects.equals(getProduct(), that.getProduct());
     }
 }
