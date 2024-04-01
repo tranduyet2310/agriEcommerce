@@ -29,10 +29,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen10dp"
-            android:layout_marginEnd="@dimen/dimen10dp"
-            android:fontFamily="@font/inter_regular"
-            android:text="@string/choose_payment_method"
             android:layout_marginTop="@dimen/dimen10dp"
+            android:layout_marginEnd="@dimen/dimen10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/choose_payment_method"
             android:textColor="@color/redAgri"
             android:textSize="13sp"
             app:drawableEndCompat="@drawable/ic_arrow"
@@ -40,16 +40,48 @@
             app:layout_constraintStart_toStartOf="@id/leftGuideline"
             app:layout_constraintTop_toBottomOf="@id/tvPaymentMethods" />
 
+        <RadioGroup
+            android:id="@+id/radioGroupPayment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/topLine"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@id/tvPaymentExplanation">
+
+            <RadioButton
+                android:id="@+id/radioCoD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/inter_medium"
+                android:padding="10dp"
+                android:text="@string/cod"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/radioPaypal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/inter_medium"
+                android:padding="10dp"
+                android:text="@string/paypal"
+                android:textSize="13sp" />
+
+        </RadioGroup>
+
         <View
             android:id="@+id/topLine"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/white_background"
             android:backgroundTint="#97AABD"
             app:layout_constraintEnd_toEndOf="@id/rightGuideline"
             app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@id/tvPaymentExplanation" />
+            app:layout_constraintTop_toBottomOf="@id/radioGroupPayment" />
 
         <TextView
             android:id="@+id/tvShoppingAddress"

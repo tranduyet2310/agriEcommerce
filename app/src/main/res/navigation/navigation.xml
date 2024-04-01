@@ -230,6 +230,9 @@
         <action
             android:id="@+id/action_billingFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
+        <argument
+            android:name="total"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/addressFragment"

@@ -4,10 +4,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:backgroundTint="#F5F8FA"
+    android:layout_margin="5dp"
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="match_parent">
 
         <View
@@ -24,25 +25,36 @@
             android:id="@+id/imageCartProduct"
             android:layout_width="80dp"
             android:layout_height="75dp"
-            android:layout_marginBottom="5dp"
-            android:scaleType="centerCrop"
             android:src="@color/darkGreen"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toTopOf="@+id/topLine"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAccessibility="no" />
+
+        <View
+            android:layout_width="@dimen/dimen1dp"
+            android:layout_height="@dimen/dimen1dp"
+            android:id="@+id/imageSupporter"
+            app:layout_constraintStart_toStartOf="@id/imageCartProduct"
+            app:layout_constraintEnd_toEndOf="@id/imageCartProduct"
+            app:layout_constraintTop_toTopOf="@id/imageCartProduct"
+            app:layout_constraintBottom_toBottomOf="@id/imageCartProduct"/>
 
         <TextView
             android:id="@+id/tvProductCartName"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
             android:ellipsize="end"
             android:fontFamily="@font/inter_semibold"
-            android:lines="1"
+            android:maxLines="2"
             android:text="@string/vegetable"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/guideline7"
+            app:layout_constraintBottom_toTopOf="@id/imageSupporter"
             app:layout_constraintStart_toEndOf="@id/imageCartProduct"
             app:layout_constraintTop_toTopOf="@id/imageCartProduct" />
 
@@ -54,32 +66,45 @@
             android:fontFamily="@font/inter_semibold"
             android:text="@string/_5_000_000"
             android:textColor="@color/black"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/tvProductCartName"
-            app:layout_constraintTop_toBottomOf="@id/tvProductCartName" />
-
-        <TextView
-            android:id="@+id/imageCartProductColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/inter_regular"
-            android:text="@string/type_product"
             android:textSize="11sp"
-            app:layout_constraintStart_toStartOf="@id/tvProductCartPrice"
-            app:layout_constraintTop_toBottomOf="@id/tvProductCartPrice" />
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:drawablePadding="3dp"
+            app:layout_constraintStart_toStartOf="@id/tvProductCartName"
+            app:layout_constraintTop_toBottomOf="@id/imageSupporter"
+            app:drawableEndCompat="@drawable/dong_yellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:drawableTint="@color/blackAgri" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvProductType"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:ellipsize="end"-->
+<!--            android:fontFamily="@font/inter_regular"-->
+<!--            android:text="@string/type_product"-->
+<!--            android:textSize="11sp"-->
+<!--            app:layout_constraintStart_toStartOf="@id/tvProductCartPrice"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tvProductCartPrice" />-->
 
         <TextView
             android:id="@+id/tvBillingProductQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:text="@string/_1"
+            android:text="@string/_5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

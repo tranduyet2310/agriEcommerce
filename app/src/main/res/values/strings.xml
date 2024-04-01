@@ -202,4 +202,7 @@
     <string name="current_pass_not_correct">Mật khẩu hiện tại không chính xác</string>
     <string name="retype_pass_not_correct">Mật khẩu mới không khớp</string>
     <string name="delete_fav_product">Đã xóa sản phẩm khỏi danh sách yêu thích</string>
+    <string name="delete_from_cart">Bạn muốn xóa sản phẩm này khỏi giỏ hàng?</string>
+    <string name="cod">Giao hàng thu tiền - CoD</string>
+    <string name="paypal">Thanh toán với Paypal</string>
 </resources>

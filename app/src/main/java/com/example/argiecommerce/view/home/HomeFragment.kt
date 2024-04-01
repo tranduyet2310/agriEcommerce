@@ -2,7 +2,6 @@ package com.example.argiecommerce.view.home
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +23,7 @@ import com.example.argiecommerce.adapter.UpCommingProductAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentHomeBinding
 import com.example.argiecommerce.model.CartProduct
+import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.Product
@@ -248,9 +248,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun addToCart(product: Product) {
         if (product.isInCart == 1) {
-            productList.add(CartProduct(product))
-            cartViewModel.products = productList
-            Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_into_cart), Snackbar.LENGTH_SHORT).show()
+            val token = loginUtils.getUserToken()
+            cartViewModel.addToCart(token, user!!.id, product.productId).observe(
+                requireActivity(), {state -> processCartResponse(state)}
+            )
         }
     }
 
@@ -515,6 +516,28 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 if (state.data != null) {
                     alertDialog.dismiss()
                     Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_favourite_product), Snackbar.LENGTH_SHORT).show()
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    displayErrorSnackbar(state.message)
+                }
+            }
+        }
+    }
+
+    private fun processCartResponse(state: ScreenState<CartResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_into_cart), Snackbar.LENGTH_SHORT).show()
                 }
             }
 

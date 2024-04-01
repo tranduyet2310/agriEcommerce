@@ -1,5 +1,6 @@
 package com.example.argiecommerce.network
 
+import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.LoginApiResponse
@@ -52,6 +53,31 @@ interface Api {
         @Path("userId") userId: Long,
         @Path("productId") productId: Long,
     ): Call<FavoriteResponse>
+
+    @POST("/api/cart/{userId}/{productId}")
+    fun addToCart(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Path("productId") productId: Long,
+    ): Call<CartResponse>
+
+    @GET("api/cart/{userId}")
+    fun getAllCartItems(@Path("userId") userId: Long): Call<ArrayList<CartResponse>>
+
+    @PATCH("/api/cart")
+    fun changeQuantity(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Long,
+        @Query("productId") productId: Long,
+        @Query("quantity") quantity: Int
+    ): Call<CartResponse>
+
+    @DELETE("/api/cart/{userId}/{productId}")
+    fun removeFromCart(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Path("productId") productId: Long
+    ): Call<MessageResponse>
 
     @GET("api/users/{id}")
     fun getUserInfo(@Path("id") userId: Long): Call<UserApiResponse>

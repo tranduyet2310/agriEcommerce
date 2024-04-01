@@ -9,49 +9,42 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.databinding.CartProductListItemBinding
-import com.example.argiecommerce.model.CartProduct
+import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.utils.GlideApp
 import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 
-class CartProductAdapter : RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>() {
-    var onProductClick: ((CartProduct) -> Unit)? = null
-    var onPlusClick: ((CartProduct) -> Unit)? = null
-    var onMinusClick: ((CartProduct) -> Unit)? = null
+class CartProductAdapter(
+    private val cartItemList: ArrayList<CartResponse>
+) : RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>() {
+
+    var onProductClick: ((CartResponse) -> Unit)? = null
+    var onPlusClick: ((CartResponse) -> Unit)? = null
+    var onMinusClick: ((CartResponse) -> Unit)? = null
 
     inner class CartProductViewHolder(
         val binding: CartProductListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(cartProduct: CartProduct) {
+        fun bind(cartResponse: CartResponse) {
             binding.apply {
                 var requestOptions = RequestOptions()
                 requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))
-                val imageUrl = cartProduct.product.productImage[0].imageUrl
+                val imageUrl = cartResponse.product.productImage[0].imageUrl
+
                 GlideApp.with(itemView)
                     .load(imageUrl)
                     .apply(requestOptions)
                     .skipMemoryCache(true)
                     .into(imageCartProduct)
 
-                tvProductCartName.text = cartProduct.product.productName
-                tvCartProductQuantity.text = cartProduct.quantity.toString()
-                if (cartProduct.product.discountPrice > 0) {
-                    tvProductCartPrice.text = cartProduct.product.discountPrice.formatPrice()
-                } else tvProductCartPrice.text = cartProduct.product.standardPrice.formatPrice()
+                tvProductCartName.text = cartResponse.product.productName
+                tvCartProductQuantity.text = cartResponse.quantity.toString()
+                if (cartResponse.product.discountPrice > 0) {
+                    tvProductCartPrice.text = cartResponse.product.discountPrice.formatPrice()
+                } else tvProductCartPrice.text = cartResponse.product.standardPrice.formatPrice()
             }
         }
     }
 
-    private val diffCallback = object : DiffUtil.ItemCallback<CartProduct>() {
-        override fun areContentsTheSame(oldItem: CartProduct, newItem: CartProduct): Boolean {
-            return oldItem.equals(newItem)
-        }
-
-        override fun areItemsTheSame(oldItem: CartProduct, newItem: CartProduct): Boolean {
-            return oldItem.product.productId == newItem.product.productId
-        }
-    }
-
-    val differ = AsyncListDiffer(this, diffCallback)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartProductViewHolder {
         return CartProductViewHolder(
             CartProductListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -59,20 +52,20 @@ class CartProductAdapter : RecyclerView.Adapter<CartProductAdapter.CartProductVi
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return cartItemList.size
     }
 
     override fun onBindViewHolder(holder: CartProductViewHolder, position: Int) {
-        val cartProduct = differ.currentList[position]
-        holder.bind(cartProduct)
+        val cartResponse = cartItemList[position]
+        holder.bind(cartResponse)
         holder.itemView.setOnClickListener {
-            onProductClick?.invoke(cartProduct)
+            onProductClick?.invoke(cartResponse)
         }
         holder.binding.imagePlus.setOnClickListener{
-            onPlusClick?.invoke(cartProduct)
+            onPlusClick?.invoke(cartResponse)
         }
         holder.binding.imageMinus.setOnClickListener {
-            onMinusClick?.invoke(cartProduct)
+            onMinusClick?.invoke(cartResponse)
         }
     }
 }
