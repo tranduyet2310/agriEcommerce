@@ -32,6 +32,7 @@ import com.paypal.checkout.order.CaptureOrderResult
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
 import java.io.IOException
 
 
@@ -42,55 +43,12 @@ class PaymentFragment : Fragment() {
     private lateinit var orderId: String
     private val tag = javaClass.simpleName
 
+    @OptIn(ExperimentalSerializationApi::class)
     private val checkoutApi = CheckoutApi()
     private val orderRepository = OrderRepository(checkoutApi)
 
     private val checkoutSdk: PayPalCheckout
         get() = PayPalCheckout
-
-    private val selectedUserAction: UserAction
-        get() {
-            return when (val selectedId = binding.selectUserAction.checkedRadioButtonId) {
-                R.id.userActionOptionContinue -> UserAction.CONTINUE
-                R.id.userActionOptionPayNow -> UserAction.PAY_NOW
-                else -> {
-                    throw IllegalArgumentException(
-                        "Expected one of the following ids: ${R.id.userActionOptionContinue}, or " +
-                                "${R.id.userActionOptionPayNow} but was $selectedId"
-                    )
-                }
-            }
-        }
-
-    private val selectedOrderIntent: OrderIntent
-        get() {
-            return when (val selectedId = binding.selectOrderIntent.checkedRadioButtonId) {
-                R.id.orderIntentOptionAuthorize -> OrderIntent.AUTHORIZE
-                R.id.orderIntentOptionCapture -> OrderIntent.CAPTURE
-                else -> {
-                    throw IllegalArgumentException(
-                        "Expected one of the following ids: ${R.id.orderIntentOptionAuthorize}, or " +
-                                "${R.id.orderIntentOptionCapture} but was $selectedId"
-                    )
-                }
-            }
-        }
-
-    private val selectedCurrencyCode: CurrencyCode
-        get() {
-            return when (val selectedId = binding.selectCurrencyCode.checkedRadioButtonId) {
-                R.id.currencyCodeUsd -> CurrencyCode.USD
-                R.id.currencyCodeEur -> CurrencyCode.EUR
-                R.id.currencyCodeGbp -> CurrencyCode.GBP
-                else -> {
-                    throw IllegalArgumentException(
-                        "Expected one of the following ids: ${R.id.currencyCodeUsd}, " +
-                                "${R.id.currencyCodeEur}, or ${R.id.currencyCodeGbp} but was $selectedId"
-                    )
-                }
-            }
-        }
-
     private val enteredAmount: String
         get() = binding.totalAmountInput.editText!!.text.toString()
 
@@ -142,34 +100,19 @@ class PaymentFragment : Fragment() {
 
         checkoutSdk.registerCallbacks(
             onApprove = OnApprove { approval ->
-                Log.i(tag, "OnApprove: $approval")
-                when (selectedOrderIntent) {
-                    OrderIntent.AUTHORIZE -> approval.orderActions.authorize { result ->
-                        val message = when (result) {
-                            is AuthorizeOrderResult.Success -> {
-                                Log.i(tag, "Success: $result")
-                                "💰 Order Authorization Succeeded 💰"
-                            }
-                            is AuthorizeOrderResult.Error -> {
-                                Log.i(tag, "Error: $result")
-                                "🔥 Order Authorization Failed 🔥"
-                            }
+                approval.orderActions.capture { result ->
+                    val message = when (result) {
+                        is CaptureOrderResult.Success -> {
+                            Log.i(tag, "Success: $result")
+                            "💰 Order Capture Succeeded 💰"
                         }
-                        showSnackbar(message)
-                    }
-                    OrderIntent.CAPTURE -> approval.orderActions.capture { result ->
-                        val message = when (result) {
-                            is CaptureOrderResult.Success -> {
-                                Log.i(tag, "Success: $result")
-                                "💰 Order Capture Succeeded 💰"
-                            }
-                            is CaptureOrderResult.Error -> {
-                                Log.i(tag, "Error: $result")
-                                "🔥 Order Capture Failed 🔥"
-                            }
+
+                        is CaptureOrderResult.Error -> {
+                            Log.i(tag, "Error: $result")
+                            "🔥 Order Capture Failed 🔥"
                         }
-                        showSnackbar(message)
                     }
+                    showSnackbar(message)
                 }
             },
             onCancel = OnCancel {
@@ -195,15 +138,15 @@ class PaymentFragment : Fragment() {
 
     private fun createOrderRequest(): OrderRequest {
         return OrderRequest(
-            intent = selectedOrderIntent.name,
+            intent = OrderIntent.CAPTURE.name,
             applicationContext = ApplicationContextRequest(
-                userAction = selectedUserAction.name
+                userAction = UserAction.PAY_NOW.name
             ),
             purchaseUnits = listOf(
                 PurchaseUnitRequest(
                     amount = AmountRequest(
                         value = enteredAmount,
-                        currencyCode = selectedCurrencyCode.name
+                        currencyCode = CurrencyCode.USD.name
                     )
                 )
             )

@@ -230,9 +230,9 @@
         <action
             android:id="@+id/action_billingFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
-        <argument
-            android:name="total"
-            app:argType="long" />
+        <action
+            android:id="@+id/action_billingFragment_to_addressDialog"
+            app:destination="@id/addressDialog" />
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
@@ -381,6 +381,14 @@
             android:id="@+id/action_addressDialog_to_userAddressFragment"
             app:destination="@id/userAddressFragment"
             app:popUpTo="@id/userAddressFragment"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="screen"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addressDialog_to_billingFragment"
+            app:destination="@id/billingFragment"
+            app:popUpTo="@id/billingFragment"
             app:popUpToInclusive="true"/>
     </dialog>
 </navigation>

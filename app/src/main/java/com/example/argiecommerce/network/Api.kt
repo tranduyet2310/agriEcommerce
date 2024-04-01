@@ -2,6 +2,7 @@ package com.example.argiecommerce.network
 
 import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.CategoryApiResponse
+import com.example.argiecommerce.model.CurrencyResponse
 import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
@@ -127,7 +128,16 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("userId") userId: Long,
         @Path("id") addressId: Long
-    ): Call<String>
+    ): Call<MessageResponse>
+
+    @GET("https://api.getgeoapi.com/v2/currency/convert")
+    suspend fun convertCurrency(
+        @Query("api_key") key: String,
+        @Query("from") from: String,
+        @Query("to") to: String,
+        @Query("amount") amount: Double,
+        @Query("format") format: String,
+    ): Response<CurrencyResponse>
 
     @GET("/api/products/category")
     suspend fun getProductByCategoryId(

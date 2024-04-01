@@ -16,6 +16,7 @@ import com.example.argiecommerce.databinding.FragmentUserAddressBinding
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.utils.Constants
+import com.example.argiecommerce.utils.Constants.SCREEN_KEY
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.UserAddressViewModel
@@ -24,6 +25,9 @@ import com.google.android.material.snackbar.Snackbar
 
 
 class UserAddressFragment : Fragment() {
+    companion object {
+        const val TAG = "UserAddressFragment"
+    }
     private var _binding: FragmentUserAddressBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
@@ -101,7 +105,9 @@ class UserAddressFragment : Fragment() {
         }
         userAddressAdapter.onClick = {
             userViewModel.userAddress = it
-            navController.navigate(R.id.action_userAddressFragment_to_addressDialog)
+            val b = Bundle()
+            b.putString(SCREEN_KEY, TAG)
+            navController.navigate(R.id.action_userAddressFragment_to_addressDialog, b)
         }
     }
 

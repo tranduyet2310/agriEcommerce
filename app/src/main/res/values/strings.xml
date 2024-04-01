@@ -205,4 +205,6 @@
     <string name="delete_from_cart">Bạn muốn xóa sản phẩm này khỏi giỏ hàng?</string>
     <string name="cod">Giao hàng thu tiền - CoD</string>
     <string name="paypal">Thanh toán với Paypal</string>
+    <string name="choose_address">Bạn cần chọn địa chỉ nhận hàng</string>
+    <string name="choose_payment">Bạn cần chọn phương thức thanh toán</string>
 </resources>

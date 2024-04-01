@@ -2,6 +2,7 @@ package com.example.argiecommerce.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.repository.UserAddressRepository
 import com.example.argiecommerce.utils.ScreenState
@@ -34,7 +35,7 @@ class UserAddressViewModel(
         token: String,
         userId: Long,
         addressId: Long
-    ): LiveData<ScreenState<String?>> {
+    ): LiveData<ScreenState<MessageResponse?>> {
         return userAddressRepository.deleteUserAddress(token, userId, addressId)
     }
 }

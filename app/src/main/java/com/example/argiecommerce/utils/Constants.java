@@ -5,8 +5,13 @@ public class Constants {
     public static final String PAYPAL_CLIENT_ID = "ASz55kaCUUc9mbDqGdnkHA_XAa2PCDD7SemUxgFkia44PzNM0tEGA4KsJWF3kCfY-WU60DcGehEAS_iH";
     public static final String RETURN_URL = "com.example.argiecommerce://paypalpay";
     public static final String PAYPAL_SECRET = "EM6H-oZ0onpePCu1buAgKHqFeVu3cn-Ujm8vXDLPTMvX2-7mIKh0xdPQhLXzieaQAtE3QIuvxFanCqMd";
+    // Currency API
+    public static final String CURRENCY_API_KEY = "6e72ae592bfda4290777cc752e67b871124b9aec";
+    public static final String CURRENCY_FROM = "VND";
+    public static final String CURRENCY_TO = "USD";
+    public static final String CURRENCY_FORMAT = "json";
     // API
-    public static final String LOCALHOST = "http://192.168.55.102:8080/";
+    public static final String LOCALHOST = "http://172.20.10.3:8080/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
     public static final String HISTORY_DATA = "history_data";
@@ -29,7 +34,7 @@ public class Constants {
     public static final String TITLE_KEY = "title";
     public static final String PRODUCT_KEY = "product_value";
     public static final String SEARCH_KEY = "search";
-    public static final String TOTAL_KEY = "total";
+    public static final String SCREEN_KEY = "screen";
     // pagination
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";
@@ -48,5 +53,7 @@ public class Constants {
     public static final String SERVER_ERROR = "Lỗi phía máy chủ";
     public static final String FIELD_REQUIRED = "Yêu cầu nhập đủ thông tin";
     //
-     public static final int MIN_PASSWORD_LENGTH = 8;
+    public static final int MIN_PASSWORD_LENGTH = 8;
+    public static final int TOTAL_ADDRESS = 5;
+    public static final String USD_FORMAT = "%.2f";
 }

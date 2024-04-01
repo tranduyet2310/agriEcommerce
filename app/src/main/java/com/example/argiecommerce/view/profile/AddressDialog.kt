@@ -12,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentAddressBinding
+import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.utils.Constants
@@ -41,6 +43,8 @@ class AddressDialog : DialogFragment() {
     private var userAddress: UserAddress? = null
     private lateinit var alertDialog: AlertDialog
     private lateinit var navController: NavController
+    val args: AddressDialogArgs by navArgs()
+    private lateinit var currentScreen: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.FullScreenDialogStyle)
@@ -55,6 +59,7 @@ class AddressDialog : DialogFragment() {
 
         user = userViewModel.user
         userAddress = userViewModel.userAddress
+        currentScreen = args.screen
         showInfo()
 
         return binding.root
@@ -111,7 +116,11 @@ class AddressDialog : DialogFragment() {
             dialogBuilder.setPositiveButton(getString(R.string.ok)) { dialog, which ->
                 dialog.dismiss()
                 deleteAddress()
-                navController.navigate(R.id.action_addressDialog_to_userAddressFragment)
+                if (currentScreen.equals(BillingFragment.TAG)){
+                    navController.navigate(R.id.action_addressDialog_to_billingFragment)
+                } else if (currentScreen.equals(UserAddressFragment.TAG)){
+                    navController.navigate(R.id.action_addressDialog_to_userAddressFragment)
+                }
             }
             dialogBuilder.setNegativeButton(getString(R.string.cancel_v2)) { dialog, which ->
                 dialog.dismiss()
@@ -122,7 +131,11 @@ class AddressDialog : DialogFragment() {
             if (userAddress != null) {
                 saveToDatabase()
                 binding.tvFailed.visibility = View.GONE
-                navController.navigate(R.id.action_addressDialog_to_userAddressFragment)
+                if (currentScreen.equals(BillingFragment.TAG)){
+                    navController.navigate(R.id.action_addressDialog_to_billingFragment)
+                } else if (currentScreen.equals(UserAddressFragment.TAG)){
+                    navController.navigate(R.id.action_addressDialog_to_userAddressFragment)
+                }
             } else {
                 binding.tvFailed.visibility = View.VISIBLE
                 binding.tvFailed.text = Constants.ADDRESS_ID_NOT_FOUND
@@ -163,7 +176,7 @@ class AddressDialog : DialogFragment() {
         }
     }
 
-    private fun processDeleteUserAddress(state: ScreenState<String?>) {
+    private fun processDeleteUserAddress(state: ScreenState<MessageResponse?>) {
         when (state) {
             is ScreenState.Loading -> {
                 val progressDialog = ProgressDialog()

@@ -2,6 +2,7 @@ package com.example.argiecommerce.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants.ADDRESS_ERROR
@@ -105,17 +106,14 @@ class UserAddressRepository {
         token: String,
         userId: Long,
         addressId: Long
-    ): LiveData<ScreenState<String?>> {
-        val mutableLiveData = MutableLiveData<ScreenState<String?>>()
+    ): LiveData<ScreenState<MessageResponse?>> {
+        val mutableLiveData = MutableLiveData<ScreenState<MessageResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
         RetrofitClient.getInstance().getApi()
             .deleteUserAddress(token, userId, addressId)
-            .enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
+            .enqueue(object : Callback<MessageResponse> {
+                override fun onResponse(call: Call<MessageResponse>, response: Response<MessageResponse>) {
                     if (response.isSuccessful) {
                         mutableLiveData.postValue(ScreenState.Success(response.body()))
                     } else {
@@ -123,7 +121,7 @@ class UserAddressRepository {
                     }
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
                     val message = t.message.toString()
                     mutableLiveData.postValue(ScreenState.Error(message, null))
                 }
