@@ -56,6 +56,7 @@ class AddressDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddressBinding.inflate(inflater)
+        binding.toolbarLayout.titleToolbar.visibility = View.GONE
 
         user = userViewModel.user
         userAddress = userViewModel.userAddress

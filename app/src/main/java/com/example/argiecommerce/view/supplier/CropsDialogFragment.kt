@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.InfoDialogAdapter
@@ -24,6 +25,7 @@ class CropsDialogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View{
         binding = FragmentCropsDialogBinding.inflate(inflater)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.culture)
 
         infoDialogList.add(InfoDialog("Nguyễn Văn A", "Táo", "Chấp nhận"))
         infoDialogList.add(InfoDialog("Nguyễn Văn A", "Xoài", "Đang chờ"))
@@ -43,7 +45,11 @@ class CropsDialogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
 
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     private fun showImagePlaceholder() {

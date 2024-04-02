@@ -46,6 +46,8 @@ class AddressFragment : Fragment(), View.OnClickListener {
     ): View {
         _binding = FragmentAddressBinding.inflate(inflater, container, false)
         user = userViewModel.user
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.add_address)
+
         return binding.root
     }
 
@@ -55,6 +57,9 @@ class AddressFragment : Fragment(), View.OnClickListener {
 
         binding.buttonDelelte.setOnClickListener(this)
         binding.buttonSave.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     override fun onDestroyView() {

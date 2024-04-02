@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.preference.PreferenceManager
@@ -22,6 +23,7 @@ import com.example.argiecommerce.adapter.KeywordAdapter
 import com.example.argiecommerce.databinding.FragmentSearchBinding
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.HISTORY_DATA
+import com.example.argiecommerce.viewmodel.UserViewModel
 
 @SuppressLint("ClickableViewAccessibility")
 class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
@@ -34,12 +36,14 @@ class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
     private lateinit var list: ArrayList<String>
     private lateinit var sharedPreferences: SharedPreferences
     private var word: String = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.search)
         setupView()
         setListenerForQuery()
         sharedPreferences.registerOnSharedPreferenceChangeListener(prefChangeListener)
@@ -125,6 +129,10 @@ class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
 
         binding.clearAll.setOnClickListener {
             clearAll(it)
+        }
+
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
         }
     }
 

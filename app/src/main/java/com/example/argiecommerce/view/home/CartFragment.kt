@@ -55,6 +55,7 @@ class CartFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.cart)
 
         user = userViewModel.user
         setupRecyclerView()
@@ -68,6 +69,10 @@ class CartFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
 
         binding.buttonCheckout.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
+
         cartAdapter.onProductClick = {
             val b = Bundle().apply {
                 putParcelable(Constants.PRODUCT_KEY, it.product)

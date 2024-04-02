@@ -57,6 +57,7 @@ class WishlistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWishlistBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.wishlist)
 
         user = userViewModel.user
         setupRecyclerView()
@@ -96,6 +97,9 @@ class WishlistFragment : Fragment() {
             favoriteViewModel.deleteFavoriteProduct(token, user!!.id, it.productId).observe(
                 requireActivity(), { state -> processFavProductDeleting(state) }
             )
+        }
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
         }
     }
 

@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentAuthenticationBinding
+import com.example.argiecommerce.viewmodel.UserViewModel
 
 class AuthenticationFragment : Fragment(), View.OnClickListener {
 
@@ -26,12 +28,17 @@ class AuthenticationFragment : Fragment(), View.OnClickListener {
     private lateinit var correctOtpCode: String
     private var clickCount = 0
 
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAuthenticationBinding.inflate(inflater, container, false)
 
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.otp_authentication)
        correctOtpCode = "123456"
 
         return binding.root
@@ -43,6 +50,9 @@ class AuthenticationFragment : Fragment(), View.OnClickListener {
 
         binding.btnContinue.setOnClickListener(this)
         binding.reSend.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     override fun onClick(v: View?) {

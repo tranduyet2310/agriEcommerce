@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ArgiEcommerce</string>
+    <string name="app_name">AgriMart</string>
     <string name="slogan">An toàn - Uy tín - Chất lượng</string>
     <string name="fullNameApp">Hệ thống phân phối nông sản</string>
     <string name="fullNameAppV2">Hệ thống phân phối\n nông sản</string>
@@ -68,7 +68,6 @@
     <string name="xem_shop">Xem Shop</string>
     <string name="add">Thêm vào giỏ</string>
     <string name="buy_now">Mua ngay</string>
-    <string name="review">Đánh giá</string>
     <string name="be_first_review">Sản phẩm chưa có đánh giá nào</string>
     <string name="write_review">Viết đánh giá</string>
     <string name="_4_5">4.5</string>
@@ -207,4 +206,21 @@
     <string name="paypal">Thanh toán với Paypal</string>
     <string name="choose_address">Bạn cần chọn địa chỉ nhận hàng</string>
     <string name="choose_payment">Bạn cần chọn phương thức thanh toán</string>
+    <string name="choose_product">Bạn cần chọn sản phẩm để thanh toán</string>
+    <string name="order_confirmed">Đơn hàng của bạn đã được đặt thành công!</string>
+    <string name="see_order_detail"><font color="#289C62"><u>Xem lịch sử đơn hàng</u></font></string>
+    <string name="back_to_home">Quay về trang chủ</string>
+    <string name="search">Tìm kiếm sản phẩm</string>
+    <string name="result">Kết quả đặt hàng</string>
+    <string name="otp_authentication">Xác thực OTP</string>
+    <string name="change_password">Đặt lại mật khẩu</string>
+    <string name="add_address">Thêm địa chỉ</string>
+    <string name="order_detail">Chi tiết đơn hàng</string>
+    <string name="personal_info">Thông tin cá nhân</string>
+    <string name="supplier">Nhà cung cấp</string>
+    <string name="product_category">Danh mục hàng</string>
+    <string name="garden">Vườn</string>
+    <string name="shop">Shop</string>
+    <string name="introduction">Giới thiệu</string>
+    
 </resources>

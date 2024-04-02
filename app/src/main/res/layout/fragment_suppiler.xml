@@ -10,9 +10,14 @@
         android:id="@+id/suppiler_layout"
         layout="@layout/suppiler_detail" />
 
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/toolbar_custom" />
+
     <com.google.android.material.appbar.AppBarLayout
         style="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_width="match_parent"
+        android:layout_marginTop="48dp"
         android:layout_height="wrap_content">
 
         <FrameLayout

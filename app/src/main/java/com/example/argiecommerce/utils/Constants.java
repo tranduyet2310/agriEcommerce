@@ -11,7 +11,7 @@ public class Constants {
     public static final String CURRENCY_TO = "USD";
     public static final String CURRENCY_FORMAT = "json";
     // API
-    public static final String LOCALHOST = "http://172.20.10.3:8080/";
+    public static final String LOCALHOST = "http://192.168.55.102:8080/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
     public static final String HISTORY_DATA = "history_data";
@@ -56,4 +56,8 @@ public class Constants {
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final int TOTAL_ADDRESS = 5;
     public static final String USD_FORMAT = "%.2f";
+    public static final String PAYMENT_COD = "CoD";
+    public static final String PAYMENT_PAYPAL = "Paypal";
+    public static final String PAID = "Đã thanh toán";
+    public static final String UNPAID = "Chưa thanh toán";
 }

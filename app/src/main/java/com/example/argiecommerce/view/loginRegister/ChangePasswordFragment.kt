@@ -53,7 +53,9 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
+
         user = userViewModel.user
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.change_password)
 
         if (user == null) {
             binding.cancel.visibility = View.INVISIBLE
@@ -68,6 +70,9 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
 
         binding.cancel.setOnClickListener(this)
         binding.saveChanges.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     override fun onDestroyView() {

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentOrderDetailBinding
 
 
@@ -19,6 +20,8 @@ class OrderDetailFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentOrderDetailBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.order_detail)
+
         return binding.root
     }
 
@@ -26,7 +29,9 @@ class OrderDetailFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     override fun onDestroyView() {

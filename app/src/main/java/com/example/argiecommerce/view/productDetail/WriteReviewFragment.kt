@@ -21,6 +21,9 @@ class WriteReviewFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWriteReviewBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.write_review)
+
+
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +31,9 @@ class WriteReviewFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
 
         binding.btnSubmit.setOnClickListener(this)
-
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     override fun onDestroyView() {

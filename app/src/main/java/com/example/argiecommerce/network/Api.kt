@@ -7,6 +7,9 @@ import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
 import com.example.argiecommerce.model.MessageResponse
+import com.example.argiecommerce.model.OrderDetailResponse
+import com.example.argiecommerce.model.OrderRequest
+import com.example.argiecommerce.model.OrderResponse
 import com.example.argiecommerce.model.PasswordRequest
 import com.example.argiecommerce.model.ProductApiResponse
 import com.example.argiecommerce.model.RegisterApiResponse
@@ -79,6 +82,36 @@ interface Api {
         @Path("userId") userId: Long,
         @Path("productId") productId: Long
     ): Call<MessageResponse>
+
+    @DELETE("/api/cart/{userId}")
+    fun deleteAllItemsByUserId(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long
+    ): Call<MessageResponse>
+
+    @POST("/api/orders/{userId}")
+    suspend fun createOrder(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Body orderRequest: OrderRequest
+    ): Response<OrderResponse>
+
+    @GET("/api/orders/{userId}")
+    fun getOrderByUserId(
+        @Path("userId") userId: Long
+    ): Call<ArrayList<OrderResponse>>
+
+    @POST("/api/details/{orderId}")
+    suspend fun createOrderDetail(
+        @Header("Authorization") token: String,
+        @Path("orderId") orderId: Long,
+        @Body orderDetailResponse: OrderDetailResponse
+    ): Response<OrderDetailResponse>
+
+    @GET("/api/details/{orderId}")
+    fun getDetailsByOrderId(
+        @Path("orderId") orderId: Long
+    ): Call<ArrayList<OrderDetailResponse>>
 
     @GET("api/users/{id}")
     fun getUserInfo(@Path("id") userId: Long): Call<UserApiResponse>

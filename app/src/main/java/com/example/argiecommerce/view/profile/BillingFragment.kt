@@ -35,8 +35,12 @@ import com.example.argiecommerce.utils.Constants.CURRENCY_FORMAT
 import com.example.argiecommerce.utils.Constants.CURRENCY_FROM
 import com.example.argiecommerce.utils.Constants.CURRENCY_TO
 import com.example.argiecommerce.utils.Constants.MAX_ADDRESS
+import com.example.argiecommerce.utils.Constants.PAID
+import com.example.argiecommerce.utils.Constants.PAYMENT_COD
+import com.example.argiecommerce.utils.Constants.PAYMENT_PAYPAL
 import com.example.argiecommerce.utils.Constants.SCREEN_KEY
 import com.example.argiecommerce.utils.Constants.TOTAL_ADDRESS
+import com.example.argiecommerce.utils.Constants.UNPAID
 import com.example.argiecommerce.utils.Constants.USD_FORMAT
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -112,6 +116,7 @@ class BillingFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBillingBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.billing)
 
         user = userViewModel.user
 
@@ -126,6 +131,9 @@ class BillingFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
         binding.buttonPlaceOrder.setOnClickListener(this)
         binding.imageAddAddress.setOnClickListener(this)
         billingAddressAdapter.onClick = {
@@ -164,8 +172,19 @@ class BillingFragment : Fragment(), View.OnClickListener {
             return
         }
 
+        if (billingProductList.isEmpty()){
+            displayErrorSnackbar(getString(R.string.choose_product))
+            return
+        }
+
         if (binding.radioCoD.isChecked || binding.radioPaypal.isChecked) {
             if (binding.radioCoD.isChecked) {
+                userViewModel.total = totalPrice
+                userViewModel.userAddress = selectedAddress
+                userViewModel.paymentMethod = PAYMENT_COD
+                userViewModel.paymentStatus = UNPAID
+                userViewModel.cartProductList = billingProductList
+                userViewModel.orderCreated = false
                 navController.navigate(R.id.action_billingFragment_to_paymentFragment)
             } else if (binding.radioPaypal.isChecked) {
                 lifecycleScope.launch {
@@ -306,6 +325,12 @@ class BillingFragment : Fragment(), View.OnClickListener {
                     }
                     showSnackbar(message)
                     if (result is CaptureOrderResult.Success) {
+                        userViewModel.total = totalPrice
+                        userViewModel.userAddress = selectedAddress
+                        userViewModel.paymentMethod = PAYMENT_PAYPAL
+                        userViewModel.paymentStatus = PAID
+                        userViewModel.cartProductList = billingProductList
+                        userViewModel.orderCreated = false
                         navController.navigate(R.id.action_billingFragment_to_paymentFragment)
                     }
                 }

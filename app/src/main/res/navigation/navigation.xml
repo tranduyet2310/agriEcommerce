@@ -355,9 +355,13 @@
         android:name="com.example.argiecommerce.view.PaymentFragment"
         android:label="fragment_payment"
         tools:layout="@layout/fragment_payment" >
+
         <action
-            android:id="@+id/action_paymentFragment_to_billingFragment"
-            app:destination="@id/billingFragment" />
+            android:id="@+id/action_paymentFragment_to_orderFragment"
+            app:destination="@id/orderFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <dialog
         android:id="@+id/contactDialogFragment"

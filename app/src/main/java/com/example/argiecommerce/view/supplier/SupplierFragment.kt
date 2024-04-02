@@ -23,6 +23,8 @@ class SupplierFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSuppilerBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.supplier)
+
         return binding.root
     }
 
@@ -33,6 +35,9 @@ class SupplierFragment : Fragment(), View.OnClickListener {
         binding.tvSearch.setOnClickListener(this)
         binding.suppilerLayout.imgSuppilerContact.setOnClickListener(this)
         binding.suppilerLayout.tvSuppilerName.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
 
         val specialtiesFragment = arrayListOf<Fragment>(
             SpIntroFragment(),
@@ -52,11 +57,11 @@ class SupplierFragment : Fragment(), View.OnClickListener {
             binding.suppilerLayout.viewpagerSuppiler
         ) { tab, position ->
             when (position) {
-                0 -> tab.text = "Giới thiệu"
-                1 -> tab.text = "Sản phẩm"
-                2 -> tab.text = "Danh mục hàng"
-                3 -> tab.text = "Vườn"
-                4 -> tab.text = "Shop"
+                0 -> tab.text = getString(R.string.introduction)
+                1 -> tab.text = getString(R.string.product)
+                2 -> tab.text = getString(R.string.product_category)
+                3 -> tab.text = getString(R.string.garden)
+                4 -> tab.text = getString(R.string.shop)
             }
         }.attach()
 

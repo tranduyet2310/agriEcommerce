@@ -16,6 +16,10 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/toolbar_custom" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

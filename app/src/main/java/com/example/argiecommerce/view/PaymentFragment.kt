@@ -1,68 +1,96 @@
 package com.example.argiecommerce.view
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentPaymentBinding
-import com.example.argiecommerce.paypal.token.CheckoutApi
-import com.example.argiecommerce.paypal.token.CreatedOrder
-import com.example.argiecommerce.paypal.token.OrderRepository
-import com.example.argiecommerce.paypal.token.request.AmountRequest
-import com.example.argiecommerce.paypal.token.request.ApplicationContextRequest
-import com.example.argiecommerce.paypal.token.request.OrderRequest
-import com.example.argiecommerce.paypal.token.request.PurchaseUnitRequest
+import com.example.argiecommerce.model.CartResponse
+import com.example.argiecommerce.model.MessageResponse
+import com.example.argiecommerce.model.OrderDetailResponse
+import com.example.argiecommerce.model.OrderRequest
+import com.example.argiecommerce.model.User
+import com.example.argiecommerce.model.UserAddress
+import com.example.argiecommerce.network.Api
+import com.example.argiecommerce.network.RetrofitClient
+import com.example.argiecommerce.utils.Constants
+import com.example.argiecommerce.utils.LoginUtils
+import com.example.argiecommerce.utils.ProgressDialog
+import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.viewmodel.CartViewModel
+import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.paypal.checkout.PayPalCheckout
-import com.paypal.checkout.approve.OnApprove
-import com.paypal.checkout.cancel.OnCancel
-import com.paypal.checkout.createorder.CreateOrder
-import com.paypal.checkout.createorder.CurrencyCode
-import com.paypal.checkout.createorder.OrderIntent
-import com.paypal.checkout.createorder.UserAction
-import com.paypal.checkout.error.OnError
-import com.paypal.checkout.order.AuthorizeOrderResult
-import com.paypal.checkout.order.CaptureOrderResult
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ExperimentalSerializationApi
-import java.io.IOException
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 class PaymentFragment : Fragment() {
     private lateinit var binding: FragmentPaymentBinding
     private lateinit var navController: NavController
 
-    private lateinit var orderId: String
-    private val tag = javaClass.simpleName
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
+    private val cartViewModel: CartViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(CartViewModel::class.java)
+    }
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(requireContext())
+    }
+    private val progressDialog: ProgressDialog by lazy {
+        ProgressDialog()
+    }
+    private val apiService: Api by lazy {
+        RetrofitClient.getInstance().getApi()
+    }
 
-    @OptIn(ExperimentalSerializationApi::class)
-    private val checkoutApi = CheckoutApi()
-    private val orderRepository = OrderRepository(checkoutApi)
-
-    private val checkoutSdk: PayPalCheckout
-        get() = PayPalCheckout
-    private val enteredAmount: String
-        get() = binding.totalAmountInput.editText!!.text.toString()
-
-    private val uiScope = MainScope()
+    private lateinit var alertDialog: AlertDialog
+    private var user: User? = null
+    private var userAddress: UserAddress? = null
+    private var totalPrice: Long = 0L
+    private lateinit var paymentMethod: String
+    private lateinit var paymentStatus: String
+    private lateinit var cartProductList: ArrayList<CartResponse>
+    private var orderCreated: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPaymentBinding.inflate(inflater)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.result)
 
-//        paymentOrder()
+        user = userViewModel.user
+        userAddress = userViewModel.userAddress
+        totalPrice = userViewModel.total
+        paymentMethod = userViewModel.paymentMethod
+        paymentStatus = userViewModel.paymentStatus
+        cartProductList = userViewModel.cartProductList
+        orderCreated = userViewModel.orderCreated
 
-
+        if (user != null && userAddress != null && !orderCreated) {
+            lifecycleScope.launch {
+                try {
+                    val orderId: Long = createOrder()
+                    createOrderDetail(orderId)
+                    makeEmptyCart()
+                } catch (e: Exception) {
+                    Log.d("TEST", "Failed to create order")
+                }
+            }
+        }
         return binding.root
     }
 
@@ -70,95 +98,90 @@ class PaymentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        binding.totalAmountInput.editText?.addTextChangedListener {
-            binding.totalAmountInput.error = null
+        binding.btnHome.setOnClickListener {
+            userViewModel.isHomeFragment = true
+            navController.navigate(R.id.action_paymentFragment_to_homeFragment)
         }
-
-        binding.submitTokenButton.setOnClickListener {
-            if (binding.totalAmountInput.editText!!.text.isEmpty()) {
-                binding.totalAmountInput.error = "Total Amount Required"
-                return@setOnClickListener
-            }
-
-            startCheckout()
+        binding.tvSeeOrder.setOnClickListener {
+            navController.navigate(R.id.action_paymentFragment_to_orderFragment)
         }
-
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
-    private fun startCheckout() {
-        checkoutSdk.startCheckout(
-            createOrder = CreateOrder { createOrderActions ->
-                uiScope.launch {
-                    val createdOrder = createOrder()
-                    createdOrder?.let {
-                        createOrderActions.set(createdOrder.id)
-                        orderId = createdOrder.id
-                    }
+    suspend fun createOrder(): Long = suspendCoroutine { continuation ->
+        val orderRequest = OrderRequest().apply {
+            paymentStatus = this@PaymentFragment.paymentStatus
+            paymentMethod = this@PaymentFragment.paymentMethod
+            total = totalPrice
+            userAddressId = userAddress!!.id
+        }
+        val token = loginUtils.getUserToken()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val response = apiService.createOrder(token, user!!.id, orderRequest)
+                if (response.isSuccessful) {
+                    val order = response.body()
+                    val orderId = order?.id ?: 0L
+                    continuation.resume(orderId)
+                } else {
+                    continuation.resume(0L)
+                }
+            } catch (e: Exception) {
+                continuation.resume(0L)
+            }
+        }
+    }
+
+    suspend fun createOrderDetail(orderId: Long) {
+        val token = loginUtils.getUserToken()
+        cartProductList.map { cartItem ->
+            val quantity = cartItem.quantity
+            val productId = cartItem.product.productId
+            val orderDetailResponse = OrderDetailResponse(quantity, productId)
+
+            lifecycleScope.async(Dispatchers.IO) {
+                val response = apiService.createOrderDetail(token, orderId, orderDetailResponse)
+                if (response.isSuccessful) {
+                    Log.d("TEST", "CREATED OrderDetail")
                 }
             }
-        )
-
-        checkoutSdk.registerCallbacks(
-            onApprove = OnApprove { approval ->
-                approval.orderActions.capture { result ->
-                    val message = when (result) {
-                        is CaptureOrderResult.Success -> {
-                            Log.i(tag, "Success: $result")
-                            "💰 Order Capture Succeeded 💰"
-                        }
-
-                        is CaptureOrderResult.Error -> {
-                            Log.i(tag, "Error: $result")
-                            "🔥 Order Capture Failed 🔥"
-                        }
-                    }
-                    showSnackbar(message)
-                }
-            },
-            onCancel = OnCancel {
-                Log.d(tag, "OnCancel")
-                showSnackbar("😭 Buyer Cancelled Checkout 😭")
-            },
-            onError = OnError { errorInfo ->
-                Log.d(tag, "ErrorInfo: $errorInfo")
-                showSnackbar("🚨 An Error Occurred 🚨")
-            }
+        }.awaitAll()
+    }
+    private fun makeEmptyCart() {
+        val token = loginUtils.getUserToken()
+        cartViewModel.deleteAllItems(token, user!!.id).observe(
+            requireActivity(), { state -> processDeleteAllItems(state) }
         )
     }
 
-    private suspend fun createOrder(): CreatedOrder? {
-        val orderRequest = createOrderRequest()
-        return try {
-            orderRepository.create(orderRequest)
-        } catch (ex: IOException) {
-            Log.w(tag, "Attempt to create order failed with the following message: ${ex.message}")
-            null
+    private fun processDeleteAllItems(state: ScreenState<MessageResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    userViewModel.orderCreated = true
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    displayErrorSnackbar(state.message)
+                }
+            }
         }
     }
 
-    private fun createOrderRequest(): OrderRequest {
-        return OrderRequest(
-            intent = OrderIntent.CAPTURE.name,
-            applicationContext = ApplicationContextRequest(
-                userAction = UserAction.PAY_NOW.name
-            ),
-            purchaseUnits = listOf(
-                PurchaseUnitRequest(
-                    amount = AmountRequest(
-                        value = enteredAmount,
-                        currencyCode = CurrencyCode.USD.name
-                    )
-                )
-            )
-        ).also { Log.i(tag, "OrderRequest: $it") }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        uiScope.coroutineContext.cancelChildren()
-    }
-
-    private fun showSnackbar(text: String) {
-        Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG).show()
+    private fun displayErrorSnackbar(errorMessage: String) {
+        Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
+            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .show()
     }
 }

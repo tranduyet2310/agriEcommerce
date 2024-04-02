@@ -18,6 +18,7 @@ import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.utils.Validation
 import com.example.argiecommerce.viewmodel.RegisterViewModel
+import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class SignUpFragment : Fragment(), View.OnClickListener {
@@ -29,6 +30,9 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     private val registerViewModel: RegisterViewModel by lazy {
         ViewModelProvider(requireActivity()).get(RegisterViewModel::class.java)
     }
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
 
     private lateinit var alertDialog: AlertDialog
     private val user: User by lazy { User() }
@@ -37,7 +41,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
-
+        userViewModel.isHomeFragment = false
         return binding.root
     }
 

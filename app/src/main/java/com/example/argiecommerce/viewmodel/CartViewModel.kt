@@ -42,4 +42,11 @@ class CartViewModel(
     ): LiveData<ScreenState<MessageResponse?>> {
         return cartRepository.removeFromCart(token, userId, productId)
     }
+
+    fun deleteAllItems(
+        token: String,
+        userId: Long
+    ): LiveData<ScreenState<MessageResponse?>> {
+        return cartRepository.deleteAllItems(token, userId)
+    }
 }

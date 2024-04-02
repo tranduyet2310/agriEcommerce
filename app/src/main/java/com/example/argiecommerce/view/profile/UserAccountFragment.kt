@@ -64,8 +64,10 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserAccountBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.personal_info)
 
         user = userViewModel.user
+
         showInfoData()
         imageActivityResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -97,6 +99,9 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
         binding.tvUpdatePassword.setOnClickListener(this)
         binding.buttonSave.setOnClickListener(this)
         binding.imageEdit.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     override fun onDestroyView() {

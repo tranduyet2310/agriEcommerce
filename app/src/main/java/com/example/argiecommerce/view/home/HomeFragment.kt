@@ -99,6 +99,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         user = userViewModel.user
+        userViewModel.isHomeFragment = true
         setupRecyclerViews()
         setupFlipImages()
         getProductData()

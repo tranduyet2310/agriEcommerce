@@ -50,6 +50,7 @@ class UserAddressFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserAddressBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.address)
 
         user = userViewModel.user
         setupRecyclerView()
@@ -108,6 +109,9 @@ class UserAddressFragment : Fragment() {
             val b = Bundle()
             b.putString(SCREEN_KEY, TAG)
             navController.navigate(R.id.action_userAddressFragment_to_addressDialog, b)
+        }
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
         }
     }
 

@@ -299,7 +299,7 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:padding="@dimen/dimen10dp"
-                android:text="@string/review"
+                android:text="@string/reviews"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 

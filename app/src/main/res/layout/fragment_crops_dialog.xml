@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".view.supplier.CropsDialogFragment">
 
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/toolbar_custom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/titleDialog"
         android:layout_width="match_parent"
@@ -13,6 +20,7 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/inter_semibold"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
         android:text="@string/culture"
         android:textAllCaps="true"
@@ -20,7 +28,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,6 +36,7 @@
         android:fontFamily="@font/inter_semibold"
         android:text="@string/estimate_total"
         android:id="@+id/titleTotal"
+        android:layout_marginTop="10dp"
         android:textSize="12sp"
         android:layout_marginStart="5dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +62,7 @@
         android:fontFamily="@font/inter_semibold"
         android:text="@string/has_receive"
         android:id="@+id/titleReceive"
+        android:layout_marginTop="10dp"
         android:textSize="12sp"
         android:layout_marginStart="5dp"
         app:layout_constraintStart_toStartOf="@id/guideline5"
@@ -72,6 +82,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/titleReceive"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grayAgri"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTotal"/>
+
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
@@ -79,6 +96,7 @@
         android:background="@color/lightGray"
         android:orientation="horizontal"
         android:weightSum="10"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTotal">

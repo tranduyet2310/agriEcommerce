@@ -42,6 +42,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        binding.toolbarLayout.titleToolbar.text = getString(R.string.infor_product)
 
         product = args.productValue
         user = userViewModel.user
@@ -100,6 +101,9 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         binding.details.btnSeeMoreInfoProduct.setOnClickListener(this)
         binding.details.btnSeeShop.setOnClickListener(this)
         binding.details.imgFavourite.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     override fun onDestroyView() {
