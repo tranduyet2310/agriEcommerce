@@ -9,7 +9,7 @@
     <string name="menu_Standard">Tiêu chuẩn</string>
     <string name="menu_Category">Danh mục</string>
     <string name="menu_Profile">Tài khoản</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="sign_in">Đăng nhập</string>
     <string name="hint_password">Password</string>
     <string name="hint_email">Email</string>
@@ -40,6 +40,7 @@
     <string name="eight_characters">Mật khẩu phải có tối thiểu 8 ký tự</string>
     <string name="create_account">Tạo tài khoản</string>
     <string name="already_have_account">Đăng nhập. <font color='#008CFF'>Đã có tài khoản?</font></string>
+
     <string name="find_product">Tìm kiếm sản phẩm</string>
     <string name="flash_sale"><font color="#ffff8800">FLASH SALE</font></string>
     <string name="see_all">Xem tất cả</string>
@@ -70,14 +71,17 @@
     <string name="buy_now">Mua ngay</string>
     <string name="be_first_review">Sản phẩm chưa có đánh giá nào</string>
     <string name="write_review">Viết đánh giá</string>
-    <string name="_4_5">4.5</string>
-    <string name="_200_review">200 Đánh giá</string>
-    <string name="_5">5</string>
     <string name="_100">100</string>
+    <string name="_200_review">200 Đánh giá</string>
+    <string name="_4_5">4.5</string>
+
+    <string name="_5_0">5.0</string>
+    <string name="_5">5</string>
     <string name="_4">4</string>
     <string name="_3">3</string>
     <string name="_2">2</string>
     <string name="_1">1</string>
+
     <string name="infor_product">Thông tin sản phẩm</string>
     <string name="infor_product_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sapien diam, pharetra eu nisi eu, mollis commodo diam. In efficitur augue mollis maximus accumsan. Sed eros risus, mollis sit amet risus vitae, feugiat cursus lectus. Donec sed metus eu odio eleifend viverra id sit amet metus. Praesent quis facilisis felis. Sed tempus augue ut velit finibus tempus. Maecenas sapien lorem, pellentesque vel convallis ut, condimentum tincidunt turpis. Pellentesque iaculis tempor laoreet. Curabitur vel lacus facilisis, auctor lacus non, commodo nulla. Nam eget libero est. Aenean laoreet nunc non dolor tristique convallis. Morbi pellentesque risus non molestie tempor. Vestibulum quis turpis varius, vulputate dolor vel, ullamcorper mauris. Vivamus sed pharetra lacus. Suspendisse potenti.\n\nNulla vel lacus id libero porta varius et sit amet nisl. Nullam consectetur vitae odio vel viverra. Integer tellus lectus, congue vitae enim non, accumsan lobortis neque. Morbi at auctor nisi. Integer dignissim massa id nulla congue, a placerat diam dignissim. Vivamus quis nulla eget nibh malesuada pulvinar eu eu sem. Maecenas ut tristique metus, et iaculis neque. Etiam malesuada orci vitae turpis dapibus, et congue lectus interdum.\n\nNulla sollicitudin lorem eget sapien facilisis elementum. In eget faucibus nulla. Donec feugiat risus eu sem facilisis maximus. Donec iaculis justo vitae lectus aliquam gravida. In felis tortor, aliquet et dapibus eu, dictum vel orci. Vivamus ultricies nibh a molestie gravida. Integer ac pellentesque massa, non ornare quam. Praesent ut ante porttitor, semper enim congue, euismod justo. Quisque convallis gravida tempus. Sed et tincidunt lorem, nec feugiat nunc. Nunc non quam non ipsum consectetur euismod vel et erat. Cras lobortis arcu at dignissim aliquam. Nunc sit amet tempor nunc, sit amet fermentum magna. Morbi fringilla lacus mauris, non viverra arcu cursus vel. Sed euismod interdum enim et pharetra. Quisque suscipit, sapien non malesuada ornare, mauris purus efficitur sapien, in lacinia augue massa id magna.</string>
     <string name="see_more">Xem thêm</string>
@@ -129,6 +133,7 @@
     <string name="had_joined">Đã tham gia</string>
     <string name="shop_description">Mô tả nông hộ</string>
     <string name="account_have_accept">Tài khoản đã được xác minh:</string>
+
     <string name="harvest_time">Giai đoạn thu hoạch</string>
     <string name="chemical_time">Giai đoạn phòng trừ sâu bệnh</string>
     <string name="take_care_time">Giai đoạn chăm sóc cây</string>
@@ -222,5 +227,19 @@
     <string name="garden">Vườn</string>
     <string name="shop">Shop</string>
     <string name="introduction">Giới thiệu</string>
-    
+    <string name="not_sale">Sản phẩm này hiện chưa bán</string>
+    <string name="cancel_order">Hủy đơn hàng</string>
+    <string name="PROCESSING">Đang xử lý</string>
+    <string name="CONFIRMED">Đã chấp nhận</string>
+    <string name="DELIVERING">Đang giao hàng</string>
+    <string name="COMPLETED">Giao hàng thành công</string>
+    <string name="CANCELLED">Đã hủy đơn hàng</string>
+    <string name="received">Đã nhận hàng</string>
+    <string name="receive_success">Nhận hàng thành công</string>
+    <string name="updated_status">Cập nhật trạng thái thành công</string>
+    <string name="no_review">Hiện chưa có đánh giá nào!</string>
+    <string name="first_review">Trở thành người đánh giá đầu tiên ?</string>
+    <string name="review_success">Đánh giá sản phẩm thành công</string>
+    <string name="allow_review">Sau khi nhận hàng mới có thể đánh giá</string>
+
 </resources>

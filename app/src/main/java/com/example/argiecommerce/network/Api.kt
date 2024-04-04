@@ -7,12 +7,18 @@ import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
 import com.example.argiecommerce.model.MessageResponse
+import com.example.argiecommerce.model.OrderApiResponse
 import com.example.argiecommerce.model.OrderDetailResponse
 import com.example.argiecommerce.model.OrderRequest
 import com.example.argiecommerce.model.OrderResponse
 import com.example.argiecommerce.model.PasswordRequest
+import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiResponse
 import com.example.argiecommerce.model.RegisterApiResponse
+import com.example.argiecommerce.model.ReviewApiResponse
+import com.example.argiecommerce.model.ReviewRequest
+import com.example.argiecommerce.model.ReviewResponse
+import com.example.argiecommerce.model.ReviewStatisticResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.model.UserApiResponse
@@ -97,9 +103,12 @@ interface Api {
     ): Response<OrderResponse>
 
     @GET("/api/orders/{userId}")
-    fun getOrderByUserId(
-        @Path("userId") userId: Long
-    ): Call<ArrayList<OrderResponse>>
+    suspend fun getOrderByUserId(
+        @Path("userId") userId: Long,
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<OrderApiResponse>
 
     @POST("/api/details/{orderId}")
     suspend fun createOrderDetail(
@@ -108,10 +117,55 @@ interface Api {
         @Body orderDetailResponse: OrderDetailResponse
     ): Response<OrderDetailResponse>
 
+    @PATCH("/api/products/{productId}")
+    suspend fun increaseSoldProduct(
+        @Header("Authorization") token: String,
+        @Path("productId") productId: Long,
+        @Query("quantity") quantity: Long
+    ): Response<Product>
+
     @GET("/api/details/{orderId}")
     fun getDetailsByOrderId(
         @Path("orderId") orderId: Long
     ): Call<ArrayList<OrderDetailResponse>>
+
+    @PATCH("/api/orders/{orderId}")
+    fun updateOrderStatus(
+        @Header("Authorization") token: String,
+        @Path("orderId") orderId: Long,
+        @Query("orderStatus") orderStatus: String
+    ): Call<OrderResponse>
+
+    @GET("/api/orders/{userId}/{productId}")
+    fun checkUserPurchasedOrNot(
+        @Path("userId") userId: Long,
+        @Path("productId") productId: Long
+    ): Call<MessageResponse>
+
+    @POST("api/reviews/{userId}/{productId}")
+    fun createReview(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Path("productId") productId: Long,
+        @Body reviewRequest: ReviewRequest
+    ): Call<ReviewResponse>
+
+    @GET("api/reviews/{productId}/list")
+    suspend fun getAllReviewsByProductId(
+        @Path("productId") productId: Long,
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<ReviewApiResponse>
+
+    @GET("api/reviews/{productId}/total")
+    fun calculateTotalRating(@Path("productId") productId: Long): Call<ReviewStatisticResponse>
+
+    @GET("api/reviews/{productId}/statistic")
+    fun statisticRating(@Path("productId") productId: Long): Call<ReviewStatisticResponse>
+
+    @GET("api/reviews/{productId}/average")
+    fun averageRating(@Path("productId") productId: Long): Call<ReviewStatisticResponse>
 
     @GET("api/users/{id}")
     fun getUserInfo(@Path("id") userId: Long): Call<UserApiResponse>
@@ -147,6 +201,9 @@ interface Api {
 
     @GET("/api/users/{userId}/addresses")
     fun getAddressByUserId(@Path("userId") userId: Long): Call<ArrayList<UserAddress>>
+
+    @GET("/api/users/addresses/{id}")
+    fun getAddressById(@Path("id") addressId: Long): Call<UserAddress>
 
     @PUT("/api/users/{userId}/addresses/{id}")
     fun updateUserAddress(

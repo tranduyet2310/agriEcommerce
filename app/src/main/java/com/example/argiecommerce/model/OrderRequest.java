@@ -4,7 +4,7 @@ public class OrderRequest {
     private String paymentMethod;
     private String paymentStatus;
     private Long total;
-    private Long userAddressId;
+    private Long addressId;
 
     public OrderRequest() {
     }
@@ -33,11 +33,11 @@ public class OrderRequest {
         this.total = total;
     }
 
-    public Long getUserAddressId() {
-        return userAddressId;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public void setUserAddressId(Long userAddressId) {
-        this.userAddressId = userAddressId;
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 }

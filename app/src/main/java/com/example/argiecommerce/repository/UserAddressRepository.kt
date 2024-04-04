@@ -129,4 +129,30 @@ class UserAddressRepository {
 
         return mutableLiveData
     }
+
+    fun getAddressById(addressId: Long): LiveData<ScreenState<UserAddress?>> {
+        val mutableLiveData = MutableLiveData<ScreenState<UserAddress?>>()
+        mutableLiveData.postValue(ScreenState.Loading(null))
+
+        RetrofitClient.getInstance().getApi().getAddressById(addressId)
+            .enqueue(object : Callback<UserAddress> {
+                override fun onResponse(
+                    call: Call<UserAddress>,
+                    response: Response<UserAddress>
+                ) {
+                    if (response.isSuccessful) {
+                        mutableLiveData.postValue(ScreenState.Success(response.body()))
+                    } else {
+                        mutableLiveData.postValue(ScreenState.Error(ADDRESS_ERROR, null))
+                    }
+                }
+
+                override fun onFailure(call: Call<UserAddress>, t: Throwable) {
+                    val message = t.message.toString()
+                    mutableLiveData.postValue(ScreenState.Error(message, null))
+                }
+            })
+
+        return mutableLiveData
+    }
 }

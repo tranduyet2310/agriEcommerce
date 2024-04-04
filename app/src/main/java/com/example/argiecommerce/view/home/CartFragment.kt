@@ -218,7 +218,8 @@ class CartFragment : Fragment(), View.OnClickListener {
                     } else {
                         hideEmptyCart()
                         showOtherViews()
-                        cartAdapter.notifyItemChanged(position)
+//                        cartAdapter.notifyItemChanged(position)
+                        cartAdapter.notifyDataSetChanged()
                         totalPrice = 0L
                         calculateTotalPrice(cartItemList)
                     }
@@ -244,7 +245,8 @@ class CartFragment : Fragment(), View.OnClickListener {
                 if (state.data != null) {
                     alertDialog.dismiss()
                     cartItemList.removeAt(position)
-                    cartAdapter.notifyItemChanged(position)
+//                    cartAdapter.notifyItemChanged(position)
+                    cartAdapter.notifyDataSetChanged()
                     totalPrice = 0L
                     calculateTotalPrice(cartItemList)
                     if (cartItemList.isEmpty()) {

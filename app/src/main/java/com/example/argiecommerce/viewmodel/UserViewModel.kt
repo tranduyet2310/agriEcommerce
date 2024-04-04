@@ -15,5 +15,4 @@ class UserViewModel: ViewModel() {
     var paymentStatus: String = UNPAID
     var cartProductList: ArrayList<CartResponse> = arrayListOf()
     var orderCreated: Boolean = false
-    var isHomeFragment: Boolean = true
 }

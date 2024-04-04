@@ -14,9 +14,9 @@
         <include
             android:id="@+id/toolbarLayout"
             layout="@layout/toolbar_custom"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="@dimen/dimen24dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/inter_semibold"
             android:text="#1234567"
             android:textColor="@color/black"
@@ -82,7 +82,7 @@
             android:id="@+id/tvShippingAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/address"
             android:textColor="@color/black"
@@ -96,11 +96,11 @@
             android:id="@+id/linearAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:maxHeight="85dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toEndOf="@id/guideline10"
             app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@id/tvShippingAddress">
-
 
             <TextView
                 android:id="@+id/tvFullName"
@@ -111,14 +111,6 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/tvAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/address_location"
-                android:textSize="13sp" />
-
-            <TextView
                 android:id="@+id/tvPhoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,13 +118,51 @@
                 android:text="@string/phone_number"
                 android:textSize="13sp" />
 
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:text="@string/address_location"
+                android:textSize="13sp" />
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPayment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/payment_method"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:drawablePadding="5dp"
+            app:drawableLeftCompat="@drawable/ic_billing_white"
+            app:drawableTint="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline10"
+            app:layout_constraintTop_toBottomOf="@id/linearStepView" />
+
+        <TextView
+            android:id="@+id/tvPaymentMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/cod"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/guideline10"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tvPayment"
+            android:textSize="13sp" />
 
         <View
             android:id="@+id/line1"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:background="#97AABD"
             android:backgroundTint="#97AABD"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -143,7 +173,7 @@
             android:id="@+id/tvProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:drawablePadding="5dp"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/product"
@@ -157,7 +187,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProducts"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="280dp"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/line1"
@@ -168,10 +198,9 @@
             android:id="@+id/linear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/total_box_background"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@id/rvProducts">
@@ -209,6 +238,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btnCancelOrder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/cancel_order"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/linear" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.55" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -38,4 +38,8 @@ class UserAddressViewModel(
     ): LiveData<ScreenState<MessageResponse?>> {
         return userAddressRepository.deleteUserAddress(token, userId, addressId)
     }
+
+    fun getAddressById(addressId: Long): LiveData<ScreenState<UserAddress?>> {
+        return userAddressRepository.getAddressById(addressId)
+    }
 }

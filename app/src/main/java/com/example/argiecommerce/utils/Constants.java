@@ -35,6 +35,8 @@ public class Constants {
     public static final String PRODUCT_KEY = "product_value";
     public static final String SEARCH_KEY = "search";
     public static final String SCREEN_KEY = "screen";
+    public static final String ORDER_KEY = "order";
+    public static final String PRODUCT_ID_KEY = "productId";
     // pagination
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";

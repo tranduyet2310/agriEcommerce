@@ -99,7 +99,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         user = userViewModel.user
-        userViewModel.isHomeFragment = true
+
         setupRecyclerViews()
         setupFlipImages()
         getProductData()
@@ -248,6 +248,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun addToCart(product: Product) {
+        if(product.isNew){
+            showSnackbar(getString(R.string.not_sale))
+            return
+        }
         if (product.isInCart == 1) {
             val token = loginUtils.getUserToken()
             cartViewModel.addToCart(token, user!!.id, product.productId).observe(
@@ -555,6 +559,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
             .apply { setAction(RETRY) { dismiss() } }
             .show()
+    }
+
+    private fun showSnackbar(text: String) {
+        Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onResume() {

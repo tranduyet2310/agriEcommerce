@@ -191,6 +191,9 @@
         <action
             android:id="@+id/action_allReviewsFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <argument
+            android:name="productId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/writeReviewFragment"
@@ -200,6 +203,9 @@
         <action
             android:id="@+id/action_writeReviewFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <argument
+            android:name="productId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -287,6 +293,9 @@
         <action
             android:id="@+id/action_orderDetailFragment_to_orderFragment"
             app:destination="@id/orderFragment" />
+        <argument
+            android:name="order"
+            app:argType="com.example.argiecommerce.model.OrderResponse" />
     </fragment>
     <fragment
         android:id="@+id/wishlistFragment"

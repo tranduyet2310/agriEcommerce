@@ -31,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -84,10 +85,15 @@ class PaymentFragment : Fragment() {
             lifecycleScope.launch {
                 try {
                     val orderId: Long = createOrder()
+                    if (orderId == 0L){
+                        displayErrorSnackbar("Failed to get orderID")
+                        cancel()
+                    }
                     createOrderDetail(orderId)
+                    increaseSoldProduct()
                     makeEmptyCart()
                 } catch (e: Exception) {
-                    Log.d("TEST", "Failed to create order")
+                    Log.d("TEST", "Get error when create order")
                 }
             }
         }
@@ -99,7 +105,6 @@ class PaymentFragment : Fragment() {
         navController = Navigation.findNavController(view)
 
         binding.btnHome.setOnClickListener {
-            userViewModel.isHomeFragment = true
             navController.navigate(R.id.action_paymentFragment_to_homeFragment)
         }
         binding.tvSeeOrder.setOnClickListener {
@@ -115,7 +120,7 @@ class PaymentFragment : Fragment() {
             paymentStatus = this@PaymentFragment.paymentStatus
             paymentMethod = this@PaymentFragment.paymentMethod
             total = totalPrice
-            userAddressId = userAddress!!.id
+            addressId = userAddress!!.id
         }
         val token = loginUtils.getUserToken()
 
@@ -146,6 +151,20 @@ class PaymentFragment : Fragment() {
                 val response = apiService.createOrderDetail(token, orderId, orderDetailResponse)
                 if (response.isSuccessful) {
                     Log.d("TEST", "CREATED OrderDetail")
+                }
+            }
+        }.awaitAll()
+    }
+
+    suspend fun increaseSoldProduct() {
+        val token = loginUtils.getUserToken()
+        cartProductList.map { cartItem ->
+            val productId = cartItem.product.productId
+            val quantity = cartItem.quantity.toLong()
+            lifecycleScope.async(Dispatchers.IO) {
+                val response = apiService.increaseSoldProduct(token, productId, quantity)
+                if (response.isSuccessful) {
+                    Log.d("TEST", "INCREASED!")
                 }
             }
         }.awaitAll()

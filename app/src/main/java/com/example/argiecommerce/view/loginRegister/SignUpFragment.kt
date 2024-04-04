@@ -41,7 +41,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
-        userViewModel.isHomeFragment = false
+
         return binding.root
     }
 
