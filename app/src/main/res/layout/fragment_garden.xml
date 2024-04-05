@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/inter_bold"
-            android:text="Đông - Xuân"
+            tools:text="Đông - Xuân"
             android:textColor="@color/orange"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/titleSeason"
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
-            android:text="5 ha"
+            tools:text="5 ha"
             android:textColor="@color/orange"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="@id/titleArea"
@@ -100,14 +100,17 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
+        android:id="@+id/scrollShortTermPlant"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/infor_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/shortTermPlant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -162,13 +165,30 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="01/01/2024"
+                tools:text="01/01/2024"
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/tvLandTitle"
                 app:layout_constraintStart_toStartOf="@id/tvLandTitle"
                 app:layout_constraintTop_toBottomOf="@id/viewLandSupporter" />
+
+            <TextView
+                android:id="@+id/tvLandContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvLandTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvLandDate" />
+
             <!--    Seed-->
             <View
                 android:id="@+id/viewSeed"
@@ -220,7 +240,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="01/01/2024"
+                tools:text="01/01/2024"
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -239,6 +259,23 @@
                 app:layout_constraintEnd_toEndOf="@id/viewLand"
                 app:layout_constraintStart_toStartOf="@id/viewLand"
                 app:layout_constraintTop_toBottomOf="@id/viewLand" />
+
+            <TextView
+                android:id="@+id/tvSeedContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvSeedTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvSeedDate" />
+
             <!--   Germination -->
             <View
                 android:id="@+id/viewGermination"
@@ -290,7 +327,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="01/01/2024"
+                tools:text="01/01/2024"
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -309,6 +346,22 @@
                 app:layout_constraintEnd_toEndOf="@id/viewSeed"
                 app:layout_constraintStart_toStartOf="@id/viewSeed"
                 app:layout_constraintTop_toBottomOf="@id/viewSeed" />
+
+            <TextView
+                android:id="@+id/tvGerminationContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvGerminationTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvGerminationDate" />
             <!--    Take care-->
             <View
                 android:id="@+id/viewTakeCare"
@@ -360,7 +413,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="01/01/2024"
+                tools:text="01/01/2024"
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -379,6 +432,22 @@
                 app:layout_constraintEnd_toEndOf="@id/viewGermination"
                 app:layout_constraintStart_toStartOf="@id/viewGermination"
                 app:layout_constraintTop_toBottomOf="@id/viewGermination" />
+
+            <TextView
+                android:id="@+id/tvTakeCareContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvTakeCareTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvTakeCareDate" />
             <!--    Chemical -->
             <View
                 android:id="@+id/viewChemical"
@@ -430,7 +499,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="01/01/2024"
+                tools:text="01/01/2024"
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -449,6 +518,22 @@
                 app:layout_constraintEnd_toEndOf="@id/viewTakeCare"
                 app:layout_constraintStart_toStartOf="@id/viewTakeCare"
                 app:layout_constraintTop_toBottomOf="@id/viewTakeCare" />
+
+            <TextView
+                android:id="@+id/tvChemicalContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvChemicalTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvChemicalDate" />
             <!--    Harvest-->
             <View
                 android:id="@+id/viewHarvest"
@@ -500,7 +585,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="01/01/2024"
+                tools:text="01/01/2024"
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -517,6 +602,7 @@
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@id/tvHarvestDate"
                 app:layout_constraintTop_toBottomOf="@id/tvHarvestDate" />
 
@@ -530,6 +616,7 @@
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/titleHarvestYield"
                 app:layout_constraintTop_toBottomOf="@id/tvHarvestDate" />
@@ -555,6 +642,461 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/scrollLongTermPlant"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/infor_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/longTermPlant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--    Take care-->
+            <View
+                android:id="@+id/viewTakeCareLong"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_remain"
+                app:layout_constraintBottom_toBottomOf="@id/imageTakeCareLong"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageTakeCareLong" />
+
+            <ImageView
+                android:id="@+id/imageTakeCareLong"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="30dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/planting"
+                app:layout_constraintStart_toEndOf="@id/viewTakeCareLong"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/viewTakeCareSupporterLong"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageTakeCareLong"
+                app:layout_constraintEnd_toEndOf="@id/imageTakeCareLong"
+                app:layout_constraintStart_toStartOf="@id/imageTakeCareLong"
+                app:layout_constraintTop_toTopOf="@id/imageTakeCareLong" />
+
+            <TextView
+                android:id="@+id/tvTakeCareTitleLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/take_care_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewTakeCareSupporterLong"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageTakeCareLong" />
+
+            <TextView
+                android:id="@+id/tvTakeCareDateLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                tools:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvTakeCareTitleLong"
+                app:layout_constraintStart_toStartOf="@id/tvTakeCareTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/viewTakeCareSupporterLong" />
+
+            <TextView
+                android:id="@+id/tvTakeCareContentLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvTakeCareTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/tvTakeCareDateLong" />
+
+            <!--    Flowering-->
+            <View
+                android:id="@+id/viewFloweringLong"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_remain"
+                app:layout_constraintBottom_toBottomOf="@id/imageFloweringLong"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageFloweringLong" />
+
+            <ImageView
+                android:id="@+id/imageFloweringLong"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="30dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/flowering"
+                app:layout_constraintStart_toEndOf="@id/viewFloweringLong"
+                app:layout_constraintTop_toBottomOf="@id/imageTakeCareLong"/>
+
+            <View
+                android:id="@+id/viewFloweringSupporterLong"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageFloweringLong"
+                app:layout_constraintEnd_toEndOf="@id/imageFloweringLong"
+                app:layout_constraintStart_toStartOf="@id/imageFloweringLong"
+                app:layout_constraintTop_toTopOf="@id/imageFloweringLong" />
+
+            <TextView
+                android:id="@+id/tvFloweringTitleLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/flowering_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewFloweringSupporterLong"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageFloweringLong" />
+
+            <TextView
+                android:id="@+id/tvFloweringDateLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                tools:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvFloweringTitleLong"
+                app:layout_constraintStart_toStartOf="@id/tvFloweringTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/viewFloweringSupporterLong" />
+
+            <TextView
+                android:id="@+id/tvFloweringContentLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvFloweringTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/tvFloweringDateLong" />
+
+            <View
+                android:id="@+id/line_takeCare_floweringLong"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewFloweringLong"
+                app:layout_constraintEnd_toEndOf="@id/viewTakeCareLong"
+                app:layout_constraintStart_toStartOf="@id/viewTakeCareLong"
+                app:layout_constraintTop_toBottomOf="@id/viewTakeCareLong" />
+
+            <!--    Chemical -->
+            <View
+                android:id="@+id/viewChemicalLong"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_remain"
+                app:layout_constraintBottom_toBottomOf="@id/imageChemicalLong"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageChemicalLong" />
+
+            <ImageView
+                android:id="@+id/imageChemicalLong"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/chemical"
+                app:layout_constraintStart_toEndOf="@id/viewChemicalLong"
+                app:layout_constraintTop_toBottomOf="@id/imageFloweringLong" />
+
+            <View
+                android:id="@+id/viewChemicalSupporterLong"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageChemicalLong"
+                app:layout_constraintEnd_toEndOf="@id/imageChemicalLong"
+                app:layout_constraintStart_toStartOf="@id/imageChemicalLong"
+                app:layout_constraintTop_toTopOf="@id/imageChemicalLong" />
+
+            <TextView
+                android:id="@+id/tvChemicalTitleLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/chemical_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewChemicalSupporterLong"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageChemicalLong" />
+
+            <TextView
+                android:id="@+id/tvChemicalDateLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                tools:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvChemicalTitleLong"
+                app:layout_constraintStart_toStartOf="@id/tvChemicalTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/viewChemicalSupporterLong" />
+
+            <View
+                android:id="@+id/line_flowering_chemicalLong"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewChemicalLong"
+                app:layout_constraintEnd_toEndOf="@id/viewFloweringLong"
+                app:layout_constraintStart_toStartOf="@id/viewFloweringLong"
+                app:layout_constraintTop_toBottomOf="@id/viewFloweringLong" />
+
+            <TextView
+                android:id="@+id/tvChemicalContentLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvChemicalTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/tvChemicalDateLong" />
+
+<!--            Fruiting-->
+
+            <View
+                android:id="@+id/viewFruitingLong"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_remain"
+                app:layout_constraintBottom_toBottomOf="@id/imageFruitingLong"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageFruitingLong" />
+
+            <ImageView
+                android:id="@+id/imageFruitingLong"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/fruiting"
+                app:layout_constraintStart_toEndOf="@id/viewFruitingLong"
+                app:layout_constraintTop_toBottomOf="@id/imageChemicalLong" />
+
+            <View
+                android:id="@+id/viewFruitingSupporterLong"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageFruitingLong"
+                app:layout_constraintEnd_toEndOf="@id/imageFruitingLong"
+                app:layout_constraintStart_toStartOf="@id/imageFruitingLong"
+                app:layout_constraintTop_toTopOf="@id/imageFruitingLong" />
+
+            <TextView
+                android:id="@+id/tvFruitingTitleLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/fruiting_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewFruitingSupporterLong"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageFruitingLong" />
+
+            <TextView
+                android:id="@+id/tvFruitingDateLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                tools:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvFruitingTitleLong"
+                app:layout_constraintStart_toStartOf="@id/tvFruitingTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/viewFruitingSupporterLong" />
+
+            <View
+                android:id="@+id/line_chemical_fruitingLong"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewFruitingLong"
+                app:layout_constraintEnd_toEndOf="@id/viewChemicalLong"
+                app:layout_constraintStart_toStartOf="@id/viewChemicalLong"
+                app:layout_constraintTop_toBottomOf="@id/viewChemicalLong" />
+
+            <TextView
+                android:id="@+id/tvFruitingContentLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvFruitingTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/tvFruitingDateLong" />
+
+<!--            Harvest-->
+
+            <View
+                android:id="@+id/viewHarvestLong"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/dimen30dp"
+                android:background="@drawable/shape_garden_status_remain"
+                app:layout_constraintBottom_toBottomOf="@id/imageHarvestLong"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageHarvestLong" />
+
+            <ImageView
+                android:id="@+id/imageHarvestLong"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="@dimen/dimen20dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/harvester"
+                app:layout_constraintStart_toEndOf="@id/viewHarvestLong"
+                app:layout_constraintTop_toBottomOf="@id/imageFruitingLong" />
+
+            <View
+                android:id="@+id/viewHarvestSupporterLong"
+                android:layout_width="@dimen/dimen1dp"
+                android:layout_height="@dimen/dimen1dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageHarvestLong"
+                app:layout_constraintEnd_toEndOf="@id/imageHarvestLong"
+                app:layout_constraintStart_toStartOf="@id/imageHarvestLong"
+                app:layout_constraintTop_toTopOf="@id/imageHarvestLong" />
+
+            <TextView
+                android:id="@+id/tvHarvestTitleLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/harvest_time"
+                android:textColor="@color/blackAgri"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/viewHarvestSupporterLong"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageHarvestLong" />
+
+            <TextView
+                android:id="@+id/tvHarvestDateLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                tools:text="01/01/2024"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvHarvestTitleLong"
+                app:layout_constraintStart_toStartOf="@id/tvHarvestTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/viewHarvestSupporterLong" />
+
+            <TextView
+                android:id="@+id/titleHarvestYieldLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/estimate_yield"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@id/tvHarvestDateLong"
+                app:layout_constraintTop_toBottomOf="@id/tvHarvestDateLong" />
+
+            <TextView
+                android:id="@+id/tvHarvestYieldLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/_5_000_000"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/titleHarvestYieldLong"
+                app:layout_constraintTop_toBottomOf="@id/tvHarvestDateLong" />
+
+            <View
+                android:id="@+id/line_harvest_fruitingLong"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grayAgri"
+                app:layout_constraintBottom_toTopOf="@id/viewHarvestLong"
+                app:layout_constraintEnd_toEndOf="@id/viewFruitingLong"
+                app:layout_constraintStart_toStartOf="@id/viewFruitingLong"
+                app:layout_constraintTop_toBottomOf="@id/viewFruitingLong" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

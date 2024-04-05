@@ -1,15 +1,26 @@
 package com.example.argiecommerce.view.supplier
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.StandardViewpagerAdapter
 import com.example.argiecommerce.databinding.FragmentSuppilerBinding
+import com.example.argiecommerce.model.SupplierBasicInfo
+import com.example.argiecommerce.model.User
+import com.example.argiecommerce.utils.GlideApp
+import com.example.argiecommerce.utils.LoginUtils
+import com.example.argiecommerce.utils.ProgressDialog
+import com.example.argiecommerce.view.MainActivity
+import com.example.argiecommerce.viewmodel.SupplierViewModel
+import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -18,6 +29,24 @@ class SupplierFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentSuppilerBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
+
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
+    private val progressDialog: ProgressDialog by lazy {
+        ProgressDialog()
+    }
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(requireContext())
+    }
+    private val supplierViewModel: SupplierViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(SupplierViewModel::class.java)
+    }
+
+    private var user: User? = null
+    private lateinit var alertDialog: AlertDialog
+    val args: SupplierFragmentArgs by navArgs()
+    private lateinit var supplierBasicInfo: SupplierBasicInfo
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,7 +54,23 @@ class SupplierFragment : Fragment(), View.OnClickListener {
         _binding = FragmentSuppilerBinding.inflate(inflater, container, false)
         binding.toolbarLayout.titleToolbar.text = getString(R.string.supplier)
 
+        user = userViewModel.user
+        supplierBasicInfo = args.supplier
+        setupView()
+
         return binding.root
+    }
+
+    private fun setupView() {
+        val supplierRating = if(supplierBasicInfo.rating == 0.0) "5.0" else supplierBasicInfo.rating.toString()
+
+        binding.suppilerLayout.tvSuppilerName.text = supplierBasicInfo.supplierShopName
+        binding.suppilerLayout.tvSuppilerProvince.text = supplierBasicInfo.supplierProvince
+        binding.suppilerLayout.tvTotalRatingSuppiler.text = supplierRating
+        if (supplierBasicInfo.imageUrl != null){
+            GlideApp.with(requireContext()).load(supplierBasicInfo.imageUrl)
+                .into(binding.suppilerLayout.imageOfSuppiler)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +84,7 @@ class SupplierFragment : Fragment(), View.OnClickListener {
             navController.navigateUp()
         }
 
-        val specialtiesFragment = arrayListOf<Fragment>(
+        val specialtiesFragment = arrayListOf(
             SpIntroFragment(),
             SpProductFragment(),
             SpCategoryFragment(),
@@ -81,14 +126,29 @@ class SupplierFragment : Fragment(), View.OnClickListener {
     }
 
     private fun openInfoDialog() {
+        if (user == null){
+            val dialog = ProgressDialog.createMessageDialog(
+                requireContext(),
+                requireContext().resources.getString(R.string.need_to_login)
+            )
+            dialog.show()
+        }
         navController.navigate(R.id.action_suppilerFragment_to_cropsDialogFragment)
     }
 
     private fun openRegisterDialog() {
+        if (user == null){
+            val dialog = ProgressDialog.createMessageDialog(
+                requireContext(),
+                requireContext().resources.getString(R.string.need_to_login)
+            )
+            dialog.show()
+        }
         navController.navigate(R.id.action_suppilerFragment_to_contactDialogFragment)
     }
 
     private fun goToSearchFragment() {
         navController.navigate(R.id.action_suppilerFragment_to_searchFragment)
     }
+
 }

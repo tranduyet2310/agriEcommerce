@@ -11,7 +11,7 @@ public class Constants {
     public static final String CURRENCY_TO = "USD";
     public static final String CURRENCY_FORMAT = "json";
     // API
-    public static final String LOCALHOST = "http://192.168.55.102:8080/";
+    public static final String LOCALHOST = "http://192.168.55.101:8080/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
     public static final String HISTORY_DATA = "history_data";
@@ -37,6 +37,7 @@ public class Constants {
     public static final String SCREEN_KEY = "screen";
     public static final String ORDER_KEY = "order";
     public static final String PRODUCT_ID_KEY = "productId";
+    public static final String SUPPLIER_KEY = "supplier";
     // pagination
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";
@@ -62,4 +63,13 @@ public class Constants {
     public static final String PAYMENT_PAYPAL = "Paypal";
     public static final String PAID = "Đã thanh toán";
     public static final String UNPAID = "Chưa thanh toán";
+    public static final String INFRO_SHOP = "shop";
+    public static final String INFO_GARDEN = "garden";
+    public static final String BANNER = "https://res.cloudinary.com/dtdctll9c/image/upload/v1710340597/buupvmd6jmb1aofikr9n.png";
+    public static final String LONG_TERM_PLANT = "Cây lâu năm";
+    public static final String SHORT_TERM_PLANT = "Cây ngắn ngày";
+    public static final String KG_UNIT = "kg";
+    public static final String YEN_UNIT = "yến";
+    public static final String TA_UNIT = "tạ";
+    public static final String TAN_UNIT = "tấn";
 }

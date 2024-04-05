@@ -4,6 +4,8 @@ import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.CurrencyResponse
 import com.example.argiecommerce.model.FavoriteResponse
+import com.example.argiecommerce.model.FieldApiResponse
+import com.example.argiecommerce.model.Image
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
 import com.example.argiecommerce.model.MessageResponse
@@ -19,6 +21,7 @@ import com.example.argiecommerce.model.ReviewApiResponse
 import com.example.argiecommerce.model.ReviewRequest
 import com.example.argiecommerce.model.ReviewResponse
 import com.example.argiecommerce.model.ReviewStatisticResponse
+import com.example.argiecommerce.model.SupplierIntroResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.model.UserApiResponse
@@ -44,9 +47,11 @@ interface Api {
     @POST("/api/auth/login")
     fun loginUser(@Body loginRequest: LoginRequest): Call<LoginApiResponse>
 
+    //  Category
     @GET("/api/categories")
     fun getAllCategories(): Call<ArrayList<CategoryApiResponse>>
 
+    //    Fav
     @GET("api/favorites/{userId}/list")
     fun getFavoriteProducts(@Path("userId") userId: Long): Call<ArrayList<FavoriteResponse>>
 
@@ -64,6 +69,7 @@ interface Api {
         @Path("productId") productId: Long,
     ): Call<FavoriteResponse>
 
+    //  Cart
     @POST("/api/cart/{userId}/{productId}")
     fun addToCart(
         @Header("Authorization") token: String,
@@ -95,6 +101,7 @@ interface Api {
         @Path("userId") userId: Long
     ): Call<MessageResponse>
 
+    //  Order
     @POST("/api/orders/{userId}")
     suspend fun createOrder(
         @Header("Authorization") token: String,
@@ -142,6 +149,32 @@ interface Api {
         @Path("productId") productId: Long
     ): Call<MessageResponse>
 
+    //    Shop
+    @GET("api/suppliers/{supplierId}/image")
+    fun getSupplierAvatar(@Path("supplierId") supplierId: Long): Call<Image>
+
+    @GET("api/shop/{supplierId}")
+    fun getAllSupplierIntro(@Path("supplierId") supplierId: Long): Call<ArrayList<SupplierIntroResponse>>
+
+    @GET("api/products/suppliers/{supplierId}")
+    suspend fun getProductBySupplierId(
+        @Path("supplierId") supplierId: Long,
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<ProductApiResponse>
+
+    @GET("api/products/category/{supplierId}")
+    fun getCategoryBySupplierId(
+        @Path("supplierId") supplierId: Long
+    ): Call<ArrayList<CategoryApiResponse>>
+
+    @GET("api/field/{supplierId}")
+    fun getFieldInfo(
+        @Path("supplierId") supplierId: Long
+    ): Call<ArrayList<FieldApiResponse>>
+
+    //   Review
     @POST("api/reviews/{userId}/{productId}")
     fun createReview(
         @Header("Authorization") token: String,
@@ -167,6 +200,7 @@ interface Api {
     @GET("api/reviews/{productId}/average")
     fun averageRating(@Path("productId") productId: Long): Call<ReviewStatisticResponse>
 
+    //  User
     @GET("api/users/{id}")
     fun getUserInfo(@Path("id") userId: Long): Call<UserApiResponse>
 
@@ -192,6 +226,7 @@ interface Api {
         @Body password: PasswordRequest
     ): Call<UserApiResponse>
 
+    //  Address
     @POST("/api/users/{userId}/addresses")
     fun createNewAddress(
         @Header("Authorization") token: String,
@@ -220,6 +255,7 @@ interface Api {
         @Path("id") addressId: Long
     ): Call<MessageResponse>
 
+    //  Currency
     @GET("https://api.getgeoapi.com/v2/currency/convert")
     suspend fun convertCurrency(
         @Query("api_key") key: String,
@@ -229,6 +265,7 @@ interface Api {
         @Query("format") format: String,
     ): Response<CurrencyResponse>
 
+    //  Product
     @GET("/api/products/category")
     suspend fun getProductByCategoryId(
         @Query("id") id: Long,

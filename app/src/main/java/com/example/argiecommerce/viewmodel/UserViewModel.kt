@@ -2,6 +2,7 @@ package com.example.argiecommerce.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.argiecommerce.model.CartResponse
+import com.example.argiecommerce.model.SupplierBasicInfo
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.utils.Constants.PAYMENT_COD
@@ -15,4 +16,5 @@ class UserViewModel: ViewModel() {
     var paymentStatus: String = UNPAID
     var cartProductList: ArrayList<CartResponse> = arrayListOf()
     var orderCreated: Boolean = false
+    var supplierBasicInfo: SupplierBasicInfo? = null
 }

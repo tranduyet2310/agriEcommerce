@@ -326,6 +326,9 @@
         <action
             android:id="@+id/action_suppilerFragment_to_cropsDialogFragment"
             app:destination="@id/cropsDialogFragment" />
+        <argument
+            android:name="supplier"
+            app:argType="com.example.argiecommerce.model.SupplierBasicInfo" />
     </fragment>
     <fragment
         android:id="@+id/seeAllFragment"
@@ -380,6 +383,9 @@
         <action
             android:id="@+id/action_contactDialogFragment_to_suppilerFragment"
             app:destination="@id/suppilerFragment" />
+        <action
+            android:id="@+id/action_contactDialogFragment_to_policyFragment"
+            app:destination="@id/policyFragment" />
     </dialog>
     <fragment
         android:id="@+id/cropsDialogFragment"
@@ -404,4 +410,9 @@
             app:popUpTo="@id/billingFragment"
             app:popUpToInclusive="true"/>
     </dialog>
+    <fragment
+        android:id="@+id/policyFragment"
+        android:name="com.example.argiecommerce.view.PolicyFragment"
+        android:label="fragment_policy"
+        tools:layout="@layout/fragment_policy" />
 </navigation>

@@ -18,12 +18,16 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentDetailsBinding
 import com.example.argiecommerce.model.CartResponse
+import com.example.argiecommerce.model.Image
 import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ReviewStatisticResponse
+import com.example.argiecommerce.model.SupplierBasicInfo
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants.PRODUCT_ID_KEY
+import com.example.argiecommerce.utils.Constants.SUPPLIER_KEY
+import com.example.argiecommerce.utils.GlideApp
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -31,6 +35,7 @@ import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 import com.example.argiecommerce.viewmodel.CartViewModel
 import com.example.argiecommerce.viewmodel.OrderViewModel
 import com.example.argiecommerce.viewmodel.ReviewViewModel
+import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -65,10 +70,15 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(requireContext())
     }
+    private val supplierViewModel: SupplierViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(SupplierViewModel::class.java)
+    }
 
     private var user: User? = null
     private lateinit var alertDialog: AlertDialog
     private var hasPurchased: Boolean = false
+    private var rating: Double = 0.0
+    private var supplierImageUrl: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -84,6 +94,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         setupProductInfo(product)
         setupSupplierInfo(product)
         if (user != null) checkPurchase()
+        getSupplierBasicInfo()
 
         return binding.root
     }
@@ -132,7 +143,17 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun goToSuppilerShop() {
-        navController.navigate(R.id.action_detailsFragment_to_suppilerFragment)
+        val supplierBasicInfo = SupplierBasicInfo()
+        supplierBasicInfo.supplierId = product.supplierId
+        supplierBasicInfo.supplierShopName = product.productSupplier
+        supplierBasicInfo.imageUrl = supplierImageUrl
+        supplierBasicInfo.supplierProvince = product.supplierProvince
+        supplierBasicInfo.rating = rating
+        val b = Bundle().apply {
+            putParcelable(SUPPLIER_KEY, supplierBasicInfo)
+        }
+        userViewModel.supplierBasicInfo = supplierBasicInfo
+        navController.navigate(R.id.action_detailsFragment_to_suppilerFragment, b)
     }
 
     private fun seeMoreInfoProduct() {
@@ -223,6 +244,12 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         )
     }
 
+    private fun getSupplierBasicInfo() {
+        supplierViewModel.getSupplierAvatar(product.supplierId).observe(
+            requireActivity(), {state -> processGetSupplierAvatar(state)}
+        )
+    }
+
     private fun setupSupplierInfo(product: Product) {
         binding.details.tvProvinceOfProvider.text = product.supplierProvince
         binding.details.tvNameOfProvider.text = product.productSupplier
@@ -284,20 +311,43 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
     private fun processAverageRating(state: ScreenState<ReviewStatisticResponse?>) {
         when (state) {
-            is ScreenState.Loading -> {
-
-            }
+            is ScreenState.Loading -> {}
 
             is ScreenState.Success -> {
                 if (state.data != null) {
                     alertDialog.dismiss()
-                    val rating = state.data.averageRating.toDouble()
+                    rating = state.data.averageRating.toDouble()
                     if (rating == 0.0) {
                         binding.details.tvRatingMiniView.text = getString(R.string._5_0)
                     } else {
                         binding.details.tvRatingMiniView.text = rating.toString()
                     }
 
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    showSnackbar(state.message)
+                }
+            }
+        }
+    }
+
+    private fun processGetSupplierAvatar(state: ScreenState<Image?>) {
+        when (state) {
+            is ScreenState.Loading -> {}
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    supplierImageUrl = state.data.imageUrl
+                    if (state.data.imageUrl != null){
+                        GlideApp.with(requireContext())
+                            .load(state.data.imageUrl)
+                            .into(binding.details.imageOfProvider)
+                    }
                 }
             }
 

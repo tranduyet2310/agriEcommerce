@@ -22,7 +22,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="18dp"
         android:layout_marginTop="70dp"
-        android:src="@color/green"
+        android:src="@drawable/harvester"
         app:civ_border_color="@color/black"
         app:civ_border_width="1dp"
         app:layout_constraintStart_toStartOf="parent"
