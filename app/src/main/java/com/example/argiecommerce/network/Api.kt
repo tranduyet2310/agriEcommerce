@@ -2,6 +2,7 @@ package com.example.argiecommerce.network
 
 import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.CategoryApiResponse
+import com.example.argiecommerce.model.CooperationResponse
 import com.example.argiecommerce.model.CurrencyResponse
 import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.FieldApiResponse
@@ -174,6 +175,49 @@ interface Api {
         @Path("supplierId") supplierId: Long
     ): Call<ArrayList<FieldApiResponse>>
 
+    @GET("api/field/{supplierId}")
+    suspend fun getCropsField(
+        @Path("supplierId") supplierId: Long
+    ): Response<ArrayList<FieldApiResponse>>
+
+    // Cooperation
+    @POST("api/cooperation/{supplierId}")
+    fun createCooperation(
+        @Header("Authorization") token: String,
+        @Path("supplierId") supplierId: Long,
+        @Body cooperationResponse: CooperationResponse
+    ): Call<CooperationResponse>
+
+    @PUT("api/cooperation/{cooperationId}")
+    fun updateCooperation(
+        @Header("Authorization") token: String,
+        @Path("cooperationId") cooperationId: Long,
+        @Body cooperationResponse: CooperationResponse
+    ): Call<CooperationResponse>
+
+    @GET("api/cooperation/{supplierId}/list")
+    fun getCooperationBySupplierId(
+        @Path("supplierId") supplierId: Long
+    ): Call<ArrayList<CooperationResponse>>
+
+    @GET("api/cooperation/{userId}")
+    fun getCooperationByUserId(
+        @Path("userId") userId: Long
+    ): Call<ArrayList<CooperationResponse>>
+
+    @GET("api/cooperation/{fieldId}/calculate/{supplierId}")
+    suspend fun calculateCurrentTotal(
+        @Path("fieldId") fieldId: Long,
+        @Path("supplierId") supplierId: Long
+    ): Response<MessageResponse>
+
+    @PATCH("api/cooperation/{cooperationId}")
+    fun updateCooperationStatus(
+        @Header("Authorization") token: String,
+        @Path("cooperationId") cooperationId: Long,
+        @Body cooperationResponse: CooperationResponse
+    ): Call<CooperationResponse>
+
     //   Review
     @POST("api/reviews/{userId}/{productId}")
     fun createReview(
@@ -199,6 +243,9 @@ interface Api {
 
     @GET("api/reviews/{productId}/average")
     fun averageRating(@Path("productId") productId: Long): Call<ReviewStatisticResponse>
+
+    @GET("api/reviews/{supplierId}/calculate")
+    fun supplierAverageRating(@Path("supplierId") supplierId: Long): Call<ReviewStatisticResponse>
 
     //  User
     @GET("api/users/{id}")

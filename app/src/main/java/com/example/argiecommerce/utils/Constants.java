@@ -38,6 +38,7 @@ public class Constants {
     public static final String ORDER_KEY = "order";
     public static final String PRODUCT_ID_KEY = "productId";
     public static final String SUPPLIER_KEY = "supplier";
+    public static final String COOPERATION_KEY = "cooperation";
     // pagination
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";

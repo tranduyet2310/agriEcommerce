@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+
+    <TextView
+        android:id="@+id/tvCropsName"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/lightBlue"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_semibold"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/blackAgri"
+        android:textSize="14sp"
+        tools:text="Cam" />
+
+    <TextView
+        android:id="@+id/tvCropsYield"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="3dp"
+        android:background="@color/lightBlue"
+        android:layout_toEndOf="@id/tvCropsName"
+        android:fontFamily="@font/inter_semibold"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/blackAgri"
+        android:textSize="14sp"
+        tools:text="Cam" />
+
+</RelativeLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.supplier.CropsDialogFragment">
+    tools:context=".view.profile.CooperationFragment">
 
     <include
         android:id="@+id/toolbarLayout"
@@ -22,88 +22,13 @@
         android:fontFamily="@font/inter_semibold"
         android:gravity="center"
         android:padding="5dp"
-        android:text="@string/culture"
+        android:text="@string/cooperation_list"
         android:textAllCaps="true"
         android:textColor="@color/yellowAgri"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarLayout" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:id="@+id/cropsLayout"
-        app:layout_constraintTop_toBottomOf="@id/titleDialog"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <TextView
-            android:id="@+id/titleTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/inter_semibold"
-            android:text="@string/estimate_total"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvCropsTotal"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            app:layout_constraintEnd_toEndOf="@id/guideline5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleTotal"
-            tools:listitem="@layout/crops_list_item" />
-
-        <TextView
-            android:id="@+id/titleReceive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/inter_semibold"
-            android:text="@string/has_receive"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@id/guideline5"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvCropsReceive"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/titleTotal"
-            tools:listitem="@layout/crops_list_item" />
-
-        <View
-            android:layout_width="3dp"
-            android:layout_height="0dp"
-            android:background="@color/grayAgri"
-            app:layout_constraintBottom_toBottomOf="@id/rcvCropsTotal"
-            app:layout_constraintEnd_toEndOf="@id/guideline5"
-            app:layout_constraintStart_toStartOf="@id/guideline5"
-            app:layout_constraintTop_toTopOf="@id/titleReceive" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/grayAgri"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rcvCropsTotal" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/headerLayout"
@@ -116,7 +41,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cropsLayout">
+        app:layout_constraintTop_toBottomOf="@id/titleDialog">
 
         <TextView
             android:layout_width="0dp"
@@ -125,7 +50,7 @@
             android:layout_weight="4"
             android:fontFamily="@font/inter_bold"
             android:gravity="center"
-            android:text="@string/fullNameUser"
+            android:text="@string/supplier"
             android:textAllCaps="true"
             android:textColor="@color/blackAgri" />
 
@@ -150,7 +75,6 @@
             android:text="@string/state"
             android:textAllCaps="true"
             android:textColor="@color/blackAgri" />
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

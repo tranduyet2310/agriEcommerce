@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_profileFragment_to_wishlistFragment"
             app:destination="@id/wishlistFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_cooperationFragment"
+            app:destination="@id/cooperationFragment" />
 
     </fragment>
     <fragment
@@ -415,4 +418,22 @@
         android:name="com.example.argiecommerce.view.PolicyFragment"
         android:label="fragment_policy"
         tools:layout="@layout/fragment_policy" />
+    <fragment
+        android:id="@+id/cooperationFragment"
+        android:name="com.example.argiecommerce.view.profile.CooperationFragment"
+        android:label="fragment_cooperation"
+        tools:layout="@layout/fragment_cooperation" >
+        <action
+            android:id="@+id/action_cooperationFragment_to_cooperationDetailFragment"
+            app:destination="@id/cooperationDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cooperationDetailFragment"
+        android:name="com.example.argiecommerce.view.profile.CooperationDetailFragment"
+        android:label="fragment_cooperation_detail"
+        tools:layout="@layout/fragment_cooperation_detail" >
+        <argument
+            android:name="cooperation"
+            app:argType="com.example.argiecommerce.model.CooperationResponse" />
+    </fragment>
 </navigation>

@@ -1,12 +1,11 @@
 package com.example.argiecommerce.view.supplier
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -18,7 +17,6 @@ import com.example.argiecommerce.model.SupplierIntroResponse
 import com.example.argiecommerce.utils.Constants.BANNER
 import com.example.argiecommerce.utils.Constants.INFO_GARDEN
 import com.example.argiecommerce.utils.Constants.INFRO_SHOP
-import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
@@ -29,13 +27,9 @@ class SpIntroFragment : Fragment() {
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
-    private val progressDialog: ProgressDialog by lazy {
-        ProgressDialog()
-    }
     private val supplierViewModel: SupplierViewModel by lazy {
         ViewModelProvider(requireActivity()).get(SupplierViewModel::class.java)
     }
-    private lateinit var alertDialog: AlertDialog
     private var supplierBasicInfo: SupplierBasicInfo? = null
 
     override fun onCreateView(
@@ -96,12 +90,12 @@ class SpIntroFragment : Fragment() {
     private fun processGetSupplierInfo(state: ScreenState<ArrayList<SupplierIntroResponse>?>) {
         when (state) {
             is ScreenState.Loading -> {
-                alertDialog = progressDialog.createAlertDialog(requireActivity())
+                binding.progressBar.visibility = View.VISIBLE
             }
 
             is ScreenState.Success -> {
                 if (state.data != null) {
-                    alertDialog.dismiss()
+                    binding.progressBar.visibility = View.GONE
                     if (state.data.isEmpty()) setupView()
                     else
                         for (response in state.data) {
@@ -118,7 +112,7 @@ class SpIntroFragment : Fragment() {
             }
 
             is ScreenState.Error -> {
-                alertDialog.dismiss()
+                binding.progressBar.visibility = View.GONE
                 if (state.message != null) {
                     showSnackbar(state.message)
                 }

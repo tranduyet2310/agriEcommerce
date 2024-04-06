@@ -1,6 +1,5 @@
 package com.example.argiecommerce.view.supplier
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import com.example.argiecommerce.databinding.FragmentSuppilerCategoryBinding
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.Subcategory
 import com.example.argiecommerce.model.SupplierBasicInfo
-import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
@@ -33,14 +31,9 @@ class SpCategoryFragment : Fragment() {
     private val supplierViewModel: SupplierViewModel by lazy {
         ViewModelProvider(requireActivity()).get(SupplierViewModel::class.java)
     }
-    private val progressDialog: ProgressDialog by lazy {
-        ProgressDialog()
-    }
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
-
-    private lateinit var alertDialog: AlertDialog
     private var supplierBasicInfo: SupplierBasicInfo? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,13 +94,12 @@ class SpCategoryFragment : Fragment() {
     private fun processCategoryResponse(state: ScreenState<ArrayList<CategoryApiResponse>?>) {
         when (state) {
             is ScreenState.Loading -> {
-                val progressDialog = ProgressDialog()
-                alertDialog = progressDialog.createAlertDialog(requireActivity())
+                binding.progressBar.visibility = View.VISIBLE
             }
 
             is ScreenState.Success -> {
                 if (state.data != null) {
-                    alertDialog.dismiss()
+                    binding.progressBar.visibility = View.GONE
                     categoryList.clear()
                     categoryList.addAll(state.data)
                     binding.rcvCategory.adapter?.notifyDataSetChanged()
@@ -115,7 +107,7 @@ class SpCategoryFragment : Fragment() {
             }
 
             is ScreenState.Error -> {
-                alertDialog.dismiss()
+                binding.progressBar.visibility = View.GONE
                 if (state.message != null) {
                     showSnackbar(state.message)
                 }

@@ -138,4 +138,30 @@ class ReviewRepository(context: Context) {
 
         return mutableLiveData
     }
+
+    fun supplierAverageRating(supplierId: Long): LiveData<ScreenState<ReviewStatisticResponse?>> {
+        val mutableLiveData = MutableLiveData<ScreenState<ReviewStatisticResponse?>>()
+        mutableLiveData.postValue(ScreenState.Loading(null))
+
+        apiService.supplierAverageRating(supplierId)
+            .enqueue(object : Callback<ReviewStatisticResponse> {
+                override fun onResponse(
+                    call: Call<ReviewStatisticResponse>,
+                    response: Response<ReviewStatisticResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        mutableLiveData.postValue(ScreenState.Success(response.body()))
+                    } else {
+                        mutableLiveData.postValue(ScreenState.Error(Constants.SERVER_ERROR, null))
+                    }
+                }
+
+                override fun onFailure(call: Call<ReviewStatisticResponse>, t: Throwable) {
+                    val message = t.message.toString()
+                    mutableLiveData.postValue(ScreenState.Error(message, null))
+                }
+            })
+
+        return mutableLiveData
+    }
 }

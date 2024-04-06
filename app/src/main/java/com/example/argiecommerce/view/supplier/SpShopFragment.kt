@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.argiecommerce.R
+import com.example.argiecommerce.databinding.FragmentSpShopBinding
 
 
 class SpShopFragment : Fragment() {
+    private lateinit var binding: FragmentSpShopBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sp_shop, container, false)
+    ): View {
+        binding = FragmentSpShopBinding.inflate(inflater, container, false)
+
+
+
+        return binding.root
     }
 
 }

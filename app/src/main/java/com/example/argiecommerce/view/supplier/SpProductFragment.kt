@@ -1,6 +1,5 @@
 package com.example.argiecommerce.view.supplier
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
@@ -22,9 +19,7 @@ import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.SupplierBasicInfo
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.LoginUtils
-import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
-import com.example.argiecommerce.view.home.HomeFragmentDirections
 import com.example.argiecommerce.viewmodel.CartViewModel
 import com.example.argiecommerce.viewmodel.FavoriteViewModel
 import com.example.argiecommerce.viewmodel.SupplierViewModel
@@ -43,9 +38,6 @@ class SpProductFragment : Fragment() {
     private val supplierViewModel: SupplierViewModel by lazy {
         ViewModelProvider(requireActivity()).get(SupplierViewModel::class.java)
     }
-    private val progressDialog: ProgressDialog by lazy {
-        ProgressDialog()
-    }
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(requireContext())
     }
@@ -56,7 +48,6 @@ class SpProductFragment : Fragment() {
         ViewModelProvider(requireActivity()).get(FavoriteViewModel::class.java)
     }
 
-    private lateinit var alertDialog: AlertDialog
     private var user: User? = null
     private var supplierBasicInfo: SupplierBasicInfo? = null
     private lateinit var productAdapter: VerticalProductAdapter
@@ -140,18 +131,18 @@ class SpProductFragment : Fragment() {
     private fun processFavProductResponse(state: ScreenState<FavoriteResponse?>) {
         when (state) {
             is ScreenState.Loading -> {
-                alertDialog = progressDialog.createAlertDialog(requireActivity())
+                binding.progressBar.visibility = View.VISIBLE
             }
 
             is ScreenState.Success -> {
                 if (state.data != null) {
-                    alertDialog.dismiss()
+                    binding.progressBar.visibility = View.GONE
                     Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_favourite_product), Snackbar.LENGTH_SHORT).show()
                 }
             }
 
             is ScreenState.Error -> {
-                alertDialog.dismiss()
+                binding.progressBar.visibility = View.GONE
                 if (state.message != null) {
                     showSnackbar(state.message)
                 }
@@ -161,18 +152,18 @@ class SpProductFragment : Fragment() {
     private fun processCartResponse(state: ScreenState<CartResponse?>) {
         when (state) {
             is ScreenState.Loading -> {
-                alertDialog = progressDialog.createAlertDialog(requireActivity())
+                binding.progressBar.visibility = View.VISIBLE
             }
 
             is ScreenState.Success -> {
                 if (state.data != null) {
-                    alertDialog.dismiss()
+                    binding.progressBar.visibility = View.GONE
                     Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_into_cart), Snackbar.LENGTH_SHORT).show()
                 }
             }
 
             is ScreenState.Error -> {
-                alertDialog.dismiss()
+                binding.progressBar.visibility = View.GONE
                 if (state.message != null) {
                     showSnackbar(state.message)
                 }

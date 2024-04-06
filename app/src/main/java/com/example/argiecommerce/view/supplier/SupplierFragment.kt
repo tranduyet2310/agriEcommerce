@@ -13,14 +13,17 @@ import androidx.navigation.fragment.navArgs
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.StandardViewpagerAdapter
 import com.example.argiecommerce.databinding.FragmentSuppilerBinding
+import com.example.argiecommerce.model.ReviewStatisticResponse
 import com.example.argiecommerce.model.SupplierBasicInfo
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.GlideApp
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
-import com.example.argiecommerce.view.MainActivity
+import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.viewmodel.ReviewViewModel
 import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -42,6 +45,9 @@ class SupplierFragment : Fragment(), View.OnClickListener {
     private val supplierViewModel: SupplierViewModel by lazy {
         ViewModelProvider(requireActivity()).get(SupplierViewModel::class.java)
     }
+    private val reviewViewModel: ReviewViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(ReviewViewModel::class.java)
+    }
 
     private var user: User? = null
     private lateinit var alertDialog: AlertDialog
@@ -57,17 +63,23 @@ class SupplierFragment : Fragment(), View.OnClickListener {
         user = userViewModel.user
         supplierBasicInfo = args.supplier
         setupView()
+        getAverageRating()
 
         return binding.root
     }
 
-    private fun setupView() {
-        val supplierRating = if(supplierBasicInfo.rating == 0.0) "5.0" else supplierBasicInfo.rating.toString()
+    private fun getAverageRating() {
+        reviewViewModel.supplierAverageRating(supplierBasicInfo.supplierId).observe(
+            requireActivity(), { state -> processAverageRating(state) }
+        )
+    }
 
+    private fun setupView() {
+        val supplierRating = if (supplierBasicInfo.rating == 0.0) getString(R.string._5_0) else supplierBasicInfo.rating.toString()
         binding.suppilerLayout.tvSuppilerName.text = supplierBasicInfo.supplierShopName
         binding.suppilerLayout.tvSuppilerProvince.text = supplierBasicInfo.supplierProvince
         binding.suppilerLayout.tvTotalRatingSuppiler.text = supplierRating
-        if (supplierBasicInfo.imageUrl != null){
+        if (supplierBasicInfo.imageUrl != null) {
             GlideApp.with(requireContext()).load(supplierBasicInfo.imageUrl)
                 .into(binding.suppilerLayout.imageOfSuppiler)
         }
@@ -126,7 +138,7 @@ class SupplierFragment : Fragment(), View.OnClickListener {
     }
 
     private fun openInfoDialog() {
-        if (user == null){
+        if (user == null) {
             val dialog = ProgressDialog.createMessageDialog(
                 requireContext(),
                 requireContext().resources.getString(R.string.need_to_login)
@@ -137,7 +149,7 @@ class SupplierFragment : Fragment(), View.OnClickListener {
     }
 
     private fun openRegisterDialog() {
-        if (user == null){
+        if (user == null) {
             val dialog = ProgressDialog.createMessageDialog(
                 requireContext(),
                 requireContext().resources.getString(R.string.need_to_login)
@@ -149,6 +161,39 @@ class SupplierFragment : Fragment(), View.OnClickListener {
 
     private fun goToSearchFragment() {
         navController.navigate(R.id.action_suppilerFragment_to_searchFragment)
+    }
+
+    private fun processAverageRating(state: ScreenState<ReviewStatisticResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    val rating = state.data.averageRating.toDouble()
+                    if (rating == 0.0) {
+                        binding.suppilerLayout.tvTotalRatingSuppiler.text = getString(R.string._5_0)
+                    } else {
+                        binding.suppilerLayout.tvTotalRatingSuppiler.text = rating.toString()
+                    }
+                    supplierBasicInfo.rating = rating
+                    userViewModel.supplierBasicInfo = supplierBasicInfo
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    showSnackbar(state.message)
+                }
+            }
+        }
+    }
+
+    private fun showSnackbar(text: String) {
+        Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG).show()
     }
 
 }

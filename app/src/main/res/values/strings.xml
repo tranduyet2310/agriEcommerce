@@ -34,12 +34,13 @@
     <string name="cancel_v2">Hủy</string>
     <string name="using_strong_password">Sử dụng mật khẩu mạnh ít nhất 8 ký tự</string>
     <string name="sign_up">Đăng ký</string>
-    <string name="fullNameUser">Họ tên</string>
+    <string name="fullNameUser">Họ tên: </string>
     <string name="emailUser">Email</string>
     <string name="password">Mật khẩu</string>
     <string name="eight_characters">Mật khẩu phải có tối thiểu 8 ký tự</string>
     <string name="create_account">Tạo tài khoản</string>
     <string name="already_have_account">Đăng nhập. <font color='#008CFF'>Đã có tài khoản?</font></string>
+    <string name="cooperation">Liên kết</string>
 
     <string name="find_product">Tìm kiếm sản phẩm</string>
     <string name="flash_sale"><font color="#ffff8800">FLASH SALE</font></string>
@@ -89,6 +90,7 @@
     <string name="edit_personal_info">Cập nhật thông tin cá nhân</string>
     <string name="user">Người dùng</string>
     <string name="order">Đơn hàng</string>
+    <string name="account">Tài khoản</string>
     <string name="all_orders">Tất cả đơn hàng</string>
     <string name="wishlist">Sản phẩm yêu thích</string>
     <string name="notification">Thông báo</string>
@@ -119,7 +121,7 @@
     <string name="full_name">Họ và tên</string>
     <string name="city">Tỉnh/Thành phố</string>
     <string name="province">Quận/Huyện</string>
-    <string name="phone_number">Số điện thoại</string>
+    <string name="phone_number">Số điện thoại: </string>
     <string name="contact">Liên hệ</string>
     <string name="forgot_change_password">Thay đổi mật khẩu</string>
     <string name="no_order">Không có đơn hàng nào!</string>
@@ -128,9 +130,10 @@
     <string name="an_empty_wishlist_does_not_look_good">Hãy thêm sản phẩm nào đó 😘</string>
     <string name="specialty">Đặc sản vùng miền</string>
     <string name="standard">Nông sản đạt chuẩn</string>
-    <string name="_4_5_5_0">4.5/5.0</string>
+<!--    <string name="_4_5_5_0">4.5/5.0</string>-->
+
     <string name="reviews">Đánh giá</string>
-    <string name="had_joined">Đã tham gia</string>
+    <string name="had_joined">Số lượt phản hồi</string>
     <string name="shop_description">Mô tả nông hộ</string>
     <string name="account_have_accept">Tài khoản đã được xác minh:</string>
 
@@ -145,7 +148,7 @@
     <string name="crops">Cây trồng:</string>
     <string name="season">Mùa vụ:</string>
     <string name="land_area">Diện tích vườn:</string>
-    <string name="estimate_yield">Sản lượng dự kiến:</string>
+    <string name="estimate_yield">Sản lượng dự kiến: </string>
     <string name="intro_shop">Giới thiệu về Shop</string>
     <string name="garden_intro">Giới thiệu về vườn</string>
     <string name="loading">Đang tải …</string>
@@ -189,9 +192,9 @@
     <string name="add_into_cart">Đã thêm vào giỏ hàng 🎉</string>
 
     <string name="connect_with">Tham gia liên kết</string>
-    <string name="description">Mô tả</string>
+    <string name="description">Mô tả: </string>
     <string name="yield">Sản lượng</string>
-    <string name="investment">Vốn đầu tư</string>
+    <string name="investment">Vốn đầu tư: </string>
     <string name="estimate_investment">Vốn đầu tư ban đầu dự kiến</string>
     <string name="agree_with_policy">Tôi đồng ý với</string>
     <string name="policy"><u><font color="#005AAA">điều khoản và chính sách</font></u></string>
@@ -201,6 +204,7 @@
     <string name="estimate_total">Tổng sản lượng:</string>
     <string name="has_receive">Đã tiếp nhận</string>
     <string name="back">Quay lại</string>
+    <string name="cooperation_list">Danh sách hợp tác</string>
 
     <string name="update_failed">Cập nhật không thành công!</string>
     <string name="delete_address">Bạn muốn xóa địa chỉ này?</string>
@@ -237,6 +241,7 @@
     <string name="DELIVERING">Đang giao hàng</string>
     <string name="COMPLETED">Giao hàng thành công</string>
     <string name="CANCELLED">Đã hủy đơn hàng</string>
+    <string name="terminated">Đã chấm dứt hợp tác</string>
     <string name="received">Đã nhận hàng</string>
     <string name="receive_success">Nhận hàng thành công</string>
     <string name="updated_status">Cập nhật trạng thái thành công</string>
@@ -283,5 +288,14 @@
     <string name="policy_content_9">Rủi ro và quyền sở hữu Sản Phẩm sẽ được chuyển cho Khách Hàng từ thời điểm Người Nhận Hàng ký vào Phiếu giao hàng. Khách Hàng cần giữ lại Phiếu giao hàng để đối soát hoặc để giải quyết các vấn đề có thể phát sinh liên quan đến Sản Phẩm (nếu có).</string>
     <string name="policy_content_10">Việc đổi, trả Sản Phẩm được thực hiện theo các quy định tại Chính sách đổi trả đăng tải trên POSTMART.</string>
     <string name="policy_content_11">Trong mọi trường hợp, AgriMart không chịu trách nhiệm đối với mọi thiệt hại/mất mát/tổn thất mà Khách Hàng phải chịu trừ khi do lỗi cố ý của AgriMart  gây ra. Trách nhiệm của AgriMart  đối với Khách Hàng (nếu có) chỉ giới hạn ở giá trị Sản Phẩm mà Khách Hàng mua trên AgriMart.</string>
+
+    <string name="must_agree">Bạn cần đồng ý điều khoản để thực hiện chức năng này</string>
+    <string name="create_cooperation">Tạo liên kết thành công</string>
+    <string name="exceed_threshold">Vượt quá khả năng cung cấp dự kiến</string>
+    <string name="no_cooperation">Danh sách hợp tác hiện đang trống</string>
+    <string name="shop_name">Tên nhà cung cấp:</string>
+    <string name="supplier_name">Tên người đại diện:</string>
+    <string name="crops_name">Loại cây hợp tác:</string>
+    <string name="cooperation_detail">Chi tiết hợp tác</string>
 
 </resources>

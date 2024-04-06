@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/order"
+                android:text="@string/account"
                 android:textColor="#666666"
                 android:textSize="15sp"
                 android:textStyle="normal"
@@ -114,7 +114,7 @@
             <View
                 android:id="@+id/linearOrders"
                 android:layout_width="0dp"
-                android:layout_height="160dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/search_box_background"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -266,6 +266,44 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/inter_regular"
                     android:text="@string/billing"
+                    android:textColor="#666666"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:drawableEndCompat="@drawable/ic_arrow"
+                    app:drawableTint="#97AABD" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearCooperation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintTop_toBottomOf="@id/linearBilling">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/settings_items_background"
+                    android:backgroundTint="@color/startColor"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/hand_shake"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvCooperation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="@dimen/dimen10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/cooperation"
                     android:textColor="#666666"
                     android:textSize="15sp"
                     android:textStyle="bold"

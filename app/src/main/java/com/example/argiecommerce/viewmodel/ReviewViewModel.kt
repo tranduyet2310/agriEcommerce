@@ -42,4 +42,8 @@ class ReviewViewModel(application: Application) : AndroidViewModel(application) 
     fun averageRating(productId: Long): LiveData<ScreenState<ReviewStatisticResponse?>> {
         return reviewRepository.averageRating(productId)
     }
+
+    fun supplierAverageRating(supplierId: Long): LiveData<ScreenState<ReviewStatisticResponse?>> {
+        return reviewRepository.supplierAverageRating(supplierId)
+    }
 }

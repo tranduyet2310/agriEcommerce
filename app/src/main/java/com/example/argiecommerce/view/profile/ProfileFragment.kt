@@ -80,6 +80,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         binding.linearLocation.setOnClickListener(this)
         binding.linearWishList.setOnClickListener(this)
         binding.linearBilling.setOnClickListener(this)
+        binding.linearCooperation.setOnClickListener(this)
     }
 
     override fun onDestroyView() {
@@ -96,7 +97,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             R.id.linearAllOrders -> seeAllOrders()
             R.id.linearWishList -> seeWishList()
             R.id.linearBilling -> billingProduct()
+            R.id.linearCooperation -> seeCooperation()
         }
+    }
+
+    private fun seeCooperation() {
+        navController.navigate(R.id.action_profileFragment_to_cooperationFragment)
     }
 
     private fun billingProduct() {

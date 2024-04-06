@@ -16,7 +16,7 @@ public class FieldApiResponse {
     @SerializedName("area")
     private String area;
     @SerializedName("estimateYield")
-    private Long estimateYield;
+    private Double estimateYield;
     @SerializedName("fieldDetails")
     private ArrayList<FieldDetail> fieldDetails;
 
@@ -63,11 +63,11 @@ public class FieldApiResponse {
         this.area = area;
     }
 
-    public Long getEstimateYield() {
+    public Double getEstimateYield() {
         return estimateYield;
     }
 
-    public void setEstimateYield(Long estimateYield) {
+    public void setEstimateYield(Double estimateYield) {
         this.estimateYield = estimateYield;
     }
 

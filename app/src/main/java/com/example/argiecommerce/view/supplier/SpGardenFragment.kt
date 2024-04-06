@@ -1,6 +1,5 @@
 package com.example.argiecommerce.view.supplier
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +13,9 @@ import com.example.argiecommerce.databinding.FragmentGardenBinding
 import com.example.argiecommerce.model.FieldApiResponse
 import com.example.argiecommerce.model.FieldDetail
 import com.example.argiecommerce.model.SupplierBasicInfo
-import com.example.argiecommerce.model.User
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.LONG_TERM_PLANT
 import com.example.argiecommerce.utils.Constants.SHORT_TERM_PLANT
 import com.example.argiecommerce.utils.CropsStatus
-import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
@@ -35,8 +31,6 @@ class SpGardenFragment : Fragment() {
         ViewModelProvider(requireActivity()).get(SupplierViewModel::class.java)
     }
 
-    private lateinit var alertDialog: AlertDialog
-    private var user: User? = null
     private var supplierBasicInfo: SupplierBasicInfo? = null
     private var cropsNameList: ArrayList<String> = arrayListOf()
     private lateinit var fieldInfoList: ArrayList<FieldApiResponse>
@@ -273,13 +267,12 @@ class SpGardenFragment : Fragment() {
     private fun processFieldResponse(state: ScreenState<ArrayList<FieldApiResponse>?>) {
         when (state) {
             is ScreenState.Loading -> {
-                val progressDialog = ProgressDialog()
-                alertDialog = progressDialog.createAlertDialog(requireActivity())
+                binding.progressBar.visibility = View.VISIBLE
             }
 
             is ScreenState.Success -> {
                 if (state.data != null) {
-                    alertDialog.dismiss()
+                    binding.progressBar.visibility = View.GONE
                     fieldInfoList = state.data
                     cropsNameList.clear()
                     cropsStatus = hashMapOf()
@@ -301,7 +294,7 @@ class SpGardenFragment : Fragment() {
             }
 
             is ScreenState.Error -> {
-                alertDialog.dismiss()
+                binding.progressBar.visibility = View.GONE
                 if (state.message != null) {
                     showSnackbar(state.message)
                 }
