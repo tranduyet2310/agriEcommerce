@@ -11,7 +11,7 @@ public class Constants {
     public static final String CURRENCY_TO = "USD";
     public static final String CURRENCY_FORMAT = "json";
     // API
-    public static final String LOCALHOST = "http://192.168.55.101:8080/";
+    public static final String LOCALHOST = "http://172.20.10.3:8080/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
     public static final String HISTORY_DATA = "history_data";

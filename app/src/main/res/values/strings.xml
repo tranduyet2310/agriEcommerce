@@ -130,11 +130,11 @@
     <string name="an_empty_wishlist_does_not_look_good">Hãy thêm sản phẩm nào đó 😘</string>
     <string name="specialty">Đặc sản vùng miền</string>
     <string name="standard">Nông sản đạt chuẩn</string>
-<!--    <string name="_4_5_5_0">4.5/5.0</string>-->
+    <string name="_4_5_5_0">4.5/5.0</string>
 
     <string name="reviews">Đánh giá</string>
     <string name="had_joined">Số lượt phản hồi</string>
-    <string name="shop_description">Mô tả nông hộ</string>
+    <string name="shop_description">Số lượng đã bán</string>
     <string name="account_have_accept">Tài khoản đã được xác minh:</string>
 
     <string name="harvest_time">Giai đoạn thu hoạch</string>

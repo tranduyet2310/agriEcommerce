@@ -118,8 +118,8 @@
     <View
         android:id="@+id/view_suppilerNote"
         android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/tvSuppilerNote"
         app:layout_constraintEnd_toEndOf="parent"
@@ -137,22 +137,19 @@
         android:textSize="@dimen/dimen16sp"
         app:drawableStartCompat="@drawable/ic_edit_note_24"
         app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/view_suppilerNote"
         app:layout_constraintTop_toBottomOf="@id/suppilerTime" />
 
-    <EditText
+    <TextView
         android:id="@+id/tvSuppilerNote"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/inter_bold"
-        android:inputType="none"
-        android:maxHeight="@dimen/dimen100dp"
-        android:maxLines="5"
-        android:scrollbars="vertical"
-        android:text="@string/infor_product_text"
+        android:layout_marginStart="@dimen/dimen15dp"
+        tools:text="@string/_5_000_000"
         android:textColor="@color/orange"
-        android:textSize="12sp"
-        android:editable="false"
-        app:layout_constraintBottom_toBottomOf="@id/view_suppilerNote"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/suppilerNote"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@id/guideline3"
         app:layout_constraintTop_toTopOf="@id/suppilerNote" />

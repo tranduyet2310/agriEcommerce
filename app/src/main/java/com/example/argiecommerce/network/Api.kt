@@ -247,6 +247,16 @@ interface Api {
     @GET("api/reviews/{supplierId}/calculate")
     fun supplierAverageRating(@Path("supplierId") supplierId: Long): Call<ReviewStatisticResponse>
 
+    //
+    @GET("api/reviews/{supplierId}/rating")
+    suspend fun getSupplierTotalReview(@Path("supplierId") supplierId: Long): Response<MessageResponse>
+
+    @GET("api/products/{supplierId}/total")
+    suspend fun getTotalProductBySupplier(@Path("supplierId") supplierId: Long): Response<MessageResponse>
+
+    @GET("api/products/{supplierId}/sold")
+    suspend fun getSoldProductBySupplier(@Path("supplierId") supplierId: Long): Response<MessageResponse>
+
     //  User
     @GET("api/users/{id}")
     fun getUserInfo(@Path("id") userId: Long): Call<UserApiResponse>
