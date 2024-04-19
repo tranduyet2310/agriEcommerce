@@ -70,7 +70,7 @@ class VerticalProductAdapter(
                 }
 
                 if (product.isFavourite == 1) {
-                   imgFavourite.setImageResource(R.drawable.ic_favorite_red)
+                    imgFavourite.setImageResource(R.drawable.ic_favorite_red)
                 } else {
                     imgFavourite.setImageResource(R.drawable.ic_favorite_border)
                 }

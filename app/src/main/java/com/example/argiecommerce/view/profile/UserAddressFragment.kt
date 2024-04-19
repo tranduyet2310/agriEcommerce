@@ -54,7 +54,7 @@ class UserAddressFragment : Fragment() {
 
         user = userViewModel.user
         setupRecyclerView()
-        getUserAddressData();
+        getUserAddressData()
 
         return binding.root
     }

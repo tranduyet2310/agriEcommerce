@@ -88,7 +88,7 @@
     <string name="see_more">Xem thêm</string>
     <string name="setting">Cài đặt</string>
     <string name="edit_personal_info">Cập nhật thông tin cá nhân</string>
-    <string name="user">Người dùng</string>
+    <string name="user">Khách hàng</string>
     <string name="order">Đơn hàng</string>
     <string name="account">Tài khoản</string>
     <string name="all_orders">Tất cả đơn hàng</string>
@@ -194,7 +194,7 @@
     <string name="connect_with">Tham gia liên kết</string>
     <string name="description">Mô tả: </string>
     <string name="yield">Sản lượng</string>
-    <string name="investment">Vốn đầu tư: </string>
+    <string name="investment">Tổng tiền: </string>
     <string name="estimate_investment">Vốn đầu tư ban đầu dự kiến</string>
     <string name="agree_with_policy">Tôi đồng ý với</string>
     <string name="policy"><u><font color="#005AAA">điều khoản và chính sách</font></u></string>
@@ -297,5 +297,17 @@
     <string name="supplier_name">Tên người đại diện:</string>
     <string name="crops_name">Loại cây hợp tác:</string>
     <string name="cooperation_detail">Chi tiết hợp tác</string>
+    <string name="delivery">Địa chỉ nhận hàng:</string>
+    <string name="payment_status">Trạng thái thanh toán:</string>
+    <string name="no_payment">Chưa thanh toán</string>
+    <string name="detail">Chi tiết</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="update">Cập nhật</string>
+    <string name="payment_50">Thanh toán trước 50%</string>
+    <string name="payment_100">Thanh toán toàn bộ</string>
+    <string name="cooperation_text">Đơn hàng thanh toán cho yêu cầu hợp tác</string>
+    <string name="payment_remain">Thanh toán phần còn lại</string>
+    <string name="pay_all">Đã thanh toán hết</string>
 
 </resources>

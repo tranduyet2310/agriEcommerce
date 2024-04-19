@@ -40,6 +40,22 @@ class CooperationViewModel(
         cooperationId: Long,
         cooperationResponse: CooperationResponse
     ): LiveData<ScreenState<CooperationResponse?>> {
-        return cooperationRepository.updateCooperationStatus(token, cooperationId, cooperationResponse)
+        return cooperationRepository.updateCooperationStatus(
+            token,
+            cooperationId,
+            cooperationResponse
+        )
+    }
+
+    fun updateCooperationAddress(
+        token: String,
+        cooperationId: Long,
+        addressId: Long
+    ): LiveData<ScreenState<CooperationResponse?>> {
+        return cooperationRepository.updateCooperationAddress(token, cooperationId, addressId)
+    }
+
+    fun getCooperationById(cooperationId: Long): LiveData<ScreenState<CooperationResponse?>> {
+        return cooperationRepository.getCooperationById(cooperationId)
     }
 }

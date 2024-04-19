@@ -39,11 +39,11 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/inter_semibold"
-            tools:text="#1234567"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/guideline1"
-            app:layout_constraintTop_toBottomOf="@id/toolbarLayout" />
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+            tools:text="#1234567" />
 
         <LinearLayout
             android:id="@+id/linearStepView"
@@ -122,9 +122,9 @@
                 android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:fontFamily="@font/inter_regular"
                 android:maxLines="3"
-                android:ellipsize="end"
                 android:text="@string/address_location"
                 android:textSize="13sp" />
 
@@ -135,11 +135,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/payment_method"
             android:textColor="@color/black"
             android:textSize="13sp"
-            android:drawablePadding="5dp"
             app:drawableLeftCompat="@drawable/ic_billing_white"
             app:drawableTint="@color/black"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -150,13 +150,13 @@
             android:id="@+id/tvPaymentMethod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_regular"
             android:text="@string/cod"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toStartOf="@id/guideline10"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/tvPayment"
-            android:textSize="13sp" />
+            app:layout_constraintStart_toStartOf="@id/guideline10"
+            app:layout_constraintTop_toBottomOf="@id/tvPayment" />
 
         <View
             android:id="@+id/line1"
@@ -187,12 +187,29 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProducts"
             android:layout_width="0dp"
-            android:layout_height="280dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:maxHeight="280dp"
+            android:minHeight="100dp"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/line1"
             app:layout_constraintTop_toBottomOf="@id/tvProducts"
             tools:listitem="@layout/billing_products_rv_item" />
+
+        <TextView
+            android:id="@+id/tvCooperation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/cooperation_text"
+            android:textColor="@color/orange"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/linear"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/tvProducts" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linear"

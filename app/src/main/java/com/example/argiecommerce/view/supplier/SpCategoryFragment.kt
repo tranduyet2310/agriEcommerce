@@ -100,9 +100,13 @@ class SpCategoryFragment : Fragment() {
             is ScreenState.Success -> {
                 if (state.data != null) {
                     binding.progressBar.visibility = View.GONE
-                    categoryList.clear()
-                    categoryList.addAll(state.data)
-                    binding.rcvCategory.adapter?.notifyDataSetChanged()
+                    if (state.data.size == 0){
+                        showSnackbar("Cửa hàng hiện chưa thêm sản phẩm nào")
+                    } else {
+                        categoryList.clear()
+                        categoryList.addAll(state.data)
+                        binding.rcvCategory.adapter?.notifyDataSetChanged()
+                    }
                 }
             }
 

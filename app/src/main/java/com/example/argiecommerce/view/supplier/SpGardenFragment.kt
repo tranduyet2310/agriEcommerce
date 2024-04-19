@@ -274,22 +274,26 @@ class SpGardenFragment : Fragment() {
                 if (state.data != null) {
                     binding.progressBar.visibility = View.GONE
                     fieldInfoList = state.data
-                    cropsNameList.clear()
-                    cropsStatus = hashMapOf()
+                    if (fieldInfoList.size == 0){
+                        showSnackbar("Thông tin Vườn hiện tại đang trống")
+                    } else {
+                        cropsNameList.clear()
+                        cropsStatus = hashMapOf()
 
-                    for (field in fieldInfoList) {
-                        var currentState: Int = 0
-                        cropsNameList.add(field.cropsName)
-                        detailInfoList = field.fieldDetails
-                        for (detail in detailInfoList) {
-                            currentState = maxOf(currentState, detail.cropsStatus.value)
+                        for (field in fieldInfoList) {
+                            var currentState: Int = 0
+                            cropsNameList.add(field.cropsName)
+                            detailInfoList = field.fieldDetails
+                            for (detail in detailInfoList) {
+                                currentState = maxOf(currentState, detail.cropsStatus.value)
+                            }
+                            cropsStatus.set(field.cropsName, currentState)
                         }
-                        cropsStatus.set(field.cropsName, currentState)
-                    }
 
-                    setupSpinner()
-                    binding.tvSeason.text = fieldInfoList[0].season
-                    binding.tvLandArea.text = fieldInfoList[0].area
+                        setupSpinner()
+                        binding.tvSeason.text = fieldInfoList[0].season
+                        binding.tvLandArea.text = fieldInfoList[0].area
+                    }
                 }
             }
 

@@ -348,6 +348,91 @@
             app:layout_constraintTop_toBottomOf="@id/titleDescription"
             tools:text="@string/infor_product_text" />
 
+        <TextView
+            android:id="@+id/titleDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/detail"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:drawableLeftCompat="@drawable/ic_billing"
+            app:drawableTint="@color/darkGreen"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit_note_24"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/imgEditAddress"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/titleDetail"
+            app:layout_constraintBottom_toBottomOf="@id/titleDetail"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:id="@+id/titlePayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/payment_status"
+            android:textColor="@color/blackAgri"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/dot"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/titleDetail" />
+
+        <TextView
+            android:id="@+id/tvPayment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/blackAgri"
+            android:textSize="16sp"
+            android:text="@string/no_payment"
+            app:layout_constraintBottom_toBottomOf="@id/titlePayment"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toEndOf="@id/titlePayment"
+            app:layout_constraintTop_toTopOf="@id/titlePayment" />
+
+        <TextView
+            android:id="@+id/titleAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/delivery"
+            android:textColor="@color/blackAgri"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/dot"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/titlePayment" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_medium"
+            android:maxLines="3"
+            android:textColor="@color/blackAgri"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/titleAddress"
+            app:layout_constraintTop_toBottomOf="@id/titleAddress"
+            tools:text="@tools:sample/lorem/random" />
+
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
@@ -357,13 +442,20 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/guideline1"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+            app:layout_constraintTop_toBottomOf="@id/tvAddress" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_v2"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/orange"
+            android:layout_marginBottom="5dp"
+            android:visibility="invisible"
+            android:id="@+id/btnPayment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@id/btnCancel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -110,6 +110,10 @@ class OrderDetailFragment : Fragment() {
         }
         billingProductAdapter.notifyDataSetChanged()
 
+        if (orderDetails.isEmpty()){
+            binding.tvCooperation.visibility = View.VISIBLE
+        }
+
         getUserAddress(addressId)
     }
 

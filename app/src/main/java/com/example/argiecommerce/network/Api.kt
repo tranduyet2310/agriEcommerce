@@ -218,6 +218,30 @@ interface Api {
         @Body cooperationResponse: CooperationResponse
     ): Call<CooperationResponse>
 
+    @PATCH("api/cooperation/{cooperationId}/payment")
+    suspend fun updateCooperationPayment(
+        @Header("Authorization") token: String,
+        @Path("cooperationId") cooperationId: Long,
+        @Body cooperationResponse: CooperationResponse
+    ): Response<CooperationResponse>
+
+    @PUT("api/cooperation/{cooperationId}")
+    suspend fun updateCooperationYield(
+        @Header("Authorization") token: String,
+        @Path("cooperationId") cooperationId: Long,
+        @Body cooperationResponse: CooperationResponse
+    ): Response<CooperationResponse>
+
+    @PATCH("api/cooperation/{cooperationId}/{addressId}")
+    fun updateCooperationAddress(
+        @Header("Authorization") token: String,
+        @Path("cooperationId") cooperationId: Long,
+        @Path("addressId") addressId: Long
+    ): Call<CooperationResponse>
+
+    @GET("api/cooperation/{cooperationId}/general")
+    fun getCooperationById(@Path("cooperationId") cooperationId: Long): Call<CooperationResponse>
+
     //   Review
     @POST("api/reviews/{userId}/{productId}")
     fun createReview(
@@ -296,6 +320,9 @@ interface Api {
 
     @GET("/api/users/addresses/{id}")
     fun getAddressById(@Path("id") addressId: Long): Call<UserAddress>
+
+    @GET("/api/users/addresses/{id}")
+    suspend fun getAddressByIdV2(@Path("id") addressId: Long): Response<UserAddress>
 
     @PUT("/api/users/{userId}/addresses/{id}")
     fun updateUserAddress(

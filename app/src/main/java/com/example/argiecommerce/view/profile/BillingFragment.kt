@@ -190,6 +190,7 @@ class BillingFragment : Fragment(), View.OnClickListener {
                 lifecycleScope.launch {
                     try {
                         convertVNDtoUSD()
+                        Log.d("TEST", "entered_amount "+enteredAmount)
                         checkoutPayPal()
                     } catch (e: Exception) {
                         Log.d("TEST", e.message.toString())

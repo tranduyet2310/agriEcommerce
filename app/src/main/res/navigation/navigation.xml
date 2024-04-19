@@ -435,5 +435,22 @@
         <argument
             android:name="cooperation"
             app:argType="com.example.argiecommerce.model.CooperationResponse" />
+        <action
+            android:id="@+id/action_cooperationDetailFragment_to_cooperationAddressFragment"
+            app:destination="@id/cooperationAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cooperationAddressFragment"
+        android:name="com.example.argiecommerce.view.profile.CooperationAddressFragment"
+        android:label="fragment_cooperation_address"
+        tools:layout="@layout/fragment_cooperation_address" >
+        <action
+            android:id="@+id/action_cooperationAddressFragment_to_cooperationDetailFragment"
+            app:destination="@id/cooperationDetailFragment"
+            app:popUpTo="@id/cooperationDetailFragment"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="cooperation"
+            app:argType="com.example.argiecommerce.model.CooperationResponse" />
     </fragment>
 </navigation>

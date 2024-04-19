@@ -155,4 +155,60 @@ class CooperationRepository {
 
         return mutableLiveData
     }
+
+    fun updateCooperationAddress(
+        token: String,
+        cooperationId: Long,
+        addressId: Long
+    ): LiveData<ScreenState<CooperationResponse?>> {
+        val mutableLiveData = MutableLiveData<ScreenState<CooperationResponse?>>()
+        mutableLiveData.postValue(ScreenState.Loading(null))
+
+        apiService.updateCooperationAddress(token, cooperationId, addressId)
+            .enqueue(object : Callback<CooperationResponse> {
+                override fun onResponse(
+                    call: Call<CooperationResponse>,
+                    response: Response<CooperationResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        mutableLiveData.postValue(ScreenState.Success(response.body()))
+                    } else {
+                        mutableLiveData.postValue(ScreenState.Error(Constants.SERVER_ERROR, null))
+                    }
+                }
+
+                override fun onFailure(call: Call<CooperationResponse>, t: Throwable) {
+                    val message = t.message.toString()
+                    mutableLiveData.postValue(ScreenState.Error(message, null))
+                }
+            })
+
+        return mutableLiveData
+    }
+
+    fun getCooperationById(cooperationId: Long): LiveData<ScreenState<CooperationResponse?>> {
+        val mutableLiveData = MutableLiveData<ScreenState<CooperationResponse?>>()
+        mutableLiveData.postValue(ScreenState.Loading(null))
+
+        apiService.getCooperationById(cooperationId)
+            .enqueue(object : Callback<CooperationResponse> {
+                override fun onResponse(
+                    call: Call<CooperationResponse>,
+                    response: Response<CooperationResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        mutableLiveData.postValue(ScreenState.Success(response.body()))
+                    } else {
+                        mutableLiveData.postValue(ScreenState.Error(Constants.SERVER_ERROR, null))
+                    }
+                }
+
+                override fun onFailure(call: Call<CooperationResponse>, t: Throwable) {
+                    val message = t.message.toString()
+                    mutableLiveData.postValue(ScreenState.Error(message, null))
+                }
+            })
+
+        return mutableLiveData
+    }
 }

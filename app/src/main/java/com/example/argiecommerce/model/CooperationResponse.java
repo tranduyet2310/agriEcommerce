@@ -37,7 +37,27 @@ public class CooperationResponse implements Parcelable {
     private OrderStatus cooperationStatus;
     @SerializedName("supplierContactName")
     private String supplierName;
+    @SerializedName("addressId")
+    private Long addressId;
+    @SerializedName("paymentStatus")
+    private String paymentStatus;
     public CooperationResponse() {
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     protected CooperationResponse(Parcel in) {
@@ -54,6 +74,41 @@ public class CooperationResponse implements Parcelable {
         supplierPhone = in.readString();
         fieldId = in.readLong();
         supplierName = in.readString();
+        if (in.readByte() == 0) {
+            addressId = null;
+        } else {
+            addressId = in.readLong();
+        }
+        paymentStatus = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(fullName);
+        dest.writeString(description);
+        dest.writeString(cropsName);
+        dest.writeDouble(requireYield);
+        dest.writeString(investment);
+        dest.writeString(contact);
+        dest.writeLong(userId);
+        dest.writeLong(supplierId);
+        dest.writeString(shopName);
+        dest.writeString(supplierPhone);
+        dest.writeLong(fieldId);
+        dest.writeString(supplierName);
+        if (addressId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(addressId);
+        }
+        dest.writeString(paymentStatus);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<CooperationResponse> CREATOR = new Creator<CooperationResponse>() {
@@ -180,25 +235,4 @@ public class CooperationResponse implements Parcelable {
         this.supplierName = supplierName;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(fullName);
-        dest.writeString(description);
-        dest.writeString(cropsName);
-        dest.writeDouble(requireYield);
-        dest.writeString(investment);
-        dest.writeString(contact);
-        dest.writeLong(userId);
-        dest.writeLong(supplierId);
-        dest.writeString(shopName);
-        dest.writeString(supplierPhone);
-        dest.writeLong(fieldId);
-        dest.writeString(supplierName);
-    }
 }
