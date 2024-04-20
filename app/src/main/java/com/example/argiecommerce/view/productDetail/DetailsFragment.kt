@@ -6,10 +6,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -24,7 +22,6 @@ import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ReviewStatisticResponse
 import com.example.argiecommerce.model.SupplierBasicInfo
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants.PRODUCT_ID_KEY
 import com.example.argiecommerce.utils.Constants.SUPPLIER_KEY
 import com.example.argiecommerce.utils.GlideApp
@@ -38,8 +35,6 @@ import com.example.argiecommerce.viewmodel.ReviewViewModel
 import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class DetailsFragment : Fragment(), View.OnClickListener {

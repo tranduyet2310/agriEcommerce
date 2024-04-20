@@ -4,19 +4,20 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.argiecommerce.databinding.CropsListItemBinding
+import com.example.argiecommerce.databinding.CropsDetailListItemBinding
 import com.example.argiecommerce.model.CropsInfo
 import com.example.argiecommerce.utils.Constants.KG_UNIT
 import com.example.argiecommerce.utils.Constants.TAN_UNIT
 import com.example.argiecommerce.utils.Constants.TA_UNIT
 import com.example.argiecommerce.utils.Constants.YEN_UNIT
+import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 
 class CropsAdapter(private val dataList: ArrayList<CropsInfo>) :
     RecyclerView.Adapter<CropsAdapter.ViewHolderClass>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         return ViewHolderClass(
-            CropsListItemBinding.inflate(LayoutInflater.from(parent.context)),
+            CropsDetailListItemBinding.inflate(LayoutInflater.from(parent.context)),
             parent.context
         )
     }
@@ -30,31 +31,46 @@ class CropsAdapter(private val dataList: ArrayList<CropsInfo>) :
         holder.bind(currentItem)
     }
 
-    class ViewHolderClass(binding: CropsListItemBinding, val context: Context) :
+    class ViewHolderClass(binding: CropsDetailListItemBinding, val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
-        val cropsName = binding.tvCropsName
-        val cropsYield = binding.tvCropsYield
-        fun bind(cropsInfo: CropsInfo) {
+        val tvPlant = binding.tvPlant
+        val tvCurrent = binding.tvCurrent
+        val tvTotal = binding.tvTotal
+        val progressBar = binding.progressBar
+        val tvEstimatePrice = binding.tvEstimatePrice
 
-            val yield = cropsInfo.estimateYield
+        fun bind(cropsInfo: CropsInfo) {
+            tvPlant.text = cropsInfo.cropsName
+            tvCurrent.text = convertToMassUnit(cropsInfo.currentYield)
+            tvTotal.text = convertToMassUnit(cropsInfo.estimateYield)
+            tvEstimatePrice.text = cropsInfo.estimatePrice.formatPrice()
+
+            if (cropsInfo.estimateYield != 0.0){
+                val currentProgress: Int = (cropsInfo.currentYield * 100 / cropsInfo.estimateYield).toInt()
+                progressBar.progress = currentProgress
+            } else {
+                progressBar.progress = 0
+            }
+            progressBar.max = 100
+        }
+
+        private fun convertToMassUnit(value: Double): String {
             val convertValue: Double
             val yieldText: String
 
-            if (yield >= 1000) {
-                convertValue = yield / 1000
+            if (value >= 1000) {
+                convertValue = value / 1000
                 yieldText = "${convertValue} " + TAN_UNIT
-            } else if (yield >= 100) {
-                convertValue = yield / 100
+            } else if (value >= 100) {
+                convertValue = value / 100
                 yieldText = "${convertValue} " + TA_UNIT
-            } else if (yield >= 10) {
-                convertValue = yield / 10
+            } else if (value >= 10) {
+                convertValue = value / 10
                 yieldText = "${convertValue} " + YEN_UNIT
             } else {
-                yieldText = "${yield} " + KG_UNIT
+                yieldText = "${value} " + KG_UNIT
             }
-
-            cropsName.text = cropsInfo.cropsName
-            cropsYield.text = yieldText
+            return yieldText
         }
     }
 }

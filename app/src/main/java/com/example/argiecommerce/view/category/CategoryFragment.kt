@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -101,27 +100,7 @@ class CategoryFragment : Fragment() {
                 if (state.data != null) {
                     alertDialog.dismiss()
                     categoryAdapter = CategoryAdapter(requireContext(), state.data)
-                    binding.rvCategoryItem.apply {
-                        layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
-                        setHasFixedSize(true)
-                        categoryAdapter.onClick = {
-                            val subcategoryList = it.subCategoryList
-                            if(subcategoryList.isEmpty()){
-                                binding.notFoundLayout.visibility = View.VISIBLE
-                                binding.rvCategoryDetail.visibility = View.INVISIBLE
-                            } else {
-                                binding.notFoundLayout.visibility = View.GONE
-                                binding.rvCategoryDetail.visibility = View.VISIBLE
-
-                                categoryDetailList.clear()
-                                subcategoryList.forEach {
-                                    categoryDetailList.add(it)
-                                }
-                                binding.rvCategoryDetail.adapter?.notifyDataSetChanged()
-                            }
-                        }
-                        adapter = categoryAdapter
-                    }
+                    setupCategoryRcv(categoryAdapter)
                 }
             }
 
@@ -132,6 +111,37 @@ class CategoryFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setupCategoryRcv(categoryAdapter: CategoryAdapter) {
+        binding.rvCategoryItem.apply {
+            layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            categoryAdapter.onClick = {
+                val subcategoryList = it.subCategoryList
+                if(subcategoryList.isEmpty()){
+                    hideRecyclerView()
+                } else {
+                    showRecyclerView()
+                    categoryDetailList.clear()
+                    subcategoryList.forEach {
+                        categoryDetailList.add(it)
+                    }
+                    binding.rvCategoryDetail.adapter?.notifyDataSetChanged()
+                }
+            }
+            adapter = categoryAdapter
+        }
+    }
+
+    private fun hideRecyclerView(){
+        binding.notFoundLayout.visibility = View.VISIBLE
+        binding.rvCategoryDetail.visibility = View.INVISIBLE
+    }
+
+    private fun showRecyclerView(){
+        binding.notFoundLayout.visibility = View.GONE
+        binding.rvCategoryDetail.visibility = View.VISIBLE
     }
 
     private fun displayErrorSnackbar(errorMessage: String) {

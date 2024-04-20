@@ -3,18 +3,14 @@ package com.example.argiecommerce.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.argiecommerce.model.PasswordRequest
-import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.model.UserApiResponse
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.ScreenState
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class UserInfoRepository {
     fun getUserInfo(userId: Long): LiveData<ScreenState<UserApiResponse?>> {

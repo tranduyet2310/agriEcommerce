@@ -195,7 +195,7 @@
     <string name="description">Mô tả: </string>
     <string name="yield">Sản lượng</string>
     <string name="investment">Tổng tiền: </string>
-    <string name="estimate_investment">Vốn đầu tư ban đầu dự kiến</string>
+    <string name="estimate_investment">Giá đề xuất</string>
     <string name="agree_with_policy">Tôi đồng ý với</string>
     <string name="policy"><u><font color="#005AAA">điều khoản và chính sách</font></u></string>
     <string name="culture">Thông tin canh tác</string>
@@ -292,7 +292,7 @@
     <string name="must_agree">Bạn cần đồng ý điều khoản để thực hiện chức năng này</string>
     <string name="create_cooperation">Tạo liên kết thành công</string>
     <string name="exceed_threshold">Vượt quá khả năng cung cấp dự kiến</string>
-    <string name="no_cooperation">Danh sách hợp tác hiện đang trống</string>
+    <string name="no_cooperation">Danh sách cây trồng hiện đang trống!</string>
     <string name="shop_name">Tên nhà cung cấp:</string>
     <string name="supplier_name">Tên người đại diện:</string>
     <string name="crops_name">Loại cây hợp tác:</string>
@@ -309,5 +309,9 @@
     <string name="cooperation_text">Đơn hàng thanh toán cho yêu cầu hợp tác</string>
     <string name="payment_remain">Thanh toán phần còn lại</string>
     <string name="pay_all">Đã thanh toán hết</string>
+    <string name="current">Hiện tại:</string>
+    <string name="price_accept">Giá tiếp nhận</string>
+    <string name="per_kg">/1 kg</string>
+    <string name="lower_than_threshold">Giá đề xuất thấp hơn ngưỡng chấp nhận</string>
 
 </resources>

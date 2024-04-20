@@ -3,7 +3,6 @@ package com.example.argiecommerce.utils
 import android.content.Context
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.AVATAR
 import com.example.argiecommerce.utils.Constants.EMAIL
 import com.example.argiecommerce.utils.Constants.ID

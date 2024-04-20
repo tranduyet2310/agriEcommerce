@@ -61,6 +61,7 @@ class ContactDialogFragment : AppCompatDialogFragment() {
     private var coefficient: Int = 1
     private val cropsHashMap: HashMap<String, Long> = hashMapOf()
     private val yieldHashMap: HashMap<String, Double> = hashMapOf()
+    private val priceHashMap: HashMap<String, Long> = hashMapOf()
     private lateinit var cropsName: String
     private var cropsCurrentTotal: Double = 0.0
     override fun onCreateView(
@@ -76,6 +77,111 @@ class ContactDialogFragment : AppCompatDialogFragment() {
         if (supplierBasicInfo != null) getCropsName()
 
         return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupSpinnerMassListener()
+        setupSpinnerCropsListener()
+
+        binding.btnCancel.setOnClickListener {
+            dialog?.dismiss()
+        }
+
+        binding.btnSave.setOnClickListener {
+            if (!binding.checkboxAgree.isChecked) {
+                showSnackbar(getString(R.string.must_agree))
+            } else if (!validateInfoField()) {
+                showSnackbar(FIELD_REQUIRED)
+            } else if (!validateYieldThreshold()) {
+                showSnackbar(getString(R.string.exceed_threshold))
+            }else if (!validatePriceThreshold()){
+                showSnackbar(getString(R.string.lower_than_threshold))
+            } else {
+                if (supplierBasicInfo != null) {
+                    val token = loginUtils.getUserToken()
+                    val cooperationResponse = createRequest()
+                    cooperationViewModel.createCooperation(
+                        token,
+                        supplierBasicInfo!!.supplierId,
+                        cooperationResponse
+                    ).observe(
+                        requireActivity(), { state -> processCooperationResponse(state) }
+                    )
+                } else {
+                    dialog?.dismiss()
+                }
+            }
+        }
+
+        binding.policy.setOnClickListener {
+            val action =
+                ContactDialogFragmentDirections.actionContactDialogFragmentToPolicyFragment()
+            this@ContactDialogFragment.findNavController().navigate(action)
+        }
+    }
+
+    private fun setupSpinnerCropsListener() {
+        binding.spCropsDialog.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                cropsName = cropsList[position]
+                val fieldId = cropsHashMap.get(cropsName)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    if (fieldId != null) {
+                        val response = RetrofitClient.getInstance().getApi()
+                            .calculateCurrentTotal(fieldId, supplierBasicInfo!!.supplierId)
+                        cropsCurrentTotal = response.body()?.message?.toDouble()!!
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Log.d("TEST", "in ContactDialogFragment - nothing to show")
+            }
+        }
+    }
+
+    private fun setupSpinnerMassListener() {
+        binding.spMassUnit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val value = massUnit[position]
+                when (value) {
+                    KG_UNIT -> coefficient = 1
+                    YEN_UNIT -> coefficient = 10
+                    TA_UNIT -> coefficient = 100
+                    TAN_UNIT -> coefficient = 1000
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Log.d("TEST", "in ContactDialogFragment - nothing to show")
+            }
+        }
+    }
+
+    private fun validatePriceThreshold(): Boolean {
+        val investment = binding.edtInvestDialog.text.toString().trim().toDouble()
+        val yield = binding.edtYieldsDialog.text.toString().trim().toDouble()
+        val requiredYield = yield * coefficient
+
+        val thresholdPerKg = priceHashMap.get(cropsName)
+        val thresholdAccept = thresholdPerKg?.times(requiredYield)
+        Log.d("TEST", "thresholdAccept "+thresholdAccept)
+        Log.d("TEST", "investment "+investment)
+        if (investment < thresholdAccept!!) {
+            return false
+        }
+        return true
     }
 
     private fun validateYieldThreshold(): Boolean {
@@ -154,88 +260,6 @@ class ContactDialogFragment : AppCompatDialogFragment() {
         binding.spMassUnit.adapter = spMassUnitAdapter
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.spMassUnit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val value = massUnit[position]
-                when (value) {
-                    KG_UNIT -> coefficient = 1
-                    YEN_UNIT -> coefficient = 10
-                    TA_UNIT -> coefficient = 100
-                    TAN_UNIT -> coefficient = 1000
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                Log.d("TEST", "in ContactDialogFragment - nothing to show")
-            }
-        }
-
-        binding.spCropsDialog.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                cropsName = cropsList[position]
-                val fieldId = cropsHashMap.get(cropsName)
-                lifecycleScope.launch(Dispatchers.IO) {
-                    if (fieldId != null) {
-                        val response = RetrofitClient.getInstance().getApi()
-                            .calculateCurrentTotal(fieldId, supplierBasicInfo!!.supplierId)
-                        cropsCurrentTotal = response.body()?.message?.toDouble()!!
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                Log.d("TEST", "in ContactDialogFragment - nothing to show")
-            }
-        }
-
-        binding.btnCancel.setOnClickListener {
-            dialog?.dismiss()
-        }
-
-        binding.btnSave.setOnClickListener {
-            if (!binding.checkboxAgree.isChecked) {
-                showSnackbar(getString(R.string.must_agree))
-            } else if (!validateInfoField()) {
-                showSnackbar(FIELD_REQUIRED)
-            } else if (!validateYieldThreshold()) {
-                showSnackbar(getString(R.string.exceed_threshold))
-            } else {
-                if (supplierBasicInfo != null) {
-                    val token = loginUtils.getUserToken()
-                    val cooperationResponse = createRequest()
-                    cooperationViewModel.createCooperation(
-                        token,
-                        supplierBasicInfo!!.supplierId,
-                        cooperationResponse
-                    ).observe(
-                        requireActivity(), { state -> processCooperationResponse(state) }
-                    )
-                } else {
-                    dialog?.dismiss()
-                }
-            }
-        }
-
-        binding.policy.setOnClickListener {
-            val action =
-                ContactDialogFragmentDirections.actionContactDialogFragmentToPolicyFragment()
-            this@ContactDialogFragment.findNavController().navigate(action)
-        }
-    }
-
     private fun processFieldResponse(state: ScreenState<ArrayList<FieldApiResponse>?>) {
         when (state) {
             is ScreenState.Loading -> {
@@ -249,6 +273,7 @@ class ContactDialogFragment : AppCompatDialogFragment() {
                     for (field in state.data) {
                         yieldHashMap.set(field.cropsName, field.estimateYield)
                         cropsHashMap.set(field.cropsName, field.id)
+                        priceHashMap.set(field.cropsName, field.estimatePrice)
                         cropsList.add(field.cropsName)
                     }
                     val spCropsAdapter = ArrayAdapter(
@@ -296,5 +321,4 @@ class ContactDialogFragment : AppCompatDialogFragment() {
     private fun showSnackbar(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
-
 }

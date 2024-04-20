@@ -14,7 +14,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.preference.PreferenceManager
@@ -23,7 +22,6 @@ import com.example.argiecommerce.adapter.KeywordAdapter
 import com.example.argiecommerce.databinding.FragmentSearchBinding
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.HISTORY_DATA
-import com.example.argiecommerce.viewmodel.UserViewModel
 
 @SuppressLint("ClickableViewAccessibility")
 class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
@@ -42,15 +40,30 @@ class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-
         binding.toolbarLayout.titleToolbar.text = getString(R.string.search)
+
         setupView()
-        setListenerForQuery()
         sharedPreferences.registerOnSharedPreferenceChangeListener(prefChangeListener)
 
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
 
+        binding.wordList.onItemClickListener = this
+        binding.wordList.onItemLongClickListener = this
+
+        binding.clearAll.setOnClickListener {
+            clearAll(it)
+        }
+
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
+
+        setListenerForQuery()
+    }
     private fun setListenerForQuery() {
         binding.editQuery.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -120,33 +133,7 @@ class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
         } else binding.imgQuestion.visibility = View.GONE
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-
-        binding.wordList.onItemClickListener = this
-        binding.wordList.onItemLongClickListener = this
-
-        binding.clearAll.setOnClickListener {
-            clearAll(it)
-        }
-
-        binding.toolbarLayout.imgBack.setOnClickListener {
-            navController.navigateUp()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onItemClick(
-        parent: AdapterView<*>?,
-        view: View?,
-        position: Int,
-        id: Long
-    ) {
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val b = Bundle().apply {
             putParcelable(Constants.CATEGORY_KEY, null)
             putParcelable(Constants.SUBCATEGORY_KEY, null)
@@ -159,21 +146,12 @@ class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
         navController.navigate(R.id.action_searchFragment_to_seeAllFragment, b)
     }
 
-    override fun onItemLongClick(
-        parent: AdapterView<*>?,
-        view: View?,
-        position: Int,
-        id: Long
-    ): Boolean {
+    override fun onItemLongClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long): Boolean {
         val context = requireContext()
         word = list.get(position)
         clearOneItemInSharedPreferences(word, requireContext())
         keywordAdapter.remove(word)
-        Toast.makeText(
-            context,
-            context.resources.getString(R.string.remove_successfully),
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(context, context.resources.getString(R.string.remove_successfully), Toast.LENGTH_SHORT).show()
         return true
     }
 
@@ -207,15 +185,10 @@ class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
         clearSharedPreferences(requireContext())
         keywordAdapter.clear()
         val context = requireContext()
-        Toast.makeText(
-            context,
-            context.resources.getString(R.string.remove_successfully),
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(context, context.resources.getString(R.string.remove_successfully), Toast.LENGTH_SHORT).show()
     }
 
-    private
-    val prefChangeListener =
+    private val prefChangeListener =
         SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
             if (!keywordAdapter.isEmpty && key != null) {
                 if (key.equals(word)) {
@@ -232,10 +205,13 @@ class SearchFragment : Fragment(), AdapterView.OnItemClickListener,
         PreferenceManager.getDefaultSharedPreferences(requireContext())
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
     }
-
     override fun onResume() {
         super.onResume()
         PreferenceManager.getDefaultSharedPreferences(requireContext())
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

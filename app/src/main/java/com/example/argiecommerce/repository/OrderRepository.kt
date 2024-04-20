@@ -9,12 +9,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.OrderDetailResponse
-import com.example.argiecommerce.model.OrderRequest
 import com.example.argiecommerce.model.OrderResponse
-import com.example.argiecommerce.model.Product
-import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.network.OrderPagingSource
-import com.example.argiecommerce.network.ProductPagingSource
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.ScreenState
@@ -22,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 @OptIn(ExperimentalPagingApi::class)
 class OrderRepository(context: Context) {
     private val apiService = RetrofitClient.getInstance().getApi()

@@ -6,9 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.argiecommerce.model.Product
-import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.model.SearchApiRequest
-import com.example.argiecommerce.network.ProductPagingSource
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.network.SearchPagingSource
 import com.example.argiecommerce.utils.Constants

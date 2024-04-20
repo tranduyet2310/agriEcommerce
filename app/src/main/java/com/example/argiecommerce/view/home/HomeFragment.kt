@@ -442,6 +442,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getSuggestedProduct() {
+        // ID of cate
         val productApiRequest = ProductApiRequest(2)
         lifecycleScope.launch {
             productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
@@ -451,6 +452,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getSpecialtyProduct() {
+        // ID of sub
         val productApiRequest = ProductApiRequest(9)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest).collectLatest { pagingData ->
@@ -460,6 +462,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getOcopProduct() {
+        // ID of sub
         val productApiRequest = ProductApiRequest(2)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest).collectLatest { pagingData ->

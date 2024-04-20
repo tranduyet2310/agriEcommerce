@@ -3,8 +3,6 @@ package com.example.argiecommerce.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.argiecommerce.model.CooperationResponse
-import com.example.argiecommerce.model.FavoriteResponse
-import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.ScreenState

@@ -1,6 +1,5 @@
 package com.example.argiecommerce.adapter
 
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

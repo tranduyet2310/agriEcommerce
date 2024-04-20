@@ -1,6 +1,5 @@
 package com.example.argiecommerce.network
 
-import android.util.Log
 import androidx.paging.PagingSource
 import com.example.argiecommerce.model.OrderResponse
 import retrofit2.HttpException

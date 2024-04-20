@@ -1,8 +1,10 @@
 package com.example.argiecommerce.view
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -12,18 +14,30 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.ActivityMainBinding
+import com.example.argiecommerce.model.LoginApiResponse
+import com.example.argiecommerce.model.LoginRequest
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants.USER
+import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
+import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.viewmodel.LoginViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
+    private val loginViewModel: LoginViewModel by lazy {
+        ViewModelProvider(this).get(LoginViewModel::class.java)
+    }
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(this)
+    }
+
     private var user: User? = null
     private lateinit var viewModel: UserViewModel
-
+    private lateinit var alertDialog: AlertDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,13 +48,46 @@ class MainActivity : AppCompatActivity() {
         val intent = intent
         if (intent != null && intent.hasExtra(USER)) {
             user = intent.getParcelableExtra(USER) as? User
+            requestNewToken()
         } else {
             // Lấy dữ liệu từ login
             user = viewModel.user
         }
-        // Truyền dữ liệu tới các fragment
-        viewModel.user = user
 
+        viewModel.user = user
+        setupNavHostFragment()
+    }
+
+    private fun requestNewToken() {
+        val loginRequest = LoginRequest(user!!.email, user!!.password)
+        loginViewModel.getLoginResponseLiveData(loginRequest)
+            .observe(this, { state -> processLoginResponse(state) })
+    }
+
+    private fun processLoginResponse(state: ScreenState<LoginApiResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                val progressDialog = ProgressDialog()
+                alertDialog = progressDialog.createAlertDialog(this)
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    user?.let { loginUtils.saveUserInfo(state.data, it) }
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun setupNavHostFragment() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController

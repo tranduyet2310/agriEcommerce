@@ -19,8 +19,28 @@ public class FieldApiResponse {
     private Double estimateYield;
     @SerializedName("fieldDetails")
     private ArrayList<FieldDetail> fieldDetails;
+    @SerializedName("estimatePrice")
+    private long estimatePrice;
+    @SerializedName("isComplete")
+    private boolean isComplete;
 
     public FieldApiResponse() {
+    }
+
+    public long getEstimatePrice() {
+        return estimatePrice;
+    }
+
+    public void setEstimatePrice(long estimatePrice) {
+        this.estimatePrice = estimatePrice;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
     }
 
     public long getId() {

@@ -10,12 +10,8 @@ import androidx.paging.PagingData
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.FieldApiResponse
 import com.example.argiecommerce.model.Image
-import com.example.argiecommerce.model.MessageResponse
-import com.example.argiecommerce.model.OrderDetailResponse
 import com.example.argiecommerce.model.Product
-import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.model.SupplierIntroResponse
-import com.example.argiecommerce.network.ProductPagingSource
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.network.SupplierProductPagingSource
 import com.example.argiecommerce.utils.Constants

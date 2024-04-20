@@ -147,8 +147,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     val loginUtils = LoginUtils(requireContext())
                     user.id = state.data.id
                     loginUtils.saveUserInfo(user)
-                    Snackbar.make(requireView(), "Đăng ký thành công", Snackbar.LENGTH_SHORT)
-                        .show()
+                    Snackbar.make(requireView(), "Đăng ký thành công", Snackbar.LENGTH_SHORT).show()
                 }
             }
 
