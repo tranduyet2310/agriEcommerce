@@ -21,6 +21,7 @@ import com.example.argiecommerce.utils.Constants.USER
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.utils.Utils
 import com.example.argiecommerce.viewmodel.LoginViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 
@@ -44,11 +45,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
+        checkCertificate()
         val intent = intent
         if (intent != null && intent.hasExtra(USER)) {
             user = intent.getParcelableExtra(USER) as? User
-            requestNewToken()
+            if (user != null){
+                requestNewToken()
+            }
         } else {
             // Lấy dữ liệu từ login
             user = viewModel.user
@@ -57,7 +60,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.user = user
         setupNavHostFragment()
     }
-
+    private fun checkCertificate() {
+        Utils.readRawResource(this, R.raw.server)
+    }
     private fun requestNewToken() {
         val loginRequest = LoginRequest(user!!.email, user!!.password)
         loginViewModel.getLoginResponseLiveData(loginRequest)

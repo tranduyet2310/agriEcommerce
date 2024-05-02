@@ -1,5 +1,7 @@
 package com.example.argiecommerce.utils
 
+import android.content.Context
+import java.io.InputStream
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
@@ -37,6 +39,11 @@ class Utils {
                 yieldText = "${yield} " + Constants.KG_UNIT
             }
             return yieldText;
+        }
+
+        lateinit var certsInputStream: InputStream
+        fun readRawResource(context: Context, resId: Int) {
+            certsInputStream = context.resources.openRawResource(resId)
         }
     }
 }

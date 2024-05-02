@@ -11,7 +11,7 @@ public class Constants {
     public static final String CURRENCY_TO = "USD";
     public static final String CURRENCY_FORMAT = "json";
     // API
-    public static final String LOCALHOST = "http://192.168.55.105:8080/";
+    public static final String LOCALHOST = "https://172.20.10.3:8443/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
     public static final String HISTORY_DATA = "history_data";
@@ -23,7 +23,7 @@ public class Constants {
     public static final String PHONE = "phone";
     public static final String AVATAR = "avatar";
     public static final String USER = "user";
-    //
+    // nav args
     public static final String SUGGESTED_PRODUCT = "Gợi ý hôm nay";
     public static final String RECENT_PRODUCT = "Sản phẩm sắp ra mắt";
     public static final String SPECIALTY_PRODUCT = "Đặc sản vùng miền";
@@ -39,6 +39,7 @@ public class Constants {
     public static final String PRODUCT_ID_KEY = "productId";
     public static final String SUPPLIER_KEY = "supplier";
     public static final String COOPERATION_KEY = "cooperation";
+    public static final String COOPERATIIVE_KEY = "cooperative";
     // pagination
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";

@@ -1,13 +1,12 @@
 package com.example.argiecommerce.view.profile
 
 import android.app.AlertDialog
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -16,7 +15,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentCooperationDetailBinding
 import com.example.argiecommerce.model.CooperationResponse
+import com.example.argiecommerce.model.CooperativePayment
 import com.example.argiecommerce.model.CurrencyRate
+import com.example.argiecommerce.model.FieldApiResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.network.Api
 import com.example.argiecommerce.network.RetrofitClient
@@ -80,6 +81,7 @@ class CooperationDetailFragment : Fragment() {
 
     val args: CooperationDetailFragmentArgs by navArgs()
     private lateinit var cooperationResponse: CooperationResponse
+    private lateinit var currentField: FieldApiResponse
     private var status: OrderStatus = OrderStatus.PROCESSING
     private lateinit var currentAddress: String
     private lateinit var paymentAmount: String
@@ -95,6 +97,7 @@ class CooperationDetailFragment : Fragment() {
     private val uiScope = MainScope()
     private lateinit var orderId: String
     private var enteredAmount = totalPrice.toString()
+    private var cooperativePaymentId: Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,9 +108,25 @@ class CooperationDetailFragment : Fragment() {
 
         cooperationResponse = args.cooperation
         user = userViewModel.user
-        showData()
-        setupStepView()
-        getDetailInfo()
+        lifecycleScope.launch {
+            withContext(Dispatchers.Main){
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+            withContext(Dispatchers.IO){
+                val response = apiService.getFieldById(cooperationResponse.fieldId)
+                if (response.isSuccessful){
+                    if (response.body() != null){
+                        currentField = response.body()!!
+                    }
+                }
+            }
+            withContext(Dispatchers.Main){
+                alertDialog.dismiss()
+            }
+            showData()
+            setupStepView()
+            getDetailInfo()
+        }
 
         return binding.root
     }
@@ -219,15 +238,20 @@ class CooperationDetailFragment : Fragment() {
     }
 
     private fun showData() {
+        val totalPrice = "${cooperationResponse.investment.toLong().formatPrice()} đ"
+        val pricePerKg = "${currentField.estimatePrice.formatPrice()} đ"
         binding.apply {
             tvShopName.text = cooperationResponse.shopName
             tvSupplierName.text = cooperationResponse.supplierName
             tvSupplierContact.text = cooperationResponse.supplierPhone
             tvCropsName.text = cooperationResponse.cropsName
+            tvCropsType.text = currentField.cropsType
+            tvSeason.text = currentField.season
 
             tvFullName.text = cooperationResponse.fullName
             tvUserContact.text = cooperationResponse.contact
-            tvInvestment.text = cooperationResponse.investment.toLong().formatPrice()
+            tvInvestment.text = totalPrice
+            tvPrice.text = pricePerKg
             tvYield.text = formatYield(cooperationResponse.requireYield)
             tvDescription.text = cooperationResponse.description
         }
@@ -246,8 +270,10 @@ class CooperationDetailFragment : Fragment() {
         if (status == OrderStatus.COMPLETED) {
             binding.stepView.done(true)
             binding.btnCancel.text = getString(R.string.received)
+            binding.btnCancel.isEnabled = false
         } else if (status == OrderStatus.CANCELLED) {
             binding.btnCancel.text = getString(R.string.terminated)
+            binding.btnCancel.isEnabled = false
         } else if (status == OrderStatus.DELIVERING) {
             binding.btnCancel.text = getString(R.string.receive_success)
         } else if (status == OrderStatus.CONFIRMED) {
@@ -333,6 +359,7 @@ class CooperationDetailFragment : Fragment() {
                 if (state.data != null) {
                     alertDialog.dismiss()
                     showSnackbar(getString(R.string.updated_status))
+                    navController.navigate(R.id.action_cooperationDetailFragment_to_cooperationFragment)
                 }
             }
 
@@ -349,12 +376,13 @@ class CooperationDetailFragment : Fragment() {
         Snackbar.make(requireView(), text, Snackbar.LENGTH_SHORT).show()
     }
 
-    suspend fun createOrderInfo(orderRequest: com.example.argiecommerce.model.OrderRequest) {
+    suspend fun createOrderInfo(cooperativePayment: CooperativePayment) {
         val token = loginUtils.getUserToken()
         withContext(Dispatchers.IO) {
-            val response = apiService.createOrder(token, user!!.id, orderRequest)
+            val response = apiService.createCooperativeOrder(token, user!!.id, cooperativePayment)
             if (response.isSuccessful) {
                 if (response.body() != null) {
+                    cooperativePaymentId = response.body()!!.id
                     withContext(Dispatchers.Main) {
                         showSnackbar("Tạo đơn hàng thành công")
                     }
@@ -422,20 +450,27 @@ class CooperationDetailFragment : Fragment() {
                     }
                     showSnackbar(message)
                     if (result is CaptureOrderResult.Success) {
-                        val orderRequest = com.example.argiecommerce.model.OrderRequest().apply {
-                            paymentStatus = Constants.PAID
+                        val cooperativePayment = CooperativePayment().apply {
+                            paymentStatus = paymentAmount
                             paymentMethod = Constants.PAYMENT_PAYPAL
                             total = totalPrice
-                            addressId = userAddressId
+                            userId = cooperationResponse.userId
+                            cooperationId = cooperationResponse.id
+                            supplierId = cooperationResponse.supplierId
+                            orderStatus = cooperationResponse.cooperationStatus
                         }
                         lifecycleScope.launch {
                             withContext(Dispatchers.Main) {
                                 alertDialog = progressDialog.createAlertDialog(requireActivity())
                             }
-                            createOrderInfo(orderRequest)
+                            createOrderInfo(cooperativePayment)
                             updateCooperation()
                             withContext(Dispatchers.Main) {
                                 alertDialog.dismiss()
+                                val b = Bundle().apply {
+                                    putLong(Constants.COOPERATIIVE_KEY, cooperativePaymentId)
+                                }
+                                navController.navigate(R.id.action_cooperationDetailFragment_to_cooperativeResultFragment, b)
                             }
                         }
                     }

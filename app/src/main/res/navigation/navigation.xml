@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_profileFragment_to_cooperationFragment"
             app:destination="@id/cooperationFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_cooperativeOrderFragment"
+            app:destination="@id/cooperativeOrderFragment" />
 
     </fragment>
     <fragment
@@ -438,6 +441,14 @@
         <action
             android:id="@+id/action_cooperationDetailFragment_to_cooperationAddressFragment"
             app:destination="@id/cooperationAddressFragment" />
+        <action
+            android:id="@+id/action_cooperationDetailFragment_to_cooperationFragment"
+            app:destination="@id/cooperationFragment"
+            app:popUpTo="@id/cooperationFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_cooperationDetailFragment_to_cooperativeResultFragment"
+            app:destination="@id/cooperativeResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/cooperationAddressFragment"
@@ -452,5 +463,40 @@
         <argument
             android:name="cooperation"
             app:argType="com.example.argiecommerce.model.CooperationResponse" />
+    </fragment>
+    <fragment
+        android:id="@+id/cooperativeResultFragment"
+        android:name="com.example.argiecommerce.view.profile.CooperativeResultFragment"
+        android:label="fragment_cooperative_result"
+        tools:layout="@layout/fragment_cooperative_result" >
+        <action
+            android:id="@+id/action_cooperativeResultFragment_to_cooperationFragment"
+            app:destination="@id/cooperationFragment"
+            app:popUpTo="@id/cooperationFragment"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="cooperative"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_cooperativeResultFragment_to_cooperativeDetailFragment"
+            app:destination="@id/cooperativeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cooperativeOrderFragment"
+        android:name="com.example.argiecommerce.view.profile.CooperativeOrderFragment"
+        android:label="fragment_cooperative_order"
+        tools:layout="@layout/fragment_cooperative_order" >
+        <action
+            android:id="@+id/action_cooperativeOrderFragment_to_cooperativeDetailFragment"
+            app:destination="@id/cooperativeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cooperativeDetailFragment"
+        android:name="com.example.argiecommerce.view.profile.CooperativeDetailFragment"
+        android:label="fragment_cooperative_detail"
+        tools:layout="@layout/fragment_cooperative_detail" >
+        <argument
+            android:name="cooperative"
+            app:argType="long" />
     </fragment>
 </navigation>

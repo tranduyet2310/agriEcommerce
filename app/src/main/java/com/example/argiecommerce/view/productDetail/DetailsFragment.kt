@@ -310,7 +310,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
             is ScreenState.Success -> {
                 if (state.data != null) {
-                    alertDialog.dismiss()
+//                    alertDialog.dismiss()
                     rating = state.data.averageRating.toDouble()
                     if (rating == 0.0) {
                         binding.details.tvRatingMiniView.text = getString(R.string._5_0)
@@ -322,7 +322,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             }
 
             is ScreenState.Error -> {
-                alertDialog.dismiss()
+//                alertDialog.dismiss()
                 if (state.message != null) {
                     showSnackbar(state.message)
                 }
@@ -336,7 +336,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
             is ScreenState.Success -> {
                 if (state.data != null) {
-                    alertDialog.dismiss()
+//                    alertDialog.dismiss()
                     supplierImageUrl = state.data.imageUrl
                     if (state.data.imageUrl != null){
                         GlideApp.with(requireContext())
@@ -347,7 +347,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             }
 
             is ScreenState.Error -> {
-                alertDialog.dismiss()
+//                alertDialog.dismiss()
                 if (state.message != null) {
                     showSnackbar(state.message)
                 }

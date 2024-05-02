@@ -3,6 +3,8 @@ package com.example.argiecommerce.network
 import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.CategoryApiResponse
 import com.example.argiecommerce.model.CooperationResponse
+import com.example.argiecommerce.model.CooperativeOrderResponse
+import com.example.argiecommerce.model.CooperativePayment
 import com.example.argiecommerce.model.CurrencyResponse
 import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.FieldApiResponse
@@ -102,6 +104,25 @@ interface Api {
         @Path("userId") userId: Long
     ): Call<MessageResponse>
 
+    // Cooperative Payment
+    @POST("/api/cooperative/{userId}")
+    suspend fun createCooperativeOrder(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long,
+        @Body cooperativePayment: CooperativePayment
+    ): Response<CooperativePayment>
+
+    @GET("/api/cooperative/{userId}")
+    suspend fun getCooperativeOrderByUserId(
+        @Path("userId") userId: Long,
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<CooperativeOrderResponse>
+
+    @GET("/api/cooperative/{id}/info")
+    suspend fun getCooperativeOrderById(@Path("id") id: Long): Response<CooperativePayment>
+
     //  Order
     @POST("/api/orders/{userId}")
     suspend fun createOrder(
@@ -180,6 +201,11 @@ interface Api {
         @Path("supplierId") supplierId: Long
     ): Response<ArrayList<FieldApiResponse>>
 
+    @GET("api/field/{fieldId}/detail")
+    suspend fun getFieldById(
+        @Path("fieldId") fieldId: Long
+    ): Response<FieldApiResponse>
+
     // Cooperation
     @POST("api/cooperation/{supplierId}")
     fun createCooperation(
@@ -241,6 +267,9 @@ interface Api {
 
     @GET("api/cooperation/{cooperationId}/general")
     fun getCooperationById(@Path("cooperationId") cooperationId: Long): Call<CooperationResponse>
+
+    @GET("api/cooperation/{cooperationId}/general")
+    suspend fun getCooperationByIdV2(@Path("cooperationId") cooperationId: Long): Response<CooperationResponse>
 
     //   Review
     @POST("api/reviews/{userId}/{productId}")

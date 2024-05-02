@@ -144,8 +144,9 @@ class SupplierFragment : Fragment(), View.OnClickListener {
                 requireContext().resources.getString(R.string.need_to_login)
             )
             dialog.show()
+        } else {
+            navController.navigate(R.id.action_suppilerFragment_to_cropsDialogFragment)
         }
-        navController.navigate(R.id.action_suppilerFragment_to_cropsDialogFragment)
     }
 
     private fun openRegisterDialog() {
@@ -155,8 +156,9 @@ class SupplierFragment : Fragment(), View.OnClickListener {
                 requireContext().resources.getString(R.string.need_to_login)
             )
             dialog.show()
+        } else {
+            navController.navigate(R.id.action_suppilerFragment_to_contactDialogFragment)
         }
-        navController.navigate(R.id.action_suppilerFragment_to_contactDialogFragment)
     }
 
     private fun goToSearchFragment() {

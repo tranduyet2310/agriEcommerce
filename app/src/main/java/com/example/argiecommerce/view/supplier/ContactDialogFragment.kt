@@ -2,6 +2,8 @@ package com.example.argiecommerce.view.supplier
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +31,7 @@ import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.OrderStatus
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 import com.example.argiecommerce.viewmodel.CooperationViewModel
 import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
@@ -78,11 +81,30 @@ class ContactDialogFragment : AppCompatDialogFragment() {
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupSpinnerMassListener()
         setupSpinnerCropsListener()
+
+        binding.edtYieldsDialog.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (binding.edtYieldsDialog.text.toString().isEmpty()) {
+                    binding.edtInvestDialog.text = Editable.Factory.getInstance().newEditable("0")
+                } else {
+                    autoCalculatePrice()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
 
         binding.btnCancel.setOnClickListener {
             dialog?.dismiss()
@@ -95,7 +117,7 @@ class ContactDialogFragment : AppCompatDialogFragment() {
                 showSnackbar(FIELD_REQUIRED)
             } else if (!validateYieldThreshold()) {
                 showSnackbar(getString(R.string.exceed_threshold))
-            }else if (!validatePriceThreshold()){
+            } else if (!validatePriceThreshold()) {
                 showSnackbar(getString(R.string.lower_than_threshold))
             } else {
                 if (supplierBasicInfo != null) {
@@ -138,6 +160,13 @@ class ContactDialogFragment : AppCompatDialogFragment() {
                         cropsCurrentTotal = response.body()?.message?.toDouble()!!
                     }
                 }
+                binding.tvPricePerKg.visibility = View.VISIBLE
+                val cropsPricePerKg =
+                    "Giá thành: ${(priceHashMap.get(cropsName)?.formatPrice() ?: "0")} đ/1 kg"
+                binding.tvPricePerKg.text = cropsPricePerKg
+
+                binding.edtYieldsDialog.text.clear()
+                binding.edtInvestDialog.text.clear()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -161,12 +190,25 @@ class ContactDialogFragment : AppCompatDialogFragment() {
                     TA_UNIT -> coefficient = 100
                     TAN_UNIT -> coefficient = 1000
                 }
+
+                if (!binding.edtYieldsDialog.text.toString().isEmpty()){
+                    autoCalculatePrice()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 Log.d("TEST", "in ContactDialogFragment - nothing to show")
             }
         }
+    }
+
+    private fun autoCalculatePrice() {
+        val yield = binding.edtYieldsDialog.text.toString().trim().toDouble()
+        val requiredYield = yield * coefficient
+        val thresholdPerKg = priceHashMap.get(cropsName)
+        val thresholdAccept = thresholdPerKg?.times(requiredYield)
+        val price = thresholdAccept?.toLong()?.formatPrice() ?: "0"
+        binding.edtInvestDialog.text = Editable.Factory.getInstance().newEditable(price)
     }
 
     private fun validatePriceThreshold(): Boolean {
@@ -176,9 +218,9 @@ class ContactDialogFragment : AppCompatDialogFragment() {
 
         val thresholdPerKg = priceHashMap.get(cropsName)
         val thresholdAccept = thresholdPerKg?.times(requiredYield)
-        Log.d("TEST", "thresholdAccept "+thresholdAccept)
-        Log.d("TEST", "investment "+investment)
         if (investment < thresholdAccept!!) {
+            return false
+        } else if (investment == 0.0){
             return false
         }
         return true

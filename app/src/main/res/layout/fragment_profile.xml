@@ -114,7 +114,7 @@
             <View
                 android:id="@+id/linearOrders"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="240dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/search_box_background"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -275,7 +275,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearCooperation"
+                android:id="@+id/linearCooperativeOrder"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -283,6 +283,44 @@
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
                 app:layout_constraintTop_toBottomOf="@id/linearBilling">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/settings_items_background"
+                    android:backgroundTint="@color/darkBlue"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_schedule_24"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvCooperativeOrder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="@dimen/dimen10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Đơn hàng hợp tác"
+                    android:textColor="#666666"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:drawableEndCompat="@drawable/ic_arrow"
+                    app:drawableTint="#97AABD" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearCooperation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintTop_toBottomOf="@id/linearCooperativeOrder">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -316,7 +354,7 @@
                 android:id="@+id/tvNotifications"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/notification"
                 android:textColor="#666666"
