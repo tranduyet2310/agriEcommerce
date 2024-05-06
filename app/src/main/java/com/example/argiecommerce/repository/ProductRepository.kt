@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiRequest
+import com.example.argiecommerce.network.AllProductsPagingSource
 import com.example.argiecommerce.network.DiscountProductPagingSource
 import com.example.argiecommerce.network.SubcategoryProductPagingSource
 import com.example.argiecommerce.network.ProductPagingSource
@@ -26,6 +27,17 @@ class ProductRepository(context: Context) {
             )
         ) {
             ProductPagingSource(apiService, productApiRequest)
+        }.flow
+    }
+
+    fun getAllProducts(productApiRequest: ProductApiRequest): Flow<PagingData<Product>> {
+        return Pager(
+            PagingConfig(
+                pageSize = DEFAULT_PAGE_SIZE.toInt(),
+                enablePlaceholders = false
+            )
+        ) {
+            AllProductsPagingSource(apiService, productApiRequest)
         }.flow
     }
 

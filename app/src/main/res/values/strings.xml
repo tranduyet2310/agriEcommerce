@@ -324,5 +324,15 @@
     <string name="remain_amount">Số tiền cần thanh toán còn lại:</string>
     <string name="payment_date">Ngày thực hiện thanh toán:</string>
     <string name="zero_dong">0 đ</string>
+    <string name="share_successfully">Chia sẻ thành công</string>
+    <string name="not_found_address">Không tìm thấy địa chỉ</string>
+    <string name="field_required">Yêu cầu nhập đủ thông tin</string>
+    <string name="create_new_address_successfully">Thêm địa chỉ mới thành công</string>
+    <string name="email_required">Yêu cầu nhập email</string>
+    <string name="password_required">Yêu cầu nhập mật khẩu</string>
+    <string name="login_success">Đăng nhập thành công</string>
+    <string name="retry_v2">Thử lại 👍</string>
+    <string name="garden_info_empty">Thông tin Vườn hiện tại đang trống</string>
+    <string name="shop_no_product">Cửa hàng hiện chưa thêm sản phẩm nào</string>
 
 </resources>

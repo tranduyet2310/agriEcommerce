@@ -48,13 +48,56 @@ class SpGardenFragment : Fragment() {
 
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupSpinnerCropsListener()
+    }
+
+    private fun setupSpinnerCropsListener() {
+        binding.spinnerCrops.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val value = cropsNameList[position]
+                for (field in fieldInfoList) {
+                    if (field.cropsName.equals(value)) {
+                        binding.tvSeason.text = field.season
+                        binding.tvLandArea.text = field.area
+                        if (field.cropsType.equals(LONG_TERM_PLANT)) {
+                            val status = cropsStatus.get(value)
+                            if (status != null) {
+                                val cropState = statusForLongTermPlant(status)
+                                setUpColorStateLong(cropState)
+                            }
+
+                            detailInfoList = field.fieldDetails
+                            for (detail in detailInfoList) {
+                                setupFieldDetailLong(detail.cropsStatus, detail.details, detail.dateCreated)
+                            }
+                        } else if (field.cropsType.equals(SHORT_TERM_PLANT)) {
+                            val status = cropsStatus.get(value)
+                            if (status != null) {
+                                val cropState = statusForShortTermPlant(status)
+                                setUpColorStateShort(cropState)
+                            }
+
+                            detailInfoList = field.fieldDetails
+                            for (detail in detailInfoList) {
+                                setupFieldDetailShort(detail.cropsStatus, detail.details, detail.dateCreated)
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                showSnackbar("Nothing to show")
+            }
+        }
+    }
 
     private fun setupSpinner() {
-        val spCropsAdapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_dropdown_item,
-            cropsNameList
-        )
+        val spCropsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, cropsNameList)
         binding.spinnerCrops.adapter = spCropsAdapter
     }
 
@@ -65,7 +108,6 @@ class SpGardenFragment : Fragment() {
     }
 
     private fun setUpColorStateShort(currentState: Int) {
-
         binding.scrollLongTermPlant.visibility = View.GONE
         binding.scrollShortTermPlant.visibility = View.VISIBLE
 
@@ -102,7 +144,6 @@ class SpGardenFragment : Fragment() {
     }
 
     private fun setUpColorStateLong(currentState: Int) {
-
         binding.scrollLongTermPlant.visibility = View.VISIBLE
         binding.scrollShortTermPlant.visibility = View.GONE
 
@@ -207,63 +248,6 @@ class SpGardenFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.spinnerCrops.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val value = cropsNameList[position]
-                for (field in fieldInfoList) {
-                    if (field.cropsName.equals(value)) {
-                        binding.tvSeason.text = field.season
-                        binding.tvLandArea.text = field.area
-                        if (field.cropsType.equals(LONG_TERM_PLANT)) {
-                            val status = cropsStatus.get(value)
-                            if (status != null) {
-                                val cropState = statusForLongTermPlant(status)
-                                setUpColorStateLong(cropState)
-                            }
-
-                            detailInfoList = field.fieldDetails
-                            for (detail in detailInfoList) {
-                                setupFieldDetailLong(
-                                    detail.cropsStatus,
-                                    detail.details,
-                                    detail.dateCreated
-                                )
-                            }
-                        } else if (field.cropsType.equals(SHORT_TERM_PLANT)) {
-                            val status = cropsStatus.get(value)
-                            if (status != null) {
-                                val cropState = statusForShortTermPlant(status)
-                                setUpColorStateShort(cropState)
-                            }
-
-                            detailInfoList = field.fieldDetails
-                            for (detail in detailInfoList) {
-                                setupFieldDetailShort(
-                                    detail.cropsStatus,
-                                    detail.details,
-                                    detail.dateCreated
-                                )
-                            }
-                        }
-                    }
-                }
-
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                showSnackbar("Nothing to show")
-            }
-        }
-    }
-
     private fun processFieldResponse(state: ScreenState<ArrayList<FieldApiResponse>?>) {
         when (state) {
             is ScreenState.Loading -> {
@@ -275,7 +259,7 @@ class SpGardenFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     fieldInfoList = state.data
                     if (fieldInfoList.size == 0){
-                        showSnackbar("Thông tin Vườn hiện tại đang trống")
+                        showSnackbar(getString(R.string.garden_info_empty))
                     } else {
                         cropsNameList.clear()
                         cropsStatus = hashMapOf()

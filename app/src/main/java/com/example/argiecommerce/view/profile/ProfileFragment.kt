@@ -171,14 +171,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showUserAvatar(imageUrl: String) {
+        val modifiedUrl = imageUrl.replace("http://", "https://")
         GlideApp.with(requireContext())
-            .load(imageUrl)
+//            .load(imageUrl)
+            .load(modifiedUrl)
             .into(binding.imageUser)
     }
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 }

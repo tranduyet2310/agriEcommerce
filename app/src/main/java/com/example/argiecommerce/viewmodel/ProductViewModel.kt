@@ -18,6 +18,10 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
         return productRepo.getProductByCategory(productApiRequest).cachedIn(viewModelScope)
     }
 
+    fun getAllProducts(productApiRequest: ProductApiRequest): Flow<PagingData<Product>> {
+        return productRepo.getAllProducts(productApiRequest).cachedIn(viewModelScope)
+    }
+
     fun getProductBySubCategory(productApiRequest: ProductApiRequest):Flow<PagingData<Product>>{
         return productRepo.getProductBySubCategory(productApiRequest).cachedIn(viewModelScope)
     }

@@ -4,6 +4,9 @@ import android.content.Context
 import java.io.InputStream
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class Utils {
     companion object {
@@ -44,6 +47,19 @@ class Utils {
         lateinit var certsInputStream: InputStream
         fun readRawResource(context: Context, resId: Int) {
             certsInputStream = context.resources.openRawResource(resId)
+        }
+
+        fun convertToLong(input: String): Long {
+            val result = input.replace(".","").replace(",","")
+            return result.toLong()
+        }
+
+        fun getExpireDate(): String {
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_YEAR, 7)
+            val dateAfter7Days = calendar.time
+            return dateFormat.format(dateAfter7Days )
         }
     }
 }

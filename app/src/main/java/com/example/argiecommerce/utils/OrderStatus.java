@@ -8,10 +8,9 @@ public enum OrderStatus {
     CANCELLED(4);
 
     private final int value;
-    private OrderStatus(int value){
+    OrderStatus(int value){
         this.value = value;
     }
-
     public int getValue(){
         return value;
     }

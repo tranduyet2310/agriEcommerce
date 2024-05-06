@@ -1,13 +1,13 @@
 package com.example.argiecommerce.view.supplier
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.CategoryAdapter
 import com.example.argiecommerce.adapter.SubcategoryAdapter
 import com.example.argiecommerce.databinding.FragmentSuppilerCategoryBinding
@@ -63,7 +63,6 @@ class SpCategoryFragment : Fragment() {
     }
 
     private fun getData() {
-        Log.d("TEST", "in here")
         supplierViewModel.getCategoryBySupplierId(supplierBasicInfo!!.supplierId).observe(
             requireActivity(), { state -> processCategoryResponse(state) }
         )
@@ -101,7 +100,7 @@ class SpCategoryFragment : Fragment() {
                 if (state.data != null) {
                     binding.progressBar.visibility = View.GONE
                     if (state.data.size == 0){
-                        showSnackbar("Cửa hàng hiện chưa thêm sản phẩm nào")
+                        showSnackbar(getString(R.string.shop_no_product))
                     } else {
                         categoryList.clear()
                         categoryList.addAll(state.data)

@@ -29,7 +29,6 @@ import com.example.argiecommerce.paypal.token.request.AmountRequest
 import com.example.argiecommerce.paypal.token.request.ApplicationContextRequest
 import com.example.argiecommerce.paypal.token.request.OrderRequest
 import com.example.argiecommerce.paypal.token.request.PurchaseUnitRequest
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.CURRENCY_API_KEY
 import com.example.argiecommerce.utils.Constants.CURRENCY_FORMAT
 import com.example.argiecommerce.utils.Constants.CURRENCY_FROM
@@ -42,7 +41,6 @@ import com.example.argiecommerce.utils.Constants.SCREEN_KEY
 import com.example.argiecommerce.utils.Constants.TOTAL_ADDRESS
 import com.example.argiecommerce.utils.Constants.UNPAID
 import com.example.argiecommerce.utils.Constants.USD_FORMAT
-import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.utils.Utils.Companion.formatPrice
@@ -87,9 +85,6 @@ class BillingFragment : Fragment(), View.OnClickListener {
     }
     private val progressDialog: ProgressDialog by lazy {
         ProgressDialog()
-    }
-    private val loginUtils: LoginUtils by lazy {
-        LoginUtils(requireContext())
     }
     private val cartViewModel: CartViewModel by lazy {
         ViewModelProvider(requireActivity()).get(CartViewModel::class.java)
@@ -281,7 +276,7 @@ class BillingFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 

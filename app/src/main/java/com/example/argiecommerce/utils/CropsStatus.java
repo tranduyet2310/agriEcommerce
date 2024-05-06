@@ -10,11 +10,9 @@ public enum CropsStatus {
     FRUITING(6),
     HARVEST(7);
 
-
-
     private final int value;
 
-    private CropsStatus(int value) {
+    CropsStatus(int value) {
         this.value = value;
     }
 

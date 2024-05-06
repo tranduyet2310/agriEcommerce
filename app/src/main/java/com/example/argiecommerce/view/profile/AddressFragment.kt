@@ -13,9 +13,6 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentAddressBinding
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
-import com.example.argiecommerce.utils.Constants.ADDRESS_CREATED
-import com.example.argiecommerce.utils.Constants.FIELD_REQUIRED
-import com.example.argiecommerce.utils.Constants.RETRY
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -92,8 +89,9 @@ class AddressFragment : Fragment(), View.OnClickListener {
         val details = binding.edtAddressDetail.text.toString().trim()
 
         if (contactName.isEmpty() || phone.isEmpty() || province.isEmpty() ||
-            district.isEmpty() || contactName.isEmpty() || details.isEmpty()) {
-            displayErrorSnackbar(FIELD_REQUIRED)
+            district.isEmpty() || contactName.isEmpty() || details.isEmpty()
+        ) {
+            displayErrorSnackbar(getString(R.string.field_required))
         } else {
             val userAddress = UserAddress(contactName, phone, province, district, commune, details)
             val token = loginUtils.getUserToken()
@@ -114,7 +112,7 @@ class AddressFragment : Fragment(), View.OnClickListener {
                     alertDialog.dismiss()
                     Snackbar.make(
                         requireView(),
-                        ADDRESS_CREATED,
+                        getString(R.string.create_new_address_successfully),
                         Snackbar.LENGTH_SHORT
                     ).show()
                     goToAddressFragment()
@@ -136,7 +134,7 @@ class AddressFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 }

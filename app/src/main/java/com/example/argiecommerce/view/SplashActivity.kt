@@ -2,11 +2,9 @@ package com.example.argiecommerce.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.argiecommerce.databinding.ActivitySplashBinding
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.USER
 import com.example.argiecommerce.utils.LoginUtils
 

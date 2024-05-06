@@ -1,8 +1,8 @@
 package com.example.argiecommerce.view.specialty
 
 import android.animation.LayoutTransition
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +16,21 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.adapter.VerticalProductAdapter
 import com.example.argiecommerce.databinding.FragmentBaseSpecialtyBinding
+import com.example.argiecommerce.model.CartResponse
+import com.example.argiecommerce.model.CategoryApiResponse
+import com.example.argiecommerce.model.FavoriteResponse
+import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants
+import com.example.argiecommerce.utils.LoginUtils
+import com.example.argiecommerce.utils.ProgressDialog
+import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.viewmodel.CartViewModel
+import com.example.argiecommerce.viewmodel.FavoriteViewModel
 import com.example.argiecommerce.viewmodel.ProductViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -37,8 +47,24 @@ class DongNamBoFragment : Fragment() {
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
+    private val cartViewModel: CartViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(CartViewModel::class.java)
+    }
+    private val favoriteViewModel: FavoriteViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(FavoriteViewModel::class.java)
+    }
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(requireContext())
+    }
+    private val progressDialog: ProgressDialog by lazy {
+        ProgressDialog()
+    }
+
+    private lateinit var alertDialog: AlertDialog
 
     private var user: User? = null
+    private var specialtyCategory: CategoryApiResponse? = null
+    private var dongNamBoId: Long = 0L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,16 +72,44 @@ class DongNamBoFragment : Fragment() {
         binding = FragmentBaseSpecialtyBinding.inflate(inflater)
 
         user = userViewModel.user
+        specialtyCategory = userViewModel.category
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()
-        getProducts()
+        if (specialtyCategory != null){
+            getProducts()
+        }
 
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        productAdapter.onClick = {
+            val b = Bundle().apply { putParcelable(Constants.PRODUCT_KEY, it) }
+            findNavController().navigate(R.id.action_specialtyFragment_to_detailsFragment, b)
+        }
+
+        productAdapter.onCartClick = {
+            addToCart(it)
+        }
+
+        productAdapter.onFavouriteClick = {
+            addFavoriteProduct(it)
+        }
+
+        productAdapter.onShareClick = {
+            shareProduct(it)
+        }
+    }
     private fun getProducts() {
-        val productApiRequest = ProductApiRequest(7)
+        for (subcategory in specialtyCategory!!.subCategoryList){
+            if (subcategory.subcategoryName.equals(Constants.DNB)){
+                dongNamBoId = subcategory.id.toLong()
+            }
+        }
+
+        val productApiRequest = ProductApiRequest(dongNamBoId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)
                 .collectLatest { pagingData ->
@@ -108,12 +162,75 @@ class DongNamBoFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        productAdapter.onClick = {
-            val b = Bundle().apply { putParcelable(Constants.PRODUCT_KEY, it) }
-            findNavController().navigate(R.id.action_specialtyFragment_to_detailsFragment, b)
+    private fun addFavoriteProduct(product: Product) {
+        if (product.isFavourite == 1) {
+            val token = loginUtils.getUserToken()
+            favoriteViewModel.createFavoriteProduct(token, user!!.id, product.productId).observe(
+                requireActivity(), { state -> processFavProductResponse(state) }
+            )
         }
+    }
+
+    private fun addToCart(product: Product) {
+        if(product.isNew){
+            showSnackbar(getString(R.string.not_sale))
+            return
+        }
+        if (product.isInCart == 1) {
+            val token = loginUtils.getUserToken()
+            cartViewModel.addToCart(token, user!!.id, product.productId).observe(
+                requireActivity(), {state -> processCartResponse(state)}
+            )
+        }
+    }
+
+    private fun shareProduct(product: Product){
+        showSnackbar(getString(R.string.share_successfully))
+    }
+    private fun processFavProductResponse(state: ScreenState<FavoriteResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_favourite_product), Snackbar.LENGTH_SHORT).show()
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    showSnackbar(state.message)
+                }
+            }
+        }
+    }
+
+    private fun processCartResponse(state: ScreenState<CartResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_into_cart), Snackbar.LENGTH_SHORT).show()
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    showSnackbar(state.message)
+                }
+            }
+        }
+    }
+    private fun showSnackbar(text: String) {
+        Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG).show()
     }
 }

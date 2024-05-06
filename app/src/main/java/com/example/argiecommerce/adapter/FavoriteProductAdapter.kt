@@ -94,9 +94,11 @@ class FavoriteProductAdapter(
                 requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))
 
                 val imageUrl = product.productImage[0].imageUrl
+                val modifiedUrl = imageUrl.replace("http://", "https://")
 
                 GlideApp.with(context)
-                    .load(imageUrl)
+//                    .load(imageUrl)
+                    .load(modifiedUrl)
                     .apply(requestOptions)
                     .skipMemoryCache(true)
                     .into(binding.imgProductImage)

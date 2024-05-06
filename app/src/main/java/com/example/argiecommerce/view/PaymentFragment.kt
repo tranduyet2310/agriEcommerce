@@ -21,7 +21,6 @@ import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.network.Api
 import com.example.argiecommerce.network.RetrofitClient
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -200,7 +199,7 @@ class PaymentFragment : Fragment() {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 }

@@ -52,6 +52,8 @@ interface Api {
 
     //  Category
     @GET("/api/categories")
+    suspend fun getCategories(): Response<ArrayList<CategoryApiResponse>>
+    @GET("/api/categories")
     fun getAllCategories(): Call<ArrayList<CategoryApiResponse>>
 
     //    Fav
@@ -379,6 +381,13 @@ interface Api {
     ): Response<CurrencyResponse>
 
     //  Product
+    @GET("/api/products/all")
+    suspend fun getAllProducts(
+        @Query("pageNo") pageNo: String,
+        @Query("sortBy") sortBy: String,
+        @Query("sortDir") sortDir: String
+    ): Response<ProductApiResponse>
+
     @GET("/api/products/category")
     suspend fun getProductByCategoryId(
         @Query("id") id: Long,

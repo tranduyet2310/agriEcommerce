@@ -298,7 +298,9 @@
         tools:layout="@layout/fragment_order_detail" >
         <action
             android:id="@+id/action_orderDetailFragment_to_orderFragment"
-            app:destination="@id/orderFragment" />
+            app:destination="@id/orderFragment"
+            app:popUpTo="@id/orderFragment"
+            app:popUpToInclusive="true"/>
         <argument
             android:name="order"
             app:argType="com.example.argiecommerce.model.OrderResponse" />

@@ -20,7 +20,7 @@ import com.example.argiecommerce.databinding.FragmentUserAccountBinding
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserApiResponse
 import com.example.argiecommerce.utils.Constants
-import com.example.argiecommerce.utils.Constants.FIELD_REQUIRED
+//import com.example.argiecommerce.utils.Constants.FIELD_REQUIRED
 import com.example.argiecommerce.utils.GlideApp
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -128,7 +128,8 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
         val newPhone = binding.edtPhoneNumber.text.toString().trim()
 
         if (newFullName.isEmpty() || newPhone.isEmpty()) {
-            Snackbar.make(requireView(), FIELD_REQUIRED, Snackbar.LENGTH_SHORT).show()
+//            Snackbar.make(requireView(), FIELD_REQUIRED, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), getString(R.string.field_required), Snackbar.LENGTH_SHORT).show()
         } else {
             val userDto = UserApiResponse()
             userDto.phone = newPhone
@@ -241,7 +242,7 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 }

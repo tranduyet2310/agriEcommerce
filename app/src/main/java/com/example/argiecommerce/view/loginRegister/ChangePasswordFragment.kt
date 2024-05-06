@@ -2,11 +2,10 @@ package com.example.argiecommerce.view.loginRegister
 
 import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -15,7 +14,6 @@ import com.example.argiecommerce.databinding.FragmentChangePasswordBinding
 import com.example.argiecommerce.model.PasswordRequest
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserApiResponse
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.MIN_PASSWORD_LENGTH
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -93,7 +91,8 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
         val retypePass = binding.edtRetypePassword.text.toString().trim()
 
         if (currentPass.isEmpty() || newPass.isEmpty() || retypePass.isEmpty()) {
-            displayErrorSnackbar(Constants.FIELD_REQUIRED)
+//            displayErrorSnackbar(FIELD_REQUIRED)
+            displayErrorSnackbar(getString(R.string.field_required))
         } else if (!user?.password.equals(currentPass)) {
             displayErrorSnackbar(getString(R.string.current_pass_not_correct))
         } else if (newPass.length < MIN_PASSWORD_LENGTH) {
@@ -145,7 +144,7 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 }

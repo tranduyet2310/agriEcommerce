@@ -3,10 +3,10 @@ package com.example.argiecommerce.view.profile
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -20,7 +20,6 @@ import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.OrderDetailResponse
 import com.example.argiecommerce.model.OrderResponse
 import com.example.argiecommerce.model.UserAddress
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.OrderStatus
 import com.example.argiecommerce.utils.ProgressDialog
@@ -194,6 +193,7 @@ class OrderDetailFragment : Fragment() {
                 if (state.data != null) {
                     alertDialog.dismiss()
                     Snackbar.make(requireView(), getString(R.string.updated_status), Snackbar.LENGTH_SHORT).show()
+                    navController.navigate(R.id.action_orderDetailFragment_to_orderFragment)
                 }
             }
 
@@ -207,7 +207,7 @@ class OrderDetailFragment : Fragment() {
     }
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 }

@@ -15,10 +15,6 @@ import com.example.argiecommerce.databinding.FragmentLoginBinding
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.utils.Constants.EMAIL_REQUIRED
-import com.example.argiecommerce.utils.Constants.LOGIN_SUCCESS
-import com.example.argiecommerce.utils.Constants.PASSWORD_REQUIRED
-import com.example.argiecommerce.utils.Constants.RETRY
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -92,11 +88,11 @@ class LoginFragment : Fragment(), View.OnClickListener {
         val email = binding.inputEmail.text.toString()
         val password = binding.inputPassword.text.toString()
         if (email.isEmpty()) {
-            binding.textFieldEmail.error = EMAIL_REQUIRED
+            binding.textFieldEmail.error = getString(R.string.email_required)
             return
         }
         if (password.isEmpty()) {
-            binding.textFieldPassword.error = PASSWORD_REQUIRED
+            binding.textFieldPassword.error = getString(R.string.password_required)
             return
         }
 
@@ -112,7 +108,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 
@@ -130,8 +126,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     val savedUser = loginUtils.getUserInfo()
                     userViewModel.user = savedUser
 
-                    Snackbar.make(requireView(), LOGIN_SUCCESS, Snackbar.LENGTH_SHORT)
-                        .show()
+                    Snackbar.make(requireView(), getString(R.string.login_success), Snackbar.LENGTH_SHORT).show()
                     navController.navigate(R.id.action_loginFragment_to_homeFragment)
                 }
             }

@@ -276,7 +276,9 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     private fun setupProductImage(product: Product) {
         val imageList = ArrayList<SlideModel>()
         for (image in product.productImage) {
-            imageList.add(SlideModel(image.imageUrl))
+            val modifiedUrl = image.imageUrl.replace("http://", "https://")
+//            imageList.add(SlideModel(image.imageUrl))
+            imageList.add(SlideModel(modifiedUrl))
         }
         binding.details.imageOfProduct.setImageList(imageList, ScaleTypes.FIT)
     }
@@ -338,9 +340,12 @@ class DetailsFragment : Fragment(), View.OnClickListener {
                 if (state.data != null) {
 //                    alertDialog.dismiss()
                     supplierImageUrl = state.data.imageUrl
+
                     if (state.data.imageUrl != null){
+                        val modifiedUrl = state.data.imageUrl.replace("http://", "https://")
                         GlideApp.with(requireContext())
-                            .load(state.data.imageUrl)
+//                            .load(state.data.imageUrl)
+                            .load(modifiedUrl)
                             .into(binding.details.imageOfProvider)
                     }
                 }

@@ -17,7 +17,6 @@ import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -65,23 +64,6 @@ class WishlistFragment : Fragment() {
 
         return binding.root
     }
-
-    private fun setupRecyclerView() {
-        favoriteAdapter = FavoriteProductAdapter(requireContext(), favoriteProductList)
-        binding.favoriteList.apply {
-            layoutManager =
-                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-            adapter = favoriteAdapter
-        }
-    }
-
-    private fun getFavoriteProducts() {
-        favoriteViewModel.getFavoriteProducts(user!!.id).observe(
-            requireActivity(), { state -> processFavoriteProducts(state) }
-        )
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
@@ -101,6 +83,21 @@ class WishlistFragment : Fragment() {
         binding.toolbarLayout.imgBack.setOnClickListener {
             navController.navigateUp()
         }
+    }
+    private fun setupRecyclerView() {
+        favoriteAdapter = FavoriteProductAdapter(requireContext(), favoriteProductList)
+        binding.favoriteList.apply {
+            layoutManager =
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = favoriteAdapter
+        }
+    }
+
+    private fun getFavoriteProducts() {
+        favoriteViewModel.getFavoriteProducts(user!!.id).observe(
+            requireActivity(), { state -> processFavoriteProducts(state) }
+        )
     }
 
     override fun onDestroyView() {
@@ -190,7 +187,7 @@ class WishlistFragment : Fragment() {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 }

@@ -1,6 +1,11 @@
 package com.example.argiecommerce.view.supplier
 
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +17,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,7 +30,8 @@ import com.example.argiecommerce.model.FieldApiResponse
 import com.example.argiecommerce.model.SupplierBasicInfo
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.network.RetrofitClient
-import com.example.argiecommerce.utils.Constants.FIELD_REQUIRED
+import com.example.argiecommerce.utils.Constants
+//import com.example.argiecommerce.utils.Constants.FIELD_REQUIRED
 import com.example.argiecommerce.utils.Constants.KG_UNIT
 import com.example.argiecommerce.utils.Constants.TAN_UNIT
 import com.example.argiecommerce.utils.Constants.TA_UNIT
@@ -31,7 +40,10 @@ import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.OrderStatus
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.utils.Utils
+import com.example.argiecommerce.utils.Utils.Companion.convertToLong
 import com.example.argiecommerce.utils.Utils.Companion.formatPrice
+import com.example.argiecommerce.view.MainActivity
 import com.example.argiecommerce.viewmodel.CooperationViewModel
 import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
@@ -114,7 +126,7 @@ class ContactDialogFragment : AppCompatDialogFragment() {
             if (!binding.checkboxAgree.isChecked) {
                 showSnackbar(getString(R.string.must_agree))
             } else if (!validateInfoField()) {
-                showSnackbar(FIELD_REQUIRED)
+                showSnackbar(getString(R.string.field_required))
             } else if (!validateYieldThreshold()) {
                 showSnackbar(getString(R.string.exceed_threshold))
             } else if (!validatePriceThreshold()) {
@@ -212,15 +224,16 @@ class ContactDialogFragment : AppCompatDialogFragment() {
     }
 
     private fun validatePriceThreshold(): Boolean {
-        val investment = binding.edtInvestDialog.text.toString().trim().toDouble()
+        val investment = binding.edtInvestDialog.text.toString().trim()
+        val investmentValue = convertToLong(investment).toDouble()
         val yield = binding.edtYieldsDialog.text.toString().trim().toDouble()
         val requiredYield = yield * coefficient
 
         val thresholdPerKg = priceHashMap.get(cropsName)
         val thresholdAccept = thresholdPerKg?.times(requiredYield)
-        if (investment < thresholdAccept!!) {
+        if (investmentValue == 0.0){
             return false
-        } else if (investment == 0.0){
+        } else if (investmentValue < thresholdAccept!!) {
             return false
         }
         return true
@@ -269,7 +282,7 @@ class ContactDialogFragment : AppCompatDialogFragment() {
         val cooperationResponse = CooperationResponse()
         cooperationResponse.fullName = fullName
         cooperationResponse.description = description
-        cooperationResponse.investment = investment
+        cooperationResponse.investment = convertToLong(investment).toString()
         cooperationResponse.contact = contact
         cooperationResponse.requireYield = requiredYield
         cooperationResponse.supplierId = supplierBasicInfo!!.supplierId
@@ -346,6 +359,10 @@ class ContactDialogFragment : AppCompatDialogFragment() {
             is ScreenState.Success -> {
                 if (state.data != null) {
                     alertDialog.dismiss()
+
+                    createNotification()
+                    showNotification()
+
                     showSnackbar(getString(R.string.create_cooperation))
                     dialog?.dismiss()
                 }
@@ -362,5 +379,35 @@ class ContactDialogFragment : AppCompatDialogFragment() {
 
     private fun showSnackbar(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun createNotification(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "channel_name"
+            val descriptionText = "description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel =  NotificationChannel(Constants.CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun showNotification(){
+        val expiredDate = Utils.getExpireDate()
+        val builder = NotificationCompat.Builder(requireActivity(), Constants.CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Đặt đơn hàng thành công")
+            .setContentText("Bạn hãy thực hiện thanh toán đơn trước ${expiredDate}")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(MainActivity.pendingIntent)
+            .build()
+
+        with(NotificationManagerCompat.from(requireActivity())){
+            if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+                return
+            notify(0, builder)
+        }
     }
 }

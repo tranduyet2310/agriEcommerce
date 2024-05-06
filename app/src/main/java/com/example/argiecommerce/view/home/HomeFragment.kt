@@ -30,12 +30,15 @@ import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.model.Subcategory
 import com.example.argiecommerce.model.User
+import com.example.argiecommerce.network.Api
+import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants.CATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.FLASH_SALE
+import com.example.argiecommerce.utils.Constants.OCOP
 import com.example.argiecommerce.utils.Constants.OCOP_PRODUCT
 import com.example.argiecommerce.utils.Constants.RECENT_PRODUCT
-import com.example.argiecommerce.utils.Constants.RETRY
 import com.example.argiecommerce.utils.Constants.SEARCH_KEY
+import com.example.argiecommerce.utils.Constants.SPECIALTY
 import com.example.argiecommerce.utils.Constants.SPECIALTY_PRODUCT
 import com.example.argiecommerce.utils.Constants.SUBCATEGORY_KEY
 import com.example.argiecommerce.utils.Constants.SUGGESTED_PRODUCT
@@ -50,8 +53,10 @@ import com.example.argiecommerce.viewmodel.FavoriteViewModel
 import com.example.argiecommerce.viewmodel.ProductViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
@@ -79,19 +84,25 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val favoriteViewModel: FavoriteViewModel by lazy {
         ViewModelProvider(requireActivity()).get(FavoriteViewModel::class.java)
     }
-
-    private lateinit var alertDialog: AlertDialog
-    private lateinit var categoryAdapter: CategoryAdapter
-    private lateinit var categoryItemList: ArrayList<CategoryApiResponse>
-    private lateinit var networkMonitor: NetworkMonitorUtil
+    private val apiService: Api by lazy {
+        RetrofitClient.getInstance().getApi()
+    }
     private val progressDialog: ProgressDialog by lazy {
         ProgressDialog()
     }
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(requireContext())
     }
+
+    private lateinit var alertDialog: AlertDialog
+    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var categoryItemList: ArrayList<CategoryApiResponse>
+    private lateinit var networkMonitor: NetworkMonitorUtil
+
     private var user: User? = null
     private var productList: ArrayList<CartProduct> = arrayListOf()
+    private var ocopProductId: Int = 0
+    private var specialtyProductId: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -144,12 +155,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         binding.oopsLayout.visibility = View.GONE
                         binding.content.scroll.visibility = View.VISIBLE
 
-                        getCategoryData()
-                        getFlashSaleProduct()
-                        getOcopProduct()
-                        getSpecialtyProduct()
-                        getRecentProduct()
-                        getSuggestedProduct()
+                        lifecycleScope.launch {
+                            getCategoryData()
+                            getFlashSaleProduct()
+                            getOcopProduct()
+                            getSpecialtyProduct()
+                            getRecentProduct()
+                            getSuggestedProduct()
+                        }
                     }
 
                     false -> {
@@ -261,7 +274,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun shareProduct(product: Product){
-        Snackbar.make(requireView(), "Chia sẻ thành công", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(requireView(), getString(R.string.share_successfully), Snackbar.LENGTH_SHORT).show()
     }
     private fun goToDetailFragment(product: Product){
         val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(product)
@@ -348,21 +361,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun goToSuggestedProductFragment() {
-        var c: CategoryApiResponse? = null
-        var sb: Subcategory? = null
-
-        for (category in categoryItemList) {
-            for (subcategory in category.subCategoryList) {
-                if (subcategory.subcategoryName.equals("Táo")) {
-                    sb = subcategory
-                    c = category
-                }
-            }
-        }
-
         val b = Bundle().apply {
-            putParcelable(CATEGORY_KEY, c)
-            putParcelable(SUBCATEGORY_KEY, sb)
+            putParcelable(CATEGORY_KEY, null)
+            putParcelable(SUBCATEGORY_KEY, null)
             putString(TITLE_KEY, SUGGESTED_PRODUCT)
             putString(SEARCH_KEY, null)
         }
@@ -371,14 +372,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun goToSpecialtyFragment() {
         var c: CategoryApiResponse? = null
-        var sb: Subcategory? = null
+        val sb: Subcategory? = null
 
         for (category in categoryItemList) {
-            for (subcategory in category.subCategoryList) {
-                if (subcategory.subcategoryName.equals("Táo khô")) {
-                    sb = subcategory
-                    c = category
-                }
+            if (category.id == specialtyProductId){
+                c = category
             }
         }
 
@@ -397,7 +395,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         for (category in categoryItemList) {
             for (subcategory in category.subCategoryList) {
-                if (subcategory.subcategoryName.equals("Rau cải thìa")) {
+                if (subcategory.id == ocopProductId) {
                     sb = subcategory
                     c = category
                 }
@@ -437,33 +435,56 @@ class HomeFragment : Fragment(), View.OnClickListener {
         navController.navigate(R.id.action_homeFragment_to_searchFragment)
     }
 
-    private fun getCategoryData() {
-        categoryViewModel.getCategoryResponseData().observe(requireActivity(), { state -> processCategoryResponse(state) })
+    suspend fun getCategoryData() {
+        withContext(Dispatchers.IO){
+            val response = apiService.getCategories()
+            if (response.isSuccessful){
+                if (response.body() != null){
+                    val categoryList = response.body()
+                    if (!categoryList!!.isEmpty()){
+                        categoryItemList.clear()
+                        categoryItemList.addAll(categoryList)
+                        for (category in categoryItemList){
+                            if (category.categoryName.equals(SPECIALTY)){
+                                specialtyProductId = category.id
+                            }
+                            for (subcategory in category.subCategoryList){
+                                if (subcategory.subcategoryName.equals(OCOP)){
+                                    ocopProductId = subcategory.id
+                                }
+                            }
+                        }
+                        withContext(Dispatchers.Main){
+                            categoryAdapter.notifyDataSetChanged()
+                        }
+                    }
+
+                }
+            }
+        }
+//        categoryViewModel.getCategoryResponseData().observe(requireActivity(), { state -> processCategoryResponse(state) })
     }
 
     private fun getSuggestedProduct() {
-        // ID of cate
-        val productApiRequest = ProductApiRequest(2)
+        val productApiRequest = ProductApiRequest()
         lifecycleScope.launch {
-            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
+            productViewModel.getAllProducts(productApiRequest).collectLatest { pagingData ->
                 suggestedProductAdapter.submitData(pagingData)
             }
         }
     }
 
     private fun getSpecialtyProduct() {
-        // ID of sub
-        val productApiRequest = ProductApiRequest(9)
+        val productApiRequest = ProductApiRequest(specialtyProductId.toLong())
         lifecycleScope.launch {
-            productViewModel.getProductBySubCategory(productApiRequest).collectLatest { pagingData ->
+            productViewModel.getProducts(productApiRequest).collectLatest { pagingData ->
                     specialtyProductAdapter.submitData(pagingData)
             }
         }
     }
 
     private fun getOcopProduct() {
-        // ID of sub
-        val productApiRequest = ProductApiRequest(2)
+        val productApiRequest = ProductApiRequest(ocopProductId.toLong())
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest).collectLatest { pagingData ->
                     ocopProductAdapter.submitData(pagingData)
@@ -560,7 +581,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 

@@ -27,9 +27,11 @@ class CartProductAdapter(
                 var requestOptions = RequestOptions()
                 requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))
                 val imageUrl = cartResponse.product.productImage[0].imageUrl
+                val modifiedUrl = imageUrl.replace("http://", "https://")
 
                 GlideApp.with(itemView)
-                    .load(imageUrl)
+//                    .load(imageUrl)
+                    .load(modifiedUrl)
                     .apply(requestOptions)
                     .skipMemoryCache(true)
                     .into(imageCartProduct)

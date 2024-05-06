@@ -51,7 +51,7 @@ class SpIntroFragment : Fragment() {
         binding.tvGardenInfo.gravity = Gravity.CENTER
         binding.tvShopInfo.text = getString(R.string.no_intro_shop)
         binding.tvShopInfo.gravity = Gravity.CENTER
-        val imageList = ArrayList<SlideModel>();
+        val imageList = ArrayList<SlideModel>()
         imageList.add(SlideModel(BANNER))
         binding.imageShopIntro.setImageList(imageList, ScaleTypes.CENTER_INSIDE)
         binding.imageGardenIntro.setImageList(imageList, ScaleTypes.CENTER_INSIDE)
@@ -64,7 +64,7 @@ class SpIntroFragment : Fragment() {
     }
 
     private fun setupShopImages(images: MutableList<Image>) {
-        val imageList = ArrayList<SlideModel>();
+        val imageList = ArrayList<SlideModel>()
         if (images.isEmpty()) {
             imageList.add(SlideModel(BANNER))
         } else {
@@ -76,7 +76,7 @@ class SpIntroFragment : Fragment() {
     }
 
     private fun setupGardenImages(images: MutableList<Image>) {
-        val imageList = ArrayList<SlideModel>();
+        val imageList = ArrayList<SlideModel>()
         if (images.isEmpty()) {
             imageList.add(SlideModel(BANNER))
         } else {

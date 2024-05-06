@@ -76,7 +76,7 @@ dependencies {
     // Paging
     implementation("androidx.paging:paging-runtime-ktx:3.0.0-alpha06")
     // Glide
-    val glide_version = "4.12.0"
+    val glide_version = "4.16.0"
     implementation("com.github.bumptech.glide:glide:$glide_version")
     kapt("com.github.bumptech.glide:compiler:$glide_version")
     // Circle ImageView

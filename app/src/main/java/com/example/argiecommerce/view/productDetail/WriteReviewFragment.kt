@@ -15,8 +15,6 @@ import com.example.argiecommerce.databinding.FragmentWriteReviewBinding
 import com.example.argiecommerce.model.ReviewRequest
 import com.example.argiecommerce.model.ReviewResponse
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.utils.Constants
-import com.example.argiecommerce.utils.Constants.FIELD_REQUIRED
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -88,7 +86,7 @@ class WriteReviewFragment : Fragment(), View.OnClickListener {
         val rating: BigDecimal = BigDecimal.valueOf(valueRating)
 
         if (content.isEmpty() || valueRating == 0.0){
-            showSnackbar(FIELD_REQUIRED)
+            showSnackbar(getString(R.string.field_required))
             return
         }
 
@@ -123,7 +121,7 @@ class WriteReviewFragment : Fragment(), View.OnClickListener {
 
     private fun displayErrorSnackbar(errorMessage: String) {
         Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
-            .apply { setAction(Constants.RETRY) { dismiss() } }
+            .apply { setAction(getString(R.string.retry_v2)) { dismiss() } }
             .show()
     }
 

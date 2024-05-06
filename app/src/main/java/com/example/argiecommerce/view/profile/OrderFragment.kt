@@ -1,22 +1,19 @@
 package com.example.argiecommerce.view.profile
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.OrderAdapter
 import com.example.argiecommerce.adapter.OrderLoadingAdapter
-import com.example.argiecommerce.adapter.ProductLoadingAdapter
 import com.example.argiecommerce.databinding.FragmentOrderBinding
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants.ORDER_KEY

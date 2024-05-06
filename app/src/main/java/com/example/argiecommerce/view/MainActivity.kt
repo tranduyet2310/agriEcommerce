@@ -1,6 +1,9 @@
 package com.example.argiecommerce.view
 
 import android.app.AlertDialog
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -26,6 +29,9 @@ import com.example.argiecommerce.viewmodel.LoginViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
+    companion object{
+        lateinit var pendingIntent: PendingIntent
+    }
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
@@ -59,6 +65,12 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.user = user
         setupNavHostFragment()
+
+        val notifyIntent = Intent(this, MainActivity::class.java)
+        pendingIntent = TaskStackBuilder.create(this).run {
+            addNextIntentWithParentStack(notifyIntent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
     }
     private fun checkCertificate() {
         Utils.readRawResource(this, R.raw.server)

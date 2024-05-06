@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.argiecommerce.R
@@ -18,7 +17,6 @@ import com.example.argiecommerce.databinding.FragmentAddressBinding
 import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -91,7 +89,8 @@ class AddressDialog : DialogFragment() {
             district.isEmpty() || contactName.isEmpty() || details.isEmpty()
         ) {
             binding.tvFailed.visibility = View.VISIBLE
-            binding.tvFailed.text = Constants.FIELD_REQUIRED
+//            binding.tvFailed.text = FIELD_REQUIRED
+            binding.tvFailed.text = getString(R.string.field_required)
         } else {
             val updateUserAddress =
                 UserAddress(contactName, phone, province, district, commune, details)
@@ -139,7 +138,7 @@ class AddressDialog : DialogFragment() {
                 }
             } else {
                 binding.tvFailed.visibility = View.VISIBLE
-                binding.tvFailed.text = Constants.ADDRESS_ID_NOT_FOUND
+                binding.tvFailed.text = getString(R.string.not_found_address)
             }
         }
         binding.imgClose.setOnClickListener {

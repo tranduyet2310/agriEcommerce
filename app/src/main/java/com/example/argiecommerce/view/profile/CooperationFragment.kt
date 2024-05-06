@@ -50,23 +50,6 @@ class CooperationFragment : Fragment() {
 
         return binding.root
     }
-
-    private fun getCooperationData() {
-        cooperationViewModel.getCooperationByUserId(user!!.id).observe(
-            requireActivity(), { state -> processCooperationResponse(state) }
-        )
-    }
-
-    private fun setupRecyclerView() {
-        cooperationAdapter = CooperationAdapter(cooperationList)
-        binding.rcvCultivation.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-            adapter = cooperationAdapter
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
@@ -80,6 +63,21 @@ class CooperationFragment : Fragment() {
                 putParcelable(COOPERATION_KEY, it)
             }
             navController.navigate(R.id.action_cooperationFragment_to_cooperationDetailFragment, b)
+        }
+    }
+    private fun getCooperationData() {
+        cooperationViewModel.getCooperationByUserId(user!!.id).observe(
+            requireActivity(), { state -> processCooperationResponse(state) }
+        )
+    }
+
+    private fun setupRecyclerView() {
+        cooperationAdapter = CooperationAdapter(cooperationList)
+        binding.rcvCultivation.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = cooperationAdapter
         }
     }
 

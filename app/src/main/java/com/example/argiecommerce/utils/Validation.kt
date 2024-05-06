@@ -4,10 +4,10 @@ import android.util.Patterns
 
 class Validation {
     companion object {
-        private val PASSWORD_MIN_LENGTH = 8
-        private val NAME_MIN_LENGTH = 3
-        private val PHONE_NUMBER_MIN_LENGHT = 8
-        private val PHONE_NUMBER_MAX_LENGHT = 11
+        private const val PASSWORD_MIN_LENGTH = 8
+        private const val NAME_MIN_LENGTH = 3
+        private const val PHONE_NUMBER_MIN_LENGHT = 8
+        private const val PHONE_NUMBER_MAX_LENGHT = 11
 
         fun isValidEmail(email: String): Boolean {
             return Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -22,7 +22,7 @@ class Validation {
         }
 
         fun isValidPhone(phone: String): Boolean {
-            return phone.length >= PHONE_NUMBER_MIN_LENGHT && phone.length <= PHONE_NUMBER_MAX_LENGHT
+            return phone.length in PHONE_NUMBER_MIN_LENGHT..PHONE_NUMBER_MAX_LENGHT
         }
     }
 }

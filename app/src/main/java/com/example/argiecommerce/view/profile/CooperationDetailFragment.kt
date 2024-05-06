@@ -281,11 +281,6 @@ class CooperationDetailFragment : Fragment() {
             binding.btnPayment.text = getString(R.string.payment_100)
             binding.btnPayment.visibility = View.VISIBLE
         }
-
-//        if (status == OrderStatus.COMPLETED) {
-//            binding.btnCancel.isEnabled = false
-//            binding.btnCancel.setBackgroundColor(Color.parseColor("#E9EAEC"))
-//        }
     }
 
     suspend fun getAddressById(addressId: Long) {

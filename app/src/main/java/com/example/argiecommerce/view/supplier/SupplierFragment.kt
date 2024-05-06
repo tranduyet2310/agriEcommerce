@@ -80,7 +80,10 @@ class SupplierFragment : Fragment(), View.OnClickListener {
         binding.suppilerLayout.tvSuppilerProvince.text = supplierBasicInfo.supplierProvince
         binding.suppilerLayout.tvTotalRatingSuppiler.text = supplierRating
         if (supplierBasicInfo.imageUrl != null) {
-            GlideApp.with(requireContext()).load(supplierBasicInfo.imageUrl)
+            val modifiedUrl = supplierBasicInfo.imageUrl.replace("http://", "https://")
+            GlideApp.with(requireContext())
+//                .load(supplierBasicInfo.imageUrl)
+                .load(modifiedUrl)
                 .into(binding.suppilerLayout.imageOfSuppiler)
         }
     }
