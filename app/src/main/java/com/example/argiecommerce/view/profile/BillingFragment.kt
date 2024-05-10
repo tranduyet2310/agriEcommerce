@@ -41,6 +41,7 @@ import com.example.argiecommerce.utils.Constants.SCREEN_KEY
 import com.example.argiecommerce.utils.Constants.TOTAL_ADDRESS
 import com.example.argiecommerce.utils.Constants.UNPAID
 import com.example.argiecommerce.utils.Constants.USD_FORMAT
+import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.utils.Utils.Companion.formatPrice
@@ -85,6 +86,9 @@ class BillingFragment : Fragment(), View.OnClickListener {
     }
     private val progressDialog: ProgressDialog by lazy {
         ProgressDialog()
+    }
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(requireContext())
     }
     private val cartViewModel: CartViewModel by lazy {
         ViewModelProvider(requireActivity()).get(CartViewModel::class.java)
@@ -214,7 +218,8 @@ class BillingFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getUserAddress() {
-        userAddressViewModel.getAddressByUserId(user!!.id)
+        val token = loginUtils.getUserToken()
+        userAddressViewModel.getAddressByUserId(token, user!!.id)
             .observe(requireActivity(), { state -> processUserAddress(state) })
     }
 

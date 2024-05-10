@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentUserAccountBinding
 import com.example.argiecommerce.model.User
@@ -148,7 +149,9 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showUserAvatar(imageUrl: String) {
-        GlideApp.with(requireContext()).load(imageUrl).into(binding.imageUser)
+        val modifiedUrl = imageUrl.replace("http://", "https://")
+        val requestOptions = RequestOptions().placeholder(R.drawable.user).error(R.drawable.user)
+        GlideApp.with(requireContext()).load(modifiedUrl).apply(requestOptions).into(binding.imageUser)
     }
 
     private fun uriToFile(context: Context, uri: Uri): File {

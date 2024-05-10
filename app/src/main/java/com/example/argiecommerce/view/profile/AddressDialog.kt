@@ -77,7 +77,7 @@ class AddressDialog : DialogFragment() {
         binding.imgClose.visibility = View.VISIBLE
     }
 
-    private fun saveToDatabase() {
+    private fun validateFieldInfo(): Boolean {
         val contactName = binding.edtFullName.text.toString().trim()
         val phone = binding.edtPhone.text.toString().trim()
         val province = binding.edtCity.text.toString().trim()
@@ -86,23 +86,28 @@ class AddressDialog : DialogFragment() {
         val details = binding.edtAddressDetail.text.toString().trim()
 
         if (contactName.isEmpty() || phone.isEmpty() || province.isEmpty() ||
-            district.isEmpty() || contactName.isEmpty() || details.isEmpty()
+            district.isEmpty() || contactName.isEmpty() || details.isEmpty() || commune.isEmpty()
         ) {
             binding.tvFailed.visibility = View.VISIBLE
-//            binding.tvFailed.text = FIELD_REQUIRED
             binding.tvFailed.text = getString(R.string.field_required)
+            return true
         } else {
-            val updateUserAddress =
-                UserAddress(contactName, phone, province, district, commune, details)
-            val token = loginUtils.getUserToken()
-            userAddressViewModel.updateAddress(
-                token,
-                user!!.id,
-                userAddress!!.id,
-                updateUserAddress
-            )
-                .observe(requireActivity(), { state -> processUpdateUserAddress(state) })
+            return false
         }
+    }
+
+    private fun saveToDatabase(){
+        val contactName = binding.edtFullName.text.toString().trim()
+        val phone = binding.edtPhone.text.toString().trim()
+        val province = binding.edtCity.text.toString().trim()
+        val district = binding.edtState.text.toString().trim()
+        val commune = binding.edtStreet.text.toString().trim()
+        val details = binding.edtAddressDetail.text.toString().trim()
+
+        val updateUserAddress = UserAddress(contactName, phone, province, district, commune, details)
+        val token = loginUtils.getUserToken()
+        userAddressViewModel.updateAddress(token, user!!.id, userAddress!!.id, updateUserAddress)
+            .observe(requireActivity(), { state -> processUpdateUserAddress(state) })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,11 +121,6 @@ class AddressDialog : DialogFragment() {
             dialogBuilder.setPositiveButton(getString(R.string.ok)) { dialog, which ->
                 dialog.dismiss()
                 deleteAddress()
-                if (currentScreen.equals(BillingFragment.TAG)){
-                    navController.navigate(R.id.action_addressDialog_to_billingFragment)
-                } else if (currentScreen.equals(UserAddressFragment.TAG)){
-                    navController.navigate(R.id.action_addressDialog_to_userAddressFragment)
-                }
             }
             dialogBuilder.setNegativeButton(getString(R.string.cancel_v2)) { dialog, which ->
                 dialog.dismiss()
@@ -129,12 +129,8 @@ class AddressDialog : DialogFragment() {
         }
         binding.buttonSave.setOnClickListener {
             if (userAddress != null) {
-                saveToDatabase()
-                binding.tvFailed.visibility = View.GONE
-                if (currentScreen.equals(BillingFragment.TAG)){
-                    navController.navigate(R.id.action_addressDialog_to_billingFragment)
-                } else if (currentScreen.equals(UserAddressFragment.TAG)){
-                    navController.navigate(R.id.action_addressDialog_to_userAddressFragment)
+                if (!validateFieldInfo()){
+                    saveToDatabase()
                 }
             } else {
                 binding.tvFailed.visibility = View.VISIBLE
@@ -163,6 +159,11 @@ class AddressDialog : DialogFragment() {
                 if (state.data != null) {
                     alertDialog.dismiss()
                     binding.tvFailed.visibility = View.GONE
+                    if (currentScreen.equals(BillingFragment.TAG)){
+                        navController.navigate(R.id.action_addressDialog_to_billingFragment)
+                    } else if (currentScreen.equals(UserAddressFragment.TAG)){
+                        navController.navigate(R.id.action_addressDialog_to_userAddressFragment)
+                    }
                 }
             }
 
@@ -187,6 +188,11 @@ class AddressDialog : DialogFragment() {
                 if (state.data != null) {
                     alertDialog.dismiss()
                     binding.tvFailed.visibility = View.GONE
+                    if (currentScreen.equals(BillingFragment.TAG)){
+                        navController.navigate(R.id.action_addressDialog_to_billingFragment)
+                    } else if (currentScreen.equals(UserAddressFragment.TAG)){
+                        navController.navigate(R.id.action_addressDialog_to_userAddressFragment)
+                    }
                 }
             }
 
@@ -195,7 +201,7 @@ class AddressDialog : DialogFragment() {
                 if (state.message != null) {
                     Log.d("TEST", state.message)
                     binding.tvFailed.visibility = View.VISIBLE
-                    binding.tvFailed.text = state.message
+                    binding.tvFailed.text = getString(R.string.update_address_instead)
                 }
             }
         }

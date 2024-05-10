@@ -17,6 +17,7 @@ import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.SCREEN_KEY
+import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.UserAddressViewModel
@@ -41,6 +42,9 @@ class UserAddressFragment : Fragment() {
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
     }
+    private val loginUtils: LoginUtils by lazy {
+        LoginUtils(requireContext())
+    }
 
     private var user: User? = null
     private lateinit var alertDialog: AlertDialog
@@ -60,7 +64,8 @@ class UserAddressFragment : Fragment() {
     }
 
     private fun getUserAddressData() {
-        userAddressViewModel.getAddressByUserId(user!!.id)
+        val token = loginUtils.getUserToken()
+        userAddressViewModel.getAddressByUserId(token, user!!.id)
             .observe(requireActivity(), { state -> processUserAddress(state) })
     }
 

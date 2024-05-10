@@ -152,7 +152,7 @@ class OrderDetailFragment : Fragment() {
             binding.btnCancelOrder.text = getString(R.string.receive_success)
         }
 
-        if (orderStatus == OrderStatus.CONFIRMED || orderStatus == OrderStatus.COMPLETED) {
+        if (orderStatus == OrderStatus.CONFIRMED || orderStatus == OrderStatus.COMPLETED || orderStatus == OrderStatus.CANCELLED) {
             binding.btnCancelOrder.isEnabled = false
             binding.btnCancelOrder.setBackgroundColor(Color.parseColor("#E9EAEC"))
         }

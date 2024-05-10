@@ -69,7 +69,8 @@ class SpIntroFragment : Fragment() {
             imageList.add(SlideModel(BANNER))
         } else {
             for (image in images) {
-                imageList.add(SlideModel(image.imageUrl))
+                val modifiedUrl = image.imageUrl.replace("http://", "https://")
+                imageList.add(SlideModel(modifiedUrl))
             }
         }
         binding.imageShopIntro.setImageList(imageList, ScaleTypes.CENTER_INSIDE)
@@ -81,7 +82,8 @@ class SpIntroFragment : Fragment() {
             imageList.add(SlideModel(BANNER))
         } else {
             for (image in images) {
-                imageList.add(SlideModel(image.imageUrl))
+                val modifiedUrl = image.imageUrl.replace("http://", "https://")
+                imageList.add(SlideModel(modifiedUrl))
             }
         }
         binding.imageGardenIntro.setImageList(imageList, ScaleTypes.CENTER_INSIDE)

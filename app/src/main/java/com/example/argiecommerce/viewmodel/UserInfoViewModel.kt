@@ -11,8 +11,8 @@ import okhttp3.MultipartBody
 class UserInfoViewModel(
     private val userInfoRepository: UserInfoRepository = UserInfoRepository()
 ) : ViewModel() {
-    fun getUserInfo(userId: Long): LiveData<ScreenState<UserApiResponse?>> {
-        return userInfoRepository.getUserInfo(userId)
+    fun getUserInfo(token: String, userId: Long): LiveData<ScreenState<UserApiResponse?>> {
+        return userInfoRepository.getUserInfo(token, userId)
     }
 
     fun changeUserAvatar(

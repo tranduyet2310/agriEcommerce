@@ -314,7 +314,10 @@ interface Api {
 
     //  User
     @GET("api/users/{id}")
-    fun getUserInfo(@Path("id") userId: Long): Call<UserApiResponse>
+    fun getUserInfo(
+        @Header("Authorization") token: String,
+        @Path("id") userId: Long
+    ): Call<UserApiResponse>
 
     @Multipart
     @PATCH("api/users/{id}/avatar")
@@ -338,6 +341,13 @@ interface Api {
         @Body password: PasswordRequest
     ): Call<UserApiResponse>
 
+    @PATCH("api/users/{id}/fcm")
+    suspend fun updateFcmToken(
+        @Header("Authorization") token: String,
+        @Path("id") userId: Long,
+        @Query("token") fcmToken: String
+    ): Response<UserApiResponse>
+
     //  Address
     @POST("/api/users/{userId}/addresses")
     fun createNewAddress(
@@ -347,7 +357,10 @@ interface Api {
     ): Call<UserAddress>
 
     @GET("/api/users/{userId}/addresses")
-    fun getAddressByUserId(@Path("userId") userId: Long): Call<ArrayList<UserAddress>>
+    fun getAddressByUserId(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Long
+    ): Call<ArrayList<UserAddress>>
 
     @GET("/api/users/addresses/{id}")
     fun getAddressById(@Path("id") addressId: Long): Call<UserAddress>

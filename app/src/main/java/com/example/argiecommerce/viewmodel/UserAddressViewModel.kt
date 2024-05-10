@@ -18,8 +18,8 @@ class UserAddressViewModel(
         return userAddressRepository.createNewUserAddress(token, userId, userAddress)
     }
 
-    fun getAddressByUserId(userId: Long): LiveData<ScreenState<ArrayList<UserAddress>?>> {
-        return userAddressRepository.getAddressByUserId(userId)
+    fun getAddressByUserId(token: String, userId: Long): LiveData<ScreenState<ArrayList<UserAddress>?>> {
+        return userAddressRepository.getAddressByUserId(token, userId)
     }
 
     fun updateAddress(

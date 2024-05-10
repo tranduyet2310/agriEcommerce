@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "226609473685",
+    "project_id": "agrimart-7a779",
+    "storage_bucket": "agrimart-7a779.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226609473685:android:e69ea5d93fe07d8d8ad39c",
+        "android_client_info": {
+          "package_name": "com.example.argiecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDURVU17GnIfjmSvliKZgiEZNEVeHMrD7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

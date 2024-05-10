@@ -44,11 +44,11 @@ class UserAddressRepository {
         return mutableLiveData
     }
 
-    fun getAddressByUserId(userId: Long): LiveData<ScreenState<ArrayList<UserAddress>?>> {
+    fun getAddressByUserId(token: String, userId: Long): LiveData<ScreenState<ArrayList<UserAddress>?>> {
         val mutableLiveData = MutableLiveData<ScreenState<ArrayList<UserAddress>?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
-        RetrofitClient.getInstance().getApi().getAddressByUserId(userId)
+        RetrofitClient.getInstance().getApi().getAddressByUserId(token, userId)
             .enqueue(object : Callback<ArrayList<UserAddress>> {
                 override fun onResponse(
                     call: Call<ArrayList<UserAddress>>,

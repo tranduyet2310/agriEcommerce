@@ -334,5 +334,6 @@
     <string name="retry_v2">Thử lại 👍</string>
     <string name="garden_info_empty">Thông tin Vườn hiện tại đang trống</string>
     <string name="shop_no_product">Cửa hàng hiện chưa thêm sản phẩm nào</string>
+    <string name="update_address_instead">Hãy thực hiện cập nhật địa chỉ</string>
 
 </resources>

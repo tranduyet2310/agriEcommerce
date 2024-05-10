@@ -13,11 +13,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class UserInfoRepository {
-    fun getUserInfo(userId: Long): LiveData<ScreenState<UserApiResponse?>> {
+    fun getUserInfo(token: String, userId: Long): LiveData<ScreenState<UserApiResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<UserApiResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
-        RetrofitClient.getInstance().getApi().getUserInfo(userId)
+        RetrofitClient.getInstance().getApi().getUserInfo(token, userId)
             .enqueue(object : Callback<UserApiResponse> {
                 override fun onResponse(
                     call: Call<UserApiResponse>,

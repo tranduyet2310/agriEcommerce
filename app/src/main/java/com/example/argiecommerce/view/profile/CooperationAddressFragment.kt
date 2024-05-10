@@ -106,7 +106,8 @@ class CooperationAddressFragment : Fragment() {
     }
 
     private fun getUserAddressData() {
-        userAddressViewModel.getAddressByUserId(user!!.id)
+        val token = loginUtils.getUserToken()
+        userAddressViewModel.getAddressByUserId(token, user!!.id)
             .observe(requireActivity(), { state -> processUserAddress(state) })
     }
 

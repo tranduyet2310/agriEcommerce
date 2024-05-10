@@ -5,6 +5,7 @@ import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.Constants.AVATAR
 import com.example.argiecommerce.utils.Constants.EMAIL
+import com.example.argiecommerce.utils.Constants.FCM
 import com.example.argiecommerce.utils.Constants.ID
 import com.example.argiecommerce.utils.Constants.NAME
 import com.example.argiecommerce.utils.Constants.PASSWORD
@@ -52,6 +53,18 @@ class LoginUtils(private val mCtx: Context) {
         editor.putString(PHONE, user.getPhone())
         editor.putString(AVATAR, user.getAvatar())
         editor.apply()
+    }
+
+    fun saveFcmToken(token: String) {
+        val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(FCM, token)
+        editor.apply()
+    }
+
+    fun getFcmToken(): String? {
+        val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(FCM, null);
     }
 
     fun getUserInfo(): User {

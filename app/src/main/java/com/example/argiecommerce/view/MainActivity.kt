@@ -5,11 +5,13 @@ import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,6 +22,8 @@ import com.example.argiecommerce.databinding.ActivityMainBinding
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
 import com.example.argiecommerce.model.User
+import com.example.argiecommerce.network.Api
+import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants.USER
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -27,6 +31,12 @@ import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.utils.Utils
 import com.example.argiecommerce.viewmodel.LoginViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.ktx.messaging
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class MainActivity : AppCompatActivity() {
     companion object{
@@ -41,22 +51,29 @@ class MainActivity : AppCompatActivity() {
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(this)
     }
+    private val apiService: Api by lazy {
+        RetrofitClient.getInstance().getApi()
+    }
 
     private var user: User? = null
     private lateinit var viewModel: UserViewModel
     private lateinit var alertDialog: AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
         checkCertificate()
+
         val intent = intent
         if (intent != null && intent.hasExtra(USER)) {
             user = intent.getParcelableExtra(USER) as? User
             if (user != null){
                 requestNewToken()
+                sendRegistrationToServer()
             }
         } else {
             // Lấy dữ liệu từ login
@@ -72,6 +89,42 @@ class MainActivity : AppCompatActivity() {
             getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
         }
     }
+
+    private fun sendRegistrationToServer() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful){
+                Log.w("TEST", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            val token = task.result
+
+            // check fcm token
+            val savedFcmToken = loginUtils.getFcmToken()
+            if (savedFcmToken == null || !savedFcmToken.equals(token)){
+                loginUtils.saveFcmToken(token)
+                // Update token to server
+                lifecycleScope.launch {
+                    val userToken = loginUtils.getUserToken()
+                    val response = apiService.updateFcmToken(userToken, user!!.id, token)
+                    if (response.isSuccessful){
+                        if (response.body() != null){
+                            Log.d("TEST", "update fcm token successfully")
+                        } else {
+                            Log.d("TEST", "failed to update fcm token")
+                        }
+                    }
+                }
+            }
+            Log.d("TEST", "token fcm: ${token}")
+        })
+//        lifecycleScope.launch {
+//            val localToken = Firebase.messaging.token.await()
+////            val localToken = FirebaseMessaging.getInstance().token.await()
+//            Log.d("TEST", "token fcm: ${localToken}")
+//        }
+    }
+
     private fun checkCertificate() {
         Utils.readRawResource(this, R.raw.server)
     }
@@ -101,6 +154,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
                 }
             }
+            else -> {}
         }
     }
 
@@ -154,4 +208,5 @@ class MainActivity : AppCompatActivity() {
     private fun goToCartFragment() {
         navController.navigate(R.id.action_homeFragment_to_cartFragment)
     }
+
 }

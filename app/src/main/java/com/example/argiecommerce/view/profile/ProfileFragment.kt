@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentProfileBinding
 import com.example.argiecommerce.model.User
@@ -60,7 +61,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getUserInfo() {
-        userInfoViewModel.getUserInfo(user!!.id).observe(
+        val token = loginUtils.getUserToken()
+        userInfoViewModel.getUserInfo(token, user!!.id).observe(
             requireActivity(), { state -> processUserInfo(state) }
         )
     }
@@ -172,9 +174,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     private fun showUserAvatar(imageUrl: String) {
         val modifiedUrl = imageUrl.replace("http://", "https://")
+        val requestOptions = RequestOptions().placeholder(R.drawable.user).error(R.drawable.user)
         GlideApp.with(requireContext())
-//            .load(imageUrl)
             .load(modifiedUrl)
+            .apply(requestOptions)
             .into(binding.imageUser)
     }
 

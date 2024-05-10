@@ -23,6 +23,7 @@ public class Constants {
     public static final String PHONE = "phone";
     public static final String AVATAR = "avatar";
     public static final String USER = "user";
+    public static final String FCM = "fcm";
     // nav args
     public static final String SUGGESTED_PRODUCT = "Gợi ý hôm nay";
     public static final String RECENT_PRODUCT = "Sản phẩm sắp ra mắt";
@@ -50,14 +51,6 @@ public class Constants {
     public static final String MAX_ADDRESS = "Đã đạt tối đa 5 địa chỉ nhận hàng";
     public static final String ADDRESS_ERROR = "User/Address không tồn tại";
     public static final String SERVER_ERROR = "Lỗi phía máy chủ";
-
-//    public static final String FIELD_REQUIRED = "Yêu cầu nhập đủ thông tin";
-//    public static final String LOGIN_SUCCESS = "Đăng nhập thành công";
-//    public static final String PASSWORD_REQUIRED = "Yêu cầu nhập mật khẩu";
-//    public static final String EMAIL_REQUIRED = "Yêu cầu nhập email";
-//    public static final String ADDRESS_CREATED = "Thêm địa chỉ mới thành công";
-//    public static final String ADDRESS_ID_NOT_FOUND = "Không tìm thấy địa chỉ";
-//    public static final String RETRY = "Thử lại 👍";
     //
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final int TOTAL_ADDRESS = 5;
@@ -82,6 +75,7 @@ public class Constants {
     public static final String VIETGAP = "Rau cải thìa";
     public static final String GLOBALGAP = "Rau cải thìa";
     public static final String SPECIALTY = "Hoa quả";
+    //
     public static final String STANDARD = "Rau củ";
     public static final String TBB = "Táo";
     public static final String TN = "Xoài";

@@ -313,6 +313,9 @@ class ContactDialogFragment : AppCompatDialogFragment() {
             massUnit
         )
         binding.spMassUnit.adapter = spMassUnitAdapter
+        // disable edit text for total price
+        binding.edtInvestDialog.isEnabled = false
+        binding.edtInvestDialog.isClickable = false
     }
 
     private fun processFieldResponse(state: ScreenState<ArrayList<FieldApiResponse>?>) {

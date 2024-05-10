@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.request.RequestOptions
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.argiecommerce.R
@@ -343,9 +344,11 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
                     if (state.data.imageUrl != null){
                         val modifiedUrl = state.data.imageUrl.replace("http://", "https://")
+                        val requestOptions = RequestOptions().placeholder(R.drawable.harvester).error(R.drawable.harvester)
+
                         GlideApp.with(requireContext())
-//                            .load(state.data.imageUrl)
                             .load(modifiedUrl)
+                            .apply(requestOptions)
                             .into(binding.details.imageOfProvider)
                     }
                 }
