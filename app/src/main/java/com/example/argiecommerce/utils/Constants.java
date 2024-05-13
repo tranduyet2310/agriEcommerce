@@ -41,6 +41,8 @@ public class Constants {
     public static final String SUPPLIER_KEY = "supplier";
     public static final String COOPERATION_KEY = "cooperation";
     public static final String COOPERATIIVE_KEY = "cooperative";
+    public static final String USER_UID_KEY = "userUid";
+    public static final String IMAGE_KEY = "image";
     // pagination
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";
@@ -85,4 +87,9 @@ public class Constants {
     public static final String DBSH = "Xoài";
     public static final String DBSCL = "Táo";
     public static final String BTB = "Xoài";
+    // firebase
+    public static final String CHAT = "chats";
+    public static final String CHAT_LIST = "chatList";
+    public static final String CHAT_IMAGES = "Chat Images";
+    public static final String CHAT_TOKEN = "tokens";
 }

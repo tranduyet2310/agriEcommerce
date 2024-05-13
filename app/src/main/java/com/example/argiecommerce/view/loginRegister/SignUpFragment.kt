@@ -2,6 +2,7 @@ package com.example.argiecommerce.view.loginRegister
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,8 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentSignUpBinding
 import com.example.argiecommerce.model.RegisterApiResponse
 import com.example.argiecommerce.model.User
+import com.example.argiecommerce.model.UserFirebase
+import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
@@ -20,6 +23,9 @@ import com.example.argiecommerce.utils.Validation
 import com.example.argiecommerce.viewmodel.RegisterViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 
 class SignUpFragment : Fragment(), View.OnClickListener {
 
@@ -32,6 +38,15 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     }
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+    }
+    private val auth: FirebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+    private val firebaseDatabase: FirebaseDatabase by lazy {
+        FirebaseDatabase.getInstance()
+    }
+    private val firebaseStorage: FirebaseStorage by lazy {
+        FirebaseStorage.getInstance()
     }
 
     private lateinit var alertDialog: AlertDialog
@@ -147,6 +162,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     val loginUtils = LoginUtils(requireContext())
                     user.id = state.data.id
                     loginUtils.saveUserInfo(user)
+                    createChatAccount(user.email, user.password)
                     Snackbar.make(requireView(), "Đăng ký thành công", Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -158,6 +174,29 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun createChatAccount(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+//                    val reference = firebaseStorage.reference.child(Constants.USER).child(auth.uid!!)
+                        val user = UserFirebase().apply {
+                            uid = auth.uid
+                            phoneNumber = auth.currentUser!!.phoneNumber
+                            name = user.fullName
+                            search = user.fullName.lowercase()
+                            profileImage = "https://firebasestorage.googleapis.com/v0/b/agrimart-7a779.appspot.com/o/user.png?alt=media&token=fdaec1a7-ec3a-4949-8ab9-a10bc32781d8"
+                        }
+                    firebaseDatabase.reference.child(Constants.USER).child(auth.uid!!).setValue(user)
+                        .addOnCompleteListener {
+                            Log.d("TEST", "createUserWithEmail:success")
+                        }
+
+                } else {
+                    Log.w("TEST", "createUserWithEmail:failure", task.exception)
+                }
+            }
     }
 
     private fun displayErrorSnackbar(errorMessage: String) {

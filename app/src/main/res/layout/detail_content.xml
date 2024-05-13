@@ -65,14 +65,14 @@
             style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
             android:padding="@dimen/dimen10dp"
             android:text="@string/_5_000_000"
             android:textColor="@color/yellowAgri"
-            android:drawablePadding="5dp"
             android:textStyle="bold"
+            app:drawableEndCompat="@drawable/dong_yellow"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameOfProduct"
-            app:drawableEndCompat="@drawable/dong_yellow" />
+            app:layout_constraintTop_toBottomOf="@id/nameOfProduct" />
 
         <TextView
             android:id="@+id/priceOfProductDiscount"
@@ -81,14 +81,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:drawablePadding="5dp"
             android:text="7.500.000"
             android:textColor="@color/redAgri"
             android:textStyle="bold"
-            android:drawablePadding="5dp"
+            app:drawableEndCompat="@drawable/dong_red"
             app:layout_constraintBottom_toBottomOf="@id/priceOfProduct"
             app:layout_constraintStart_toEndOf="@id/priceOfProduct"
-            app:layout_constraintTop_toTopOf="@id/priceOfProduct"
-            app:drawableEndCompat="@drawable/dong_red" />
+            app:layout_constraintTop_toTopOf="@id/priceOfProduct" />
 
         <View
             android:id="@+id/divider"
@@ -118,8 +118,8 @@
                 android:id="@+id/tvRatingMiniView"
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
-                android:text="@string/_5_0"
                 android:gravity="center"
+                android:text="@string/_5_0"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -158,6 +158,29 @@
             app:layout_constraintBottom_toBottomOf="@id/titleProductSold"
             app:layout_constraintStart_toEndOf="@id/titleProductSold"
             app:layout_constraintTop_toTopOf="@id/titleProductSold" />
+
+        <TextView
+            android:id="@+id/titleProductQuantity"
+            style="@style/h5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen8dp"
+            android:text="@string/quantity"
+            app:layout_constraintBottom_toBottomOf="@id/tvProductSold"
+            app:layout_constraintStart_toEndOf="@id/tvProductSold"
+            app:layout_constraintTop_toTopOf="@id/tvProductSold" />
+
+        <TextView
+            android:id="@+id/tvProductQuantity"
+            style="@style/h5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/dimen8dp"
+            android:text="@string/_4"
+            app:layout_constraintBottom_toBottomOf="@id/titleProductQuantity"
+            app:layout_constraintStart_toEndOf="@id/titleProductQuantity"
+            app:layout_constraintTop_toTopOf="@id/titleProductQuantity" />
 
         <ImageView
             android:id="@+id/imgFavourite"

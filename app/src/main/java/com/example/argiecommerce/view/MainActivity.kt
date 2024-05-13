@@ -21,9 +21,11 @@ import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.ActivityMainBinding
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
+import com.example.argiecommerce.model.Token
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.network.Api
 import com.example.argiecommerce.network.RetrofitClient
+import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.USER
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -32,6 +34,8 @@ import com.example.argiecommerce.utils.Utils
 import com.example.argiecommerce.viewmodel.LoginViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
@@ -54,6 +58,9 @@ class MainActivity : AppCompatActivity() {
     private val apiService: Api by lazy {
         RetrofitClient.getInstance().getApi()
     }
+    private val auth: FirebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
 
     private var user: User? = null
     private lateinit var viewModel: UserViewModel
@@ -73,11 +80,18 @@ class MainActivity : AppCompatActivity() {
             user = intent.getParcelableExtra(USER) as? User
             if (user != null){
                 requestNewToken()
+                signIn()
                 sendRegistrationToServer()
             }
         } else {
             // Lấy dữ liệu từ login
             user = viewModel.user
+            signIn()
+            lifecycleScope.launch {
+                val localToken = Firebase.messaging.token.await()
+                Log.d("TEST", "token fcm: ${localToken}")
+                updateToken(localToken)
+            }
         }
 
         viewModel.user = user
@@ -88,6 +102,17 @@ class MainActivity : AppCompatActivity() {
             addNextIntentWithParentStack(notifyIntent)
             getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
         }
+    }
+
+    private fun signIn(){
+        auth.signInWithEmailAndPassword(user!!.email, user!!.password)
+            .addOnCompleteListener(this){ task ->
+                if (task.isSuccessful){
+                    Log.d("TEST", "signInWithEmail:success")
+                } else {
+                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     private fun sendRegistrationToServer() {
@@ -117,12 +142,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             Log.d("TEST", "token fcm: ${token}")
+            updateToken(token)
         })
 //        lifecycleScope.launch {
 //            val localToken = Firebase.messaging.token.await()
 ////            val localToken = FirebaseMessaging.getInstance().token.await()
 //            Log.d("TEST", "token fcm: ${localToken}")
 //        }
+    }
+
+    private fun updateToken(fcmToken: String){
+        val firebaseUser = auth.currentUser
+        val ref = FirebaseDatabase.getInstance().reference.child(Constants.CHAT_TOKEN)
+        val token = Token(fcmToken)
+        ref.child(firebaseUser!!.uid).setValue(token)
     }
 
     private fun checkCertificate() {
@@ -144,6 +177,7 @@ class MainActivity : AppCompatActivity() {
             is ScreenState.Success -> {
                 if (state.data != null) {
                     alertDialog.dismiss()
+                    Log.d("TEST", "in here")
                     user?.let { loginUtils.saveUserInfo(state.data, it) }
                 }
             }
@@ -154,7 +188,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
                 }
             }
-            else -> {}
         }
     }
 
@@ -209,4 +242,15 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(R.id.action_homeFragment_to_cartFragment)
     }
 
+//    override fun onStart() {
+//        super.onStart()
+//        val currentUser = auth.currentUser
+//        if (currentUser != null){
+//            reload()
+//        }
+//    }
+//
+//    private fun reload(){
+//
+//    }
 }

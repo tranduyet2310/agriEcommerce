@@ -2,11 +2,13 @@ package com.example.argiecommerce.view.home
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,8 @@ import com.example.argiecommerce.databinding.FragmentCartBinding
 import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.User
+import com.example.argiecommerce.network.Api
+import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -25,6 +29,11 @@ import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 import com.example.argiecommerce.viewmodel.CartViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class CartFragment : Fragment(), View.OnClickListener {
@@ -44,12 +53,16 @@ class CartFragment : Fragment(), View.OnClickListener {
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(requireContext())
     }
+    private val apiService: Api by lazy {
+        RetrofitClient.getInstance().getApi()
+    }
 
     private lateinit var alertDialog: AlertDialog
     private var user: User? = null
     private var totalPrice = 0L
     private lateinit var cartAdapter: CartProductAdapter
     private var cartItemList: ArrayList<CartResponse> = arrayListOf()
+    private val productHashMap: HashMap<String, Int> = hashMapOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,6 +73,7 @@ class CartFragment : Fragment(), View.OnClickListener {
         user = userViewModel.user
         setupRecyclerView()
         getCartItems()
+//        getProducts()
 
         return binding.root
     }
@@ -82,15 +96,19 @@ class CartFragment : Fragment(), View.OnClickListener {
 
         cartAdapter.onPlusClick = {
             val newQuantity = it.quantity + 1
-            val position = cartItemList.indexOf(it)
-            val cartItem = cartItemList[position]
-            cartItem.quantity = newQuantity
 
-            val token = loginUtils.getUserToken()
-            cartViewModel.changeQuantity(token, user!!.id, it.product.productId, newQuantity)
-                .observe(
-                    requireActivity(), { state -> processChangeQuantity(state, position) }
-                )
+            val maximumQuantity = it.product.productQuantity
+            if (newQuantity > maximumQuantity){
+                displayErrorSnackbar("Vượt quá số lượng tối đa hiện có")
+            } else {
+                val position = cartItemList.indexOf(it)
+                val cartItem = cartItemList[position]
+                cartItem.quantity = newQuantity
+
+                val token = loginUtils.getUserToken()
+                cartViewModel.changeQuantity(token, user!!.id, it.product.productId, newQuantity)
+                    .observe(requireActivity(), { state -> processChangeQuantity(state, position) })
+            }
         }
 
         cartAdapter.onMinusClick = {
@@ -123,6 +141,23 @@ class CartFragment : Fragment(), View.OnClickListener {
         }
     }
 
+//    private fun getProducts() {
+//        lifecycleScope.launch {
+//            cartItemList.map { cartItem ->
+//                withContext(Dispatchers.IO) {
+//                    val response = apiService.getProductById(cartItem.product.productId)
+//                    if (response.isSuccessful) {
+//                        if (response.body() != null) {
+//                            val productName = response.body()!!.productName
+//                            val quantity = response.body()!!.productQuantity
+//                            productHashMap[productName] = quantity
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+
     private fun getCartItems() {
         cartViewModel.getAllCartItems(user!!.id).observe(
             requireActivity(), { state -> processCartResponse(state) }
@@ -139,7 +174,20 @@ class CartFragment : Fragment(), View.OnClickListener {
     }
 
     private fun goToBillingFragment() {
-        navController.navigate(R.id.action_cartFragment_to_billingFragment)
+        var check: Boolean = false
+        var message: String = ""
+        for (cartItem in cartItemList){
+            check = cartItem.quantity > productHashMap[cartItem.product.productName]!!
+            if (check) {
+                message = "${cartItem.product.productName} vượt quá khả năng cung cấp!"
+                break
+            }
+        }
+        if(check){
+            displayErrorSnackbar(message)
+        } else {
+            navController.navigate(R.id.action_cartFragment_to_billingFragment)
+        }
     }
 
     private fun showOtherViews() {
@@ -170,6 +218,14 @@ class CartFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun loadDataToHashMap(){
+        for (cartItem in cartItemList){
+            val productName = cartItem.product.productName
+            val totalQuantity = cartItem.product.productQuantity
+            productHashMap[productName] = totalQuantity
+        }
+    }
+
     private fun processCartResponse(state: ScreenState<ArrayList<CartResponse>?>) {
         when (state) {
             is ScreenState.Loading -> {
@@ -190,6 +246,7 @@ class CartFragment : Fragment(), View.OnClickListener {
                         cartAdapter.notifyDataSetChanged()
                         totalPrice = 0L
                         calculateTotalPrice(state.data)
+                        loadDataToHashMap()
                     }
                 }
             }
@@ -218,7 +275,6 @@ class CartFragment : Fragment(), View.OnClickListener {
                     } else {
                         hideEmptyCart()
                         showOtherViews()
-//                        cartAdapter.notifyItemChanged(position)
                         cartAdapter.notifyDataSetChanged()
                         totalPrice = 0L
                         calculateTotalPrice(cartItemList)
@@ -245,7 +301,6 @@ class CartFragment : Fragment(), View.OnClickListener {
                 if (state.data != null) {
                     alertDialog.dismiss()
                     cartItemList.removeAt(position)
-//                    cartAdapter.notifyItemChanged(position)
                     cartAdapter.notifyDataSetChanged()
                     totalPrice = 0L
                     calculateTotalPrice(cartItemList)

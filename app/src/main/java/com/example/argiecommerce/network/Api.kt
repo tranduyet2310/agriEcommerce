@@ -12,6 +12,7 @@ import com.example.argiecommerce.model.Image
 import com.example.argiecommerce.model.LoginApiResponse
 import com.example.argiecommerce.model.LoginRequest
 import com.example.argiecommerce.model.MessageResponse
+import com.example.argiecommerce.model.NotificationMessage
 import com.example.argiecommerce.model.OrderApiResponse
 import com.example.argiecommerce.model.OrderDetailResponse
 import com.example.argiecommerce.model.OrderRequest
@@ -153,6 +154,13 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("productId") productId: Long,
         @Query("quantity") quantity: Long
+    ): Response<Product>
+
+    @PATCH("/api/products/{productId}/quantity")
+    suspend fun decreaseQuantity(
+        @Header("Authorization") token: String,
+        @Path("productId") productId: Long,
+        @Query("quantity") quantity: Int
     ): Response<Product>
 
     @GET("/api/details/{orderId}")
@@ -394,6 +402,8 @@ interface Api {
     ): Response<CurrencyResponse>
 
     //  Product
+    @GET("/api/products/{productId}")
+    suspend fun getProductById(@Path("productId") productId: Long): Response<Product>
     @GET("/api/products/all")
     suspend fun getAllProducts(
         @Query("pageNo") pageNo: String,
@@ -438,4 +448,9 @@ interface Api {
         @Query("sortBy") sortBy: String,
         @Query("sortDir") sortDir: String
     ): Response<ProductApiResponse>
+    // notifications
+    @POST("api/notification")
+    suspend fun sendNotification(
+        @Body notificationMessage: NotificationMessage
+    ): Response<MessageResponse>
 }

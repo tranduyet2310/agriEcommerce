@@ -175,6 +175,9 @@ class TayBacBoFragment : Fragment() {
         if(product.isNew){
             showSnackbar(getString(R.string.not_sale))
             return
+        } else if (product.productQuantity == 0){
+            showSnackbar(getString(R.string.no_product_left))
+            return
         }
         if (product.isInCart == 1) {
             val token = loginUtils.getUserToken()

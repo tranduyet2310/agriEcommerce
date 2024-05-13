@@ -65,6 +65,10 @@ class SpecialtyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
+        setupViewPager()
+    }
+
+    private fun setupViewPager() {
         val specialtiesFragment = arrayListOf<Fragment>(
             TayBacBoFragment(),
             DongBacBoFragment(),

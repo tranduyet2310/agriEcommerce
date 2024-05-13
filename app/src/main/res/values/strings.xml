@@ -335,5 +335,13 @@
     <string name="garden_info_empty">Thông tin Vườn hiện tại đang trống</string>
     <string name="shop_no_product">Cửa hàng hiện chưa thêm sản phẩm nào</string>
     <string name="update_address_instead">Hãy thực hiện cập nhật địa chỉ</string>
+    <string name="no_product_left">Sản phẩm này đã hết hàng</string>
+    <string name="quantity">" - Số lượng:"</string>
+    <string name="message">Tin nhắn</string>
+    <string name="search_chat">Tìm kiếm nhà cung cấp</string>
+    <string name="content">Nội dung tin nhắn</string>
+    <string name="search_for_supplier">Tìm kiếm nhà cung cấp</string>
+    <string name="enter_text_message">Nhập nội dung tin nhắn</string>
+    <string name="had_seen">Đã xem</string>
 
 </resources>

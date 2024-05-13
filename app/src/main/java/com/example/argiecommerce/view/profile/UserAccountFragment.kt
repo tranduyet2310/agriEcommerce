@@ -29,6 +29,9 @@ import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.UserInfoViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -50,16 +53,23 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(requireContext())
     }
-    private var user: User? = null
-
-    private var imageUri: Uri? = null
-    private lateinit var imageActivityResultLauncher: ActivityResultLauncher<Intent>
-
-    private lateinit var alertDialog: AlertDialog
     private val progressDialog: ProgressDialog by lazy {
         ProgressDialog()
     }
+    private val auth: FirebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+    private val firebaseDatabase: FirebaseDatabase by lazy {
+        FirebaseDatabase.getInstance()
+    }
+    private val firebaseStorage: FirebaseStorage by lazy {
+        FirebaseStorage.getInstance()
+    }
 
+    private var user: User? = null
+    private var imageUri: Uri? = null
+    private lateinit var imageActivityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var alertDialog: AlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -195,6 +205,7 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
                     user!!.avatar = userApiResponse.avatar
                     loginUtils.saveUserInfo(user!!)
                     userViewModel.user = user
+                    updateProfileImageInFirebase(user!!.avatar)
                     Snackbar.make(
                         requireView(),
                         getString(R.string.update_avatar),
@@ -226,6 +237,7 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
                     user!!.phone = userApiResponse.phone
                     loginUtils.saveUserInfo(user!!)
                     userViewModel.user = user
+                    updateNameInFirebase(user!!.fullName)
                     Snackbar.make(
                         requireView(),
                         getString(R.string.update_info),
@@ -241,6 +253,20 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun updateNameInFirebase(fullName: String){
+        val obj = HashMap<String, Any>()
+        obj["name"] = fullName
+        firebaseDatabase.reference.child(Constants.USER).child(auth.uid!!)
+            .updateChildren(obj).addOnSuccessListener { }
+    }
+
+    private fun updateProfileImageInFirebase(imageUrl: String){
+        val obj = HashMap<String, Any>()
+        obj["profileImage"] = imageUrl
+        firebaseDatabase.reference.child(Constants.USER).child(auth.uid!!)
+            .updateChildren(obj).addOnSuccessListener { }
     }
 
     private fun displayErrorSnackbar(errorMessage: String) {

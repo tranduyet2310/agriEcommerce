@@ -25,6 +25,9 @@ import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.UserInfoViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class ProfileFragment : Fragment(), View.OnClickListener {
@@ -44,6 +47,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(requireContext())
     }
+
     private lateinit var alertDialog: AlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +80,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
 
         binding.linearLogOut.setOnClickListener(this)
-        binding.switchNotification.setOnClickListener(this)
+        binding.linearNotifications.setOnClickListener(this)
         binding.constraintProfile.setOnClickListener(this)
         binding.linearAllOrders.setOnClickListener(this)
         binding.linearLocation.setOnClickListener(this)
@@ -94,7 +98,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.linearLogOut -> logOut()
-            R.id.switchNotification -> notificationFunc()
+            R.id.linearNotifications -> notificationFunc()
             R.id.constraintProfile -> changeInfoAccount()
             R.id.linearLocation -> changeLocation()
             R.id.linearAllOrders -> seeAllOrders()
@@ -134,13 +138,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun notificationFunc() {
-        Toast.makeText(requireContext(), "Cliked", Toast.LENGTH_SHORT).show()
+        navController.navigate(R.id.action_profileFragment_to_messageFragment)
     }
 
     private fun logOut() {
         val loginUtils = LoginUtils(requireContext())
         loginUtils.clearAll()
         userViewModel.user = null
+        Firebase.auth.signOut()
         navController.navigate(R.id.action_profileFragment_to_loginFragment)
     }
 

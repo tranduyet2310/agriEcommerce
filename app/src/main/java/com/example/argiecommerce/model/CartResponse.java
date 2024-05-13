@@ -6,7 +6,6 @@ public class CartResponse {
     private Long id;
     private Long userId;
     private Integer quantity;
-
     private Product product;
 
     public CartResponse() {

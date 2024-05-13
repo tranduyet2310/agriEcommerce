@@ -203,6 +203,8 @@ class DetailsFragment : Fragment(), View.OnClickListener {
                 requireContext().resources.getString(R.string.need_to_login)
             )
             dialog.show()
+        } else if (product.productQuantity == 0){
+            showSnackbar(getString(R.string.no_product_left))
         } else {
             val token = loginUtils.getUserToken()
             cartViewModel.addToCart(token, user!!.id, product.productId).observe(
@@ -218,6 +220,8 @@ class DetailsFragment : Fragment(), View.OnClickListener {
                 requireContext().resources.getString(R.string.need_to_login)
             )
             dialog.show()
+        } else if (product.productQuantity == 0){
+            showSnackbar(getString(R.string.no_product_left))
         } else {
             val token = loginUtils.getUserToken()
             cartViewModel.addToCart(token, user!!.id, product.productId).observe(
@@ -266,6 +270,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         binding.details.nameOfProduct.text = product.productName
         binding.details.tvInfoDetailsOfProduct.text = product.description
         binding.details.tvProductSold.text = product.sold.toString()
+        binding.details.tvProductQuantity.text = product.productQuantity.toString()
 
         if (product.isFavourite == 1) {
             binding.details.imgFavourite.setImageResource(R.drawable.ic_favorite_red)

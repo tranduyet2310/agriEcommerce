@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.example.argiecommerce"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.argiecommerce"
@@ -40,7 +40,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    dataBinding{
+    dataBinding {
         enable = true
     }
 }
@@ -74,7 +74,7 @@ dependencies {
     val retrofit_version = "2.4.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
-    implementation ("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     // Paging
     implementation("androidx.paging:paging-runtime-ktx:3.0.0-alpha06")
     // Glide
@@ -95,19 +95,22 @@ dependencies {
     val lottie_version = "6.0.0"
     implementation("com.airbnb.android:lottie:$lottie_version")
     //stepView
-    implementation ("com.github.shuhart:stepview:1.5.1")
+    implementation("com.github.shuhart:stepview:1.5.1")
     // image slider
-    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.0")
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.0")
     // paypal
-    implementation ("com.paypal.checkout:android-sdk:1.2.1")
+    implementation("com.paypal.checkout:android-sdk:1.2.1")
     // coroutines
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     // Okhttp
-    implementation ("com.squareup.okhttp3:okhttp:3.12.1")
-    implementation ("com.squareup.okhttp3:logging-interceptor:3.6.0")
+    implementation("com.squareup.okhttp3:okhttp:3.12.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.6.0")
     // network connection
-    implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-storage")
 }

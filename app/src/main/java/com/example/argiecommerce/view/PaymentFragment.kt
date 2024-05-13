@@ -90,6 +90,7 @@ class PaymentFragment : Fragment() {
                     }
                     createOrderDetail(orderId)
                     increaseSoldProduct()
+                    decreaseProductQuantity()
                     makeEmptyCart()
                 } catch (e: Exception) {
                     Log.d("TEST", "Get error when create order")
@@ -164,6 +165,20 @@ class PaymentFragment : Fragment() {
                 val response = apiService.increaseSoldProduct(token, productId, quantity)
                 if (response.isSuccessful) {
                     Log.d("TEST", "INCREASED!")
+                }
+            }
+        }.awaitAll()
+    }
+
+    suspend fun decreaseProductQuantity() {
+        val token = loginUtils.getUserToken()
+        cartProductList.map { cartItem ->
+            val productId = cartItem.product.productId
+            val quantity = cartItem.quantity
+            lifecycleScope.async(Dispatchers.IO) {
+                val response = apiService.decreaseQuantity(token, productId, quantity)
+                if (response.isSuccessful) {
+                    Log.d("TEST", "DECREASE!")
                 }
             }
         }.awaitAll()
