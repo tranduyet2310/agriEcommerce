@@ -465,7 +465,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
-//        categoryViewModel.getCategoryResponseData().observe(requireActivity(), { state -> processCategoryResponse(state) })
     }
 
     private fun getSuggestedProduct() {

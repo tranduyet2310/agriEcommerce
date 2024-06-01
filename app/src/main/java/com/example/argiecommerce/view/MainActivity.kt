@@ -80,13 +80,13 @@ class MainActivity : AppCompatActivity() {
             user = intent.getParcelableExtra(USER) as? User
             if (user != null){
                 requestNewToken()
-                signIn()
+//                signIn()
                 sendRegistrationToServer()
             }
         } else {
             // Lấy dữ liệu từ login
             user = viewModel.user
-            signIn()
+//            signIn()
             lifecycleScope.launch {
                 val localToken = Firebase.messaging.token.await()
                 Log.d("TEST", "token fcm: ${localToken}")
@@ -102,6 +102,15 @@ class MainActivity : AppCompatActivity() {
             addNextIntentWithParentStack(notifyIntent)
             getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
         }
+    }
+
+    private fun updateStatus(status: String){
+        val firebaseUser = auth.currentUser
+        val ref = FirebaseDatabase.getInstance().reference.child(USER)
+            .child(firebaseUser!!.uid)
+        val hashMap = HashMap<String, Any>()
+        hashMap["status"] = status
+        ref.updateChildren(hashMap)
     }
 
     private fun signIn(){
@@ -144,11 +153,6 @@ class MainActivity : AppCompatActivity() {
             Log.d("TEST", "token fcm: ${token}")
             updateToken(token)
         })
-//        lifecycleScope.launch {
-//            val localToken = Firebase.messaging.token.await()
-////            val localToken = FirebaseMessaging.getInstance().token.await()
-//            Log.d("TEST", "token fcm: ${localToken}")
-//        }
     }
 
     private fun updateToken(fcmToken: String){
@@ -159,7 +163,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkCertificate() {
-        Utils.readRawResource(this, R.raw.server)
+        Utils.readRawResource(this, R.raw.mycert)
     }
     private fun requestNewToken() {
         val loginRequest = LoginRequest(user!!.email, user!!.password)
@@ -242,15 +246,18 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(R.id.action_homeFragment_to_cartFragment)
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        val currentUser = auth.currentUser
-//        if (currentUser != null){
-//            reload()
-//        }
-//    }
-//
-//    private fun reload(){
-//
-//    }
+    override fun onResume() {
+        super.onResume()
+        if(auth.currentUser != null){
+            updateStatus("online")
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (auth.currentUser != null){
+            updateStatus("offline")
+        }
+    }
+
 }

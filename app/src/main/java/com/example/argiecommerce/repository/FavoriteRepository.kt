@@ -38,11 +38,7 @@ class FavoriteRepository {
         return mutableLiveData
     }
 
-    fun deleteFavoriteProduct(
-        token: String,
-        userId: Long,
-        productId: Long
-    ): LiveData<ScreenState<MessageResponse?>> {
+    fun deleteFavoriteProduct(token: String, userId: Long, productId: Long): LiveData<ScreenState<MessageResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<MessageResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
@@ -68,11 +64,7 @@ class FavoriteRepository {
         return mutableLiveData
     }
 
-    fun createFavoriteProduct(
-        token: String,
-        userId: Long,
-        productId: Long
-    ): LiveData<ScreenState<FavoriteResponse?>> {
+    fun createFavoriteProduct(token: String, userId: Long, productId: Long): LiveData<ScreenState<FavoriteResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<FavoriteResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 

@@ -84,7 +84,7 @@ class ChatFragment : Fragment() {
         }
     }
     private fun retrieveChatList(){
-        val ref = firebaseDatabase.reference.child(Constants.USER)
+        val ref = firebaseDatabase.reference.child(Constants.SUPPLIER)
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 (supplierList as ArrayList).clear()
@@ -98,6 +98,8 @@ class ChatFragment : Fragment() {
                 }
 //                chatAdapter = ChatAdapter(requireContext(), supplierList, true)
                 chatAdapter.notifyDataSetChanged()
+                if (supplierList.isEmpty()) binding.imageEmptyBox.visibility = View.VISIBLE
+                else binding.imageEmptyBox.visibility = View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {

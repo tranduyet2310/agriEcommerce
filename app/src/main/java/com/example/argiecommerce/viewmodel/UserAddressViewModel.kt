@@ -10,10 +10,7 @@ import com.example.argiecommerce.utils.ScreenState
 class UserAddressViewModel(
     private val userAddressRepository: UserAddressRepository = UserAddressRepository()
 ) : ViewModel() {
-    fun createNewAddress(
-        token: String,
-        userId: Long,
-        userAddress: UserAddress
+    fun createNewAddress(token: String, userId: Long, userAddress: UserAddress
     ): LiveData<ScreenState<UserAddress?>> {
         return userAddressRepository.createNewUserAddress(token, userId, userAddress)
     }
@@ -22,19 +19,12 @@ class UserAddressViewModel(
         return userAddressRepository.getAddressByUserId(token, userId)
     }
 
-    fun updateAddress(
-        token: String,
-        userId: Long,
-        addressId: Long,
-        userAddress: UserAddress
+    fun updateAddress(token: String, userId: Long, addressId: Long, userAddress: UserAddress
     ): LiveData<ScreenState<UserAddress?>> {
         return userAddressRepository.updateUserAddress(token, userId, addressId, userAddress)
     }
 
-    fun deleteAddress(
-        token: String,
-        userId: Long,
-        addressId: Long
+    fun deleteAddress(token: String, userId: Long, addressId: Long
     ): LiveData<ScreenState<MessageResponse?>> {
         return userAddressRepository.deleteUserAddress(token, userId, addressId)
     }

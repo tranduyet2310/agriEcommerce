@@ -21,7 +21,6 @@ import com.example.argiecommerce.databinding.FragmentUserAccountBinding
 import com.example.argiecommerce.model.User
 import com.example.argiecommerce.model.UserApiResponse
 import com.example.argiecommerce.utils.Constants
-//import com.example.argiecommerce.utils.Constants.FIELD_REQUIRED
 import com.example.argiecommerce.utils.GlideApp
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog

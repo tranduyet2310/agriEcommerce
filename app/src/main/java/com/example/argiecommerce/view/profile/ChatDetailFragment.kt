@@ -122,12 +122,6 @@ class ChatDetailFragment : Fragment() {
             selectImage()
         }
 
-        messageAdapter.onViewFullImage = {
-            val b = Bundle().apply {
-                putString(Constants.IMAGE_KEY, it.url)
-            }
-            navController.navigate(R.id.action_chatDetailFragment_to_viewFullImageFragment, b)
-        }
     }
     private fun setupSelectImageEvent() {
         imageActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -196,7 +190,7 @@ class ChatDetailFragment : Fragment() {
         }
     }
     private fun setupReceiverInfo() {
-        reference = firebaseDatabase.reference.child(Constants.USER).child(supplierUid)
+        reference = firebaseDatabase.reference.child(Constants.SUPPLIER).child(supplierUid)
         reference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user: UserFirebase? = snapshot.getValue(UserFirebase::class.java)
@@ -348,6 +342,13 @@ class ChatDetailFragment : Fragment() {
             layoutManager = linearLayoutManager
             messageAdapter = MessageAdapter(requireContext(), chatList, imageUrl)
             adapter = messageAdapter
+        }
+
+        messageAdapter.onViewFullImage = {
+            val b = Bundle().apply {
+                putString(Constants.IMAGE_KEY, it.url)
+            }
+            navController.navigate(R.id.action_chatDetailFragment_to_viewFullImageFragment, b)
         }
     }
 

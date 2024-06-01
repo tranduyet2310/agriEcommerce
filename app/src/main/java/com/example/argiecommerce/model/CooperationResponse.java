@@ -3,8 +3,6 @@ package com.example.argiecommerce.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-
 import com.example.argiecommerce.utils.OrderStatus;
 import com.google.gson.annotations.SerializedName;
 

@@ -39,11 +39,7 @@ class UserInfoRepository {
         return mutableLiveData
     }
 
-    fun uploadAvatar(
-        token: String,
-        userId: Long,
-        file: MultipartBody.Part
-    ): LiveData<ScreenState<UserApiResponse?>> {
+    fun uploadAvatar(token: String, userId: Long, file: MultipartBody.Part): LiveData<ScreenState<UserApiResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<UserApiResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
@@ -69,11 +65,7 @@ class UserInfoRepository {
         return mutableLiveData
     }
 
-    fun updateBasicInfo(
-        token: String,
-        userId: Long,
-        userDto: UserApiResponse
-    ): LiveData<ScreenState<UserApiResponse?>> {
+    fun updateBasicInfo(token: String, userId: Long, userDto: UserApiResponse): LiveData<ScreenState<UserApiResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<UserApiResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
@@ -99,11 +91,7 @@ class UserInfoRepository {
         return mutableLiveData
     }
 
-    fun changePassword(
-        token: String,
-        userId: Long,
-        password: PasswordRequest
-    ): LiveData<ScreenState<UserApiResponse?>> {
+    fun changePassword(token: String, userId: Long, password: PasswordRequest): LiveData<ScreenState<UserApiResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<UserApiResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 

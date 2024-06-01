@@ -2,13 +2,11 @@ package com.example.argiecommerce.view.home
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +17,6 @@ import com.example.argiecommerce.databinding.FragmentCartBinding
 import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.network.Api
-import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -29,11 +25,6 @@ import com.example.argiecommerce.utils.Utils.Companion.formatPrice
 import com.example.argiecommerce.viewmodel.CartViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class CartFragment : Fragment(), View.OnClickListener {
@@ -53,9 +44,6 @@ class CartFragment : Fragment(), View.OnClickListener {
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(requireContext())
     }
-    private val apiService: Api by lazy {
-        RetrofitClient.getInstance().getApi()
-    }
 
     private lateinit var alertDialog: AlertDialog
     private var user: User? = null
@@ -73,7 +61,6 @@ class CartFragment : Fragment(), View.OnClickListener {
         user = userViewModel.user
         setupRecyclerView()
         getCartItems()
-//        getProducts()
 
         return binding.root
     }
@@ -140,23 +127,6 @@ class CartFragment : Fragment(), View.OnClickListener {
             R.id.buttonCheckout -> goToBillingFragment()
         }
     }
-
-//    private fun getProducts() {
-//        lifecycleScope.launch {
-//            cartItemList.map { cartItem ->
-//                withContext(Dispatchers.IO) {
-//                    val response = apiService.getProductById(cartItem.product.productId)
-//                    if (response.isSuccessful) {
-//                        if (response.body() != null) {
-//                            val productName = response.body()!!.productName
-//                            val quantity = response.body()!!.productQuantity
-//                            productHashMap[productName] = quantity
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     private fun getCartItems() {
         cartViewModel.getAllCartItems(user!!.id).observe(

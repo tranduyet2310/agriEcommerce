@@ -3,16 +3,11 @@ package com.example.argiecommerce.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.argiecommerce.model.MessageResponse
-import com.example.argiecommerce.model.OrderDetailResponse
-import com.example.argiecommerce.model.OrderRequest
 import com.example.argiecommerce.model.OrderResponse
-import com.example.argiecommerce.model.Product
-import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.repository.OrderRepository
 import com.example.argiecommerce.utils.ScreenState
 import kotlinx.coroutines.flow.Flow

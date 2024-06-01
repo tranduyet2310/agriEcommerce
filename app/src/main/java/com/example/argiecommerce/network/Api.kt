@@ -54,6 +54,7 @@ interface Api {
     //  Category
     @GET("/api/categories")
     suspend fun getCategories(): Response<ArrayList<CategoryApiResponse>>
+
     @GET("/api/categories")
     fun getAllCategories(): Call<ArrayList<CategoryApiResponse>>
 
@@ -404,6 +405,7 @@ interface Api {
     //  Product
     @GET("/api/products/{productId}")
     suspend fun getProductById(@Path("productId") productId: Long): Response<Product>
+
     @GET("/api/products/all")
     suspend fun getAllProducts(
         @Query("pageNo") pageNo: String,
@@ -448,6 +450,7 @@ interface Api {
         @Query("sortBy") sortBy: String,
         @Query("sortDir") sortDir: String
     ): Response<ProductApiResponse>
+
     // notifications
     @POST("api/notification")
     suspend fun sendNotification(

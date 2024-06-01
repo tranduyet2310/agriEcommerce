@@ -25,7 +25,6 @@ class BillingProductAdapter(
                 val modifiedUrl = imageUrl.replace("http://", "https://")
 
                 GlideApp.with(itemView)
-//                    .load(imageUrl)
                     .load(modifiedUrl)
                     .apply(requestOptions)
                     .skipMemoryCache(true)

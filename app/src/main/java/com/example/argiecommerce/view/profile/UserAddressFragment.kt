@@ -29,6 +29,7 @@ class UserAddressFragment : Fragment() {
     companion object {
         const val TAG = "UserAddressFragment"
     }
+
     private var _binding: FragmentUserAddressBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
@@ -61,6 +62,23 @@ class UserAddressFragment : Fragment() {
         getUserAddressData()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
+        binding.imageAddAddress.setOnClickListener {
+            navController.navigate(R.id.action_userAddressFragment_to_addressFragment)
+        }
+        userAddressAdapter.onClick = {
+            userViewModel.userAddress = it
+            val b = Bundle()
+            b.putString(SCREEN_KEY, TAG)
+            navController.navigate(R.id.action_userAddressFragment_to_addressDialog, b)
+        }
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            navController.navigateUp()
+        }
     }
 
     private fun getUserAddressData() {
@@ -97,26 +115,10 @@ class UserAddressFragment : Fragment() {
     private fun setupRecyclerView() {
         userAddressAdapter = UserAddressAdapter(userAddrewssList)
         binding.rcvUserAddress.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
             adapter = userAddressAdapter
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-        binding.imageAddAddress.setOnClickListener {
-            navController.navigate(R.id.action_userAddressFragment_to_addressFragment)
-        }
-        userAddressAdapter.onClick = {
-            userViewModel.userAddress = it
-            val b = Bundle()
-            b.putString(SCREEN_KEY, TAG)
-            navController.navigate(R.id.action_userAddressFragment_to_addressDialog, b)
-        }
-        binding.toolbarLayout.imgBack.setOnClickListener {
-            navController.navigateUp()
         }
     }
 

@@ -82,7 +82,6 @@ class SupplierFragment : Fragment(), View.OnClickListener {
         if (supplierBasicInfo.imageUrl != null) {
             val modifiedUrl = supplierBasicInfo.imageUrl.replace("http://", "https://")
             GlideApp.with(requireContext())
-//                .load(supplierBasicInfo.imageUrl)
                 .load(modifiedUrl)
                 .into(binding.suppilerLayout.imageOfSuppiler)
         }

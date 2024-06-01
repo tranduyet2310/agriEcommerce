@@ -64,15 +64,47 @@ class AddressDialog : DialogFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
+
+        binding.buttonDelelte.setOnClickListener {
+            val dialogBuilder = AlertDialog.Builder(requireActivity())
+            dialogBuilder.setTitle(getString(R.string.check_out))
+            dialogBuilder.setMessage(getString(R.string.delete_address))
+            dialogBuilder.setPositiveButton(getString(R.string.ok)) { dialog, which ->
+                dialog.dismiss()
+                deleteAddress()
+            }
+            dialogBuilder.setNegativeButton(getString(R.string.cancel_v2)) { dialog, which ->
+                dialog.dismiss()
+            }
+            dialogBuilder.create().show()
+        }
+
+        binding.buttonSave.setOnClickListener {
+            if (userAddress != null) {
+                if (!validateFieldInfo()){
+                    saveToDatabase()
+                }
+            } else {
+                binding.tvFailed.visibility = View.VISIBLE
+                binding.tvFailed.text = getString(R.string.not_found_address)
+            }
+        }
+
+        binding.imgClose.setOnClickListener {
+            dialog?.dismiss()
+        }
+    }
+
     private fun showInfo() {
-        binding.edtFullName.text =
-            Editable.Factory.getInstance().newEditable(userAddress?.contactName)
+        binding.edtFullName.text = Editable.Factory.getInstance().newEditable(userAddress?.contactName)
         binding.edtPhone.text = Editable.Factory.getInstance().newEditable(userAddress?.phone)
         binding.edtCity.text = Editable.Factory.getInstance().newEditable(userAddress?.province)
         binding.edtState.text = Editable.Factory.getInstance().newEditable(userAddress?.district)
         binding.edtStreet.text = Editable.Factory.getInstance().newEditable(userAddress?.commune)
-        binding.edtAddressDetail.text =
-            Editable.Factory.getInstance().newEditable(userAddress?.details)
+        binding.edtAddressDetail.text = Editable.Factory.getInstance().newEditable(userAddress?.details)
 
         binding.imgClose.visibility = View.VISIBLE
     }
@@ -108,38 +140,6 @@ class AddressDialog : DialogFragment() {
         val token = loginUtils.getUserToken()
         userAddressViewModel.updateAddress(token, user!!.id, userAddress!!.id, updateUserAddress)
             .observe(requireActivity(), { state -> processUpdateUserAddress(state) })
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = findNavController()
-
-        binding.buttonDelelte.setOnClickListener {
-            val dialogBuilder = AlertDialog.Builder(requireActivity())
-            dialogBuilder.setTitle(getString(R.string.check_out))
-            dialogBuilder.setMessage(getString(R.string.delete_address))
-            dialogBuilder.setPositiveButton(getString(R.string.ok)) { dialog, which ->
-                dialog.dismiss()
-                deleteAddress()
-            }
-            dialogBuilder.setNegativeButton(getString(R.string.cancel_v2)) { dialog, which ->
-                dialog.dismiss()
-            }
-            dialogBuilder.create().show()
-        }
-        binding.buttonSave.setOnClickListener {
-            if (userAddress != null) {
-                if (!validateFieldInfo()){
-                    saveToDatabase()
-                }
-            } else {
-                binding.tvFailed.visibility = View.VISIBLE
-                binding.tvFailed.text = getString(R.string.not_found_address)
-            }
-        }
-        binding.imgClose.setOnClickListener {
-            dialog?.dismiss()
-        }
     }
 
     private fun deleteAddress() {

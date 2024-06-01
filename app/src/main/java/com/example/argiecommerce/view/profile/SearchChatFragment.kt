@@ -3,11 +3,10 @@ package com.example.argiecommerce.view.profile
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.argiecommerce.R
@@ -72,7 +71,7 @@ class SearchChatFragment : Fragment() {
 
     private fun getAllSuppliers() {
         val userUid = auth.currentUser!!.uid
-        val reference = firebaseDatabase.reference.child(Constants.USER)
+        val reference = firebaseDatabase.reference.child(Constants.SUPPLIER)
         reference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 (supplierList as ArrayList<UserFirebase>).clear()
@@ -97,7 +96,7 @@ class SearchChatFragment : Fragment() {
 
     private fun searchForSupplier(supplierName: String){
         val userUid = auth.currentUser!!.uid
-        val reference = firebaseDatabase.reference.child(Constants.USER).orderByChild("search")
+        val reference = firebaseDatabase.reference.child(Constants.SUPPLIER).orderByChild("search")
             .startAt(supplierName)
             .endAt(supplierName + "\uf8ff") // \uf8ff = %
 

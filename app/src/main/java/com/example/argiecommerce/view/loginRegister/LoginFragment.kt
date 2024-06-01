@@ -2,6 +2,7 @@ package com.example.argiecommerce.view.loginRegister
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.LoginViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 
 
 class LoginFragment : Fragment(), View.OnClickListener {
@@ -35,6 +37,10 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private val loginUtils: LoginUtils by lazy {
         LoginUtils(requireContext())
     }
+    private val auth: FirebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
     private lateinit var userViewModel: UserViewModel
     private lateinit var alertDialog: AlertDialog
     private lateinit var user: User
@@ -97,6 +103,9 @@ class LoginFragment : Fragment(), View.OnClickListener {
         }
 
         user = User(email, password)
+
+        signIn()
+
         val loginRequest = LoginRequest(email, password)
         loginViewModel.getLoginResponseLiveData(loginRequest)
             .observe(requireActivity(), { state -> processLoginResponse(state) })
@@ -138,5 +147,16 @@ class LoginFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun signIn(){
+        auth.signInWithEmailAndPassword(user.email, user.password)
+            .addOnCompleteListener(requireActivity()){ task ->
+                if (task.isSuccessful){
+                    Log.d("TEST", "signInWithEmail:success")
+                } else {
+                    Snackbar.make(requireView(), "Authentication failed", Snackbar.LENGTH_SHORT).show()
+                }
+            }
     }
 }

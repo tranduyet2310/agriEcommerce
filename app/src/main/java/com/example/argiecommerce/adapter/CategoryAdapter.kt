@@ -39,7 +39,6 @@ class CategoryAdapter(
         val modifiedUrl = category.categoryImage.replace("http://", "https://")
 
         GlideApp.with(context)
-//            .load(category.categoryImage)
             .load(modifiedUrl)
             .apply(requestOptions)
             .skipMemoryCache(true)

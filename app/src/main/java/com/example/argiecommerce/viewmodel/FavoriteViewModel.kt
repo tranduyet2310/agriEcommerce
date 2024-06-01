@@ -14,19 +14,11 @@ class FavoriteViewModel(
         return favoriteRepository.getFavoriteProductsByUserId(userId)
     }
 
-    fun deleteFavoriteProduct(
-        token: String,
-        userId: Long,
-        productId: Long
-    ): LiveData<ScreenState<MessageResponse?>> {
+    fun deleteFavoriteProduct(token: String, userId: Long, productId: Long): LiveData<ScreenState<MessageResponse?>> {
         return favoriteRepository.deleteFavoriteProduct(token, userId, productId)
     }
 
-    fun createFavoriteProduct(
-        token: String,
-        userId: Long,
-        productId: Long
-    ): LiveData<ScreenState<FavoriteResponse?>> {
+    fun createFavoriteProduct(token: String, userId: Long, productId: Long): LiveData<ScreenState<FavoriteResponse?>> {
         return favoriteRepository.createFavoriteProduct(token, userId, productId)
     }
 }

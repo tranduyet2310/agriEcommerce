@@ -11,7 +11,7 @@ public class Constants {
     public static final String CURRENCY_TO = "USD";
     public static final String CURRENCY_FORMAT = "json";
     // API
-    public static final String LOCALHOST = "https://172.20.10.3:8443/";
+    public static final String LOCALHOST = "https://tranduyet.online/";
     // SharedPreference
     public static final String SHARED_PREF_NAME = "shared_preference";
     public static final String HISTORY_DATA = "history_data";
@@ -52,7 +52,7 @@ public class Constants {
     public static final String LOGIN_MESSAGE = "Email/Password không đúng";
     public static final String MAX_ADDRESS = "Đã đạt tối đa 5 địa chỉ nhận hàng";
     public static final String ADDRESS_ERROR = "User/Address không tồn tại";
-    public static final String SERVER_ERROR = "Lỗi phía máy chủ";
+    public static final String SERVER_ERROR = "Có lỗi vui lòng thử lại!";
     //
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final int TOTAL_ADDRESS = 5;
@@ -72,22 +72,23 @@ public class Constants {
     public static final String TAN_UNIT = "tấn";
     public static final String CHANNEL_ID = "notify";
     //
-    public static final String OCOP = "Rau lang";
-    public static final String ORGANIC = "Rau lang";
-    public static final String VIETGAP = "Rau cải thìa";
-    public static final String GLOBALGAP = "Rau cải thìa";
-    public static final String SPECIALTY = "Hoa quả";
+    public static final String OCOP = "OCOP";
+    public static final String ORGANIC = "Organic";
+    public static final String VIETGAP = "VietGAP";
+    public static final String GLOBALGAP = "GlobalGAP";
+    public static final String STANDARD = "Tiêu chuẩn";
     //
-    public static final String STANDARD = "Rau củ";
-    public static final String TBB = "Táo";
-    public static final String TN = "Xoài";
-    public static final String DNB = "Táo";
-    public static final String NTB = "Xoài";
-    public static final String DBB = "Táo";
-    public static final String DBSH = "Xoài";
-    public static final String DBSCL = "Táo";
-    public static final String BTB = "Xoài";
+    public static final String SPECIALTY = "Đặc sản";
+    public static final String TBB = "Tây Bắc Bộ";
+    public static final String TN = "Tây Nguyên";
+    public static final String DNB = "Đông Nam Bộ";
+    public static final String NTB = "DH Nam Trung Bộ";
+    public static final String DBB = "Đông Bắc Bộ";
+    public static final String DBSH = "ĐB Sông Hồng";
+    public static final String DBSCL = "ĐB Sông Cửu Long";
+    public static final String BTB = "Bắc Trung Bộ";
     // firebase
+    public static final String SUPPLIER = "supplier";
     public static final String CHAT = "chats";
     public static final String CHAT_LIST = "chatList";
     public static final String CHAT_IMAGES = "Chat Images";

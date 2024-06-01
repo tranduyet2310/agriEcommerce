@@ -283,7 +283,6 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         val imageList = ArrayList<SlideModel>()
         for (image in product.productImage) {
             val modifiedUrl = image.imageUrl.replace("http://", "https://")
-//            imageList.add(SlideModel(image.imageUrl))
             imageList.add(SlideModel(modifiedUrl))
         }
         binding.details.imageOfProduct.setImageList(imageList, ScaleTypes.FIT)

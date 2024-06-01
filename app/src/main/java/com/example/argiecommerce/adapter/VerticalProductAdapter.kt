@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.resource.bitmap.FitCenter
@@ -59,7 +58,6 @@ class VerticalProductAdapter(
                 val modifiedUrl = imageUrl.replace("http://", "https://")
 
                 GlideApp.with(context)
-//                    .load(imageUrl)
                     .load(modifiedUrl)
                     .apply(requestOptions)
                     .skipMemoryCache(true)

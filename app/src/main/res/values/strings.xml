@@ -47,7 +47,7 @@
     <string name="see_all">Xem tất cả</string>
     <string name="ocop_product">Sản phẩm <font color="#FF0000">O</font><font color="#008000">C</font><font color="#0000FF">O</font><font color="#FFD700">P</font></string>
     <string name="specialty_products">Đặc sản vùng miền</string>
-    <string name="today_suggestion">Gợi ý hôm nay</string>
+    <string name="today_suggestion">Tất cả sản phẩm</string>
     <string name="comming_product">Sản phẩm sắp ra mắt</string>
     <string name="upcomming">Sắp ra mắt</string>
     <string name="what_is_product_look_for">Nhập tên sản phẩm cần tìm</string>
@@ -343,5 +343,6 @@
     <string name="search_for_supplier">Tìm kiếm nhà cung cấp</string>
     <string name="enter_text_message">Nhập nội dung tin nhắn</string>
     <string name="had_seen">Đã xem</string>
+    <string name="yield_estimated">Sản lượng dự kiến:</string>
 
 </resources>

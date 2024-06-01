@@ -2,7 +2,6 @@ package com.example.argiecommerce.utils
 
 import android.app.NotificationManager
 import android.content.Context
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.argiecommerce.R
 import com.google.firebase.messaging.FirebaseMessagingService

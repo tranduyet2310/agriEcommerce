@@ -14,17 +14,6 @@ import com.example.argiecommerce.utils.Constants.SHARED_PREF_NAME
 import com.example.argiecommerce.utils.Constants.TOKEN
 
 class LoginUtils(private val mCtx: Context) {
-//    companion object {
-//        private var mInstance: LoginUtils? = null
-//
-//        @Synchronized
-//        fun getInstance(mCtx: Context): LoginUtils {
-//            if (mInstance == null) {
-//                mInstance = LoginUtils(mCtx)
-//            }
-//            return mInstance as LoginUtils
-//        }
-//    }
 
     fun saveUserInfo(response: LoginApiResponse, user: User) {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)

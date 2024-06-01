@@ -2,11 +2,9 @@ package com.example.argiecommerce.view.profile
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -15,9 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.FragmentProfileBinding
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.model.UserAddress
 import com.example.argiecommerce.model.UserApiResponse
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.GlideApp
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -25,7 +21,6 @@ import com.example.argiecommerce.utils.ScreenState
 import com.example.argiecommerce.viewmodel.UserInfoViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -64,13 +59,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    private fun getUserInfo() {
-        val token = loginUtils.getUserToken()
-        userInfoViewModel.getUserInfo(token, user!!.id).observe(
-            requireActivity(), { state -> processUserInfo(state) }
-        )
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
@@ -88,6 +76,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         binding.linearBilling.setOnClickListener(this)
         binding.linearCooperation.setOnClickListener(this)
         binding.linearCooperativeOrder.setOnClickListener(this)
+    }
+
+    private fun getUserInfo() {
+        val token = loginUtils.getUserToken()
+        userInfoViewModel.getUserInfo(token, user!!.id).observe(
+            requireActivity(), { state -> processUserInfo(state) }
+        )
     }
 
     override fun onDestroyView() {

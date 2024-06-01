@@ -15,26 +15,17 @@ class UserInfoViewModel(
         return userInfoRepository.getUserInfo(token, userId)
     }
 
-    fun changeUserAvatar(
-        token: String,
-        userId: Long,
-        file: MultipartBody.Part
+    fun changeUserAvatar(token: String, userId: Long, file: MultipartBody.Part
     ): LiveData<ScreenState<UserApiResponse?>> {
         return userInfoRepository.uploadAvatar(token, userId, file)
     }
 
-    fun updateBasicInfo(
-        token: String,
-        userId: Long,
-        userDto: UserApiResponse
+    fun updateBasicInfo(token: String, userId: Long, userDto: UserApiResponse
     ): LiveData<ScreenState<UserApiResponse?>> {
         return userInfoRepository.updateBasicInfo(token, userId, userDto)
     }
 
-    fun changePassword(
-        token: String,
-        userId: Long,
-        passwordRequest: PasswordRequest
+    fun changePassword(token: String, userId: Long, passwordRequest: PasswordRequest
     ): LiveData<ScreenState<UserApiResponse?>> {
         return userInfoRepository.changePassword(token, userId, passwordRequest)
     }

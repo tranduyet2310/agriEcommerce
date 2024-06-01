@@ -17,6 +17,7 @@ import com.example.argiecommerce.utils.Constants.LONG_TERM_PLANT
 import com.example.argiecommerce.utils.Constants.SHORT_TERM_PLANT
 import com.example.argiecommerce.utils.CropsStatus
 import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.utils.Utils
 import com.example.argiecommerce.viewmodel.SupplierViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -71,7 +72,7 @@ class SpGardenFragment : Fragment() {
 
                             detailInfoList = field.fieldDetails
                             for (detail in detailInfoList) {
-                                setupFieldDetailLong(detail.cropsStatus, detail.details, detail.dateCreated)
+                                setupFieldDetailLong(detail.cropsStatus, detail.details, detail.dateCreated, field.estimateYield)
                             }
                         } else if (field.cropsType.equals(SHORT_TERM_PLANT)) {
                             val status = cropsStatus.get(value)
@@ -82,7 +83,7 @@ class SpGardenFragment : Fragment() {
 
                             detailInfoList = field.fieldDetails
                             for (detail in detailInfoList) {
-                                setupFieldDetailShort(detail.cropsStatus, detail.details, detail.dateCreated)
+                                setupFieldDetailShort(detail.cropsStatus, detail.details, detail.dateCreated, field.estimateYield)
                             }
                         }
                     }
@@ -177,7 +178,7 @@ class SpGardenFragment : Fragment() {
 
     }
 
-    private fun setupFieldDetailShort(status: CropsStatus, detail: String, date: String) {
+    private fun setupFieldDetailShort(status: CropsStatus, detail: String, date: String, yield: Double) {
         when (status) {
             CropsStatus.MAKE_LAND -> {
                 binding.tvLandContent.text = detail
@@ -206,16 +207,18 @@ class SpGardenFragment : Fragment() {
 
             CropsStatus.HARVEST -> {
                 binding.tvHarvestYield.visibility = View.VISIBLE
+                binding.tvHarvestDetail.visibility = View.VISIBLE
                 binding.titleHarvestYield.visibility = View.VISIBLE
-                binding.tvHarvestYield.text = detail
+                binding.tvHarvestYield.text = Utils.formatYield(yield)
                 binding.tvHarvestDate.text = date
+                binding.tvHarvestDetail.text = detail
             }
 
             else -> {}
         }
     }
 
-    private fun setupFieldDetailLong(status: CropsStatus, detail: String, date: String) {
+    private fun setupFieldDetailLong(status: CropsStatus, detail: String, date: String, yield: Double) {
         when (status) {
             CropsStatus.TAKE_CARE -> {
                 binding.tvTakeCareContentLong.text = detail
@@ -239,9 +242,11 @@ class SpGardenFragment : Fragment() {
 
             CropsStatus.HARVEST -> {
                 binding.tvHarvestYieldLong.visibility = View.VISIBLE
+                binding.tvHarvestDetailLong.visibility = View.VISIBLE
                 binding.titleHarvestYieldLong.visibility = View.VISIBLE
-                binding.tvHarvestYieldLong.text = detail
+                binding.tvHarvestYieldLong.text = Utils.formatYield(yield)
                 binding.tvHarvestDateLong.text = date
+                binding.tvHarvestDetailLong.text = detail
             }
 
             else -> {}

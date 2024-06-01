@@ -162,7 +162,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     val loginUtils = LoginUtils(requireContext())
                     user.id = state.data.id
                     loginUtils.saveUserInfo(user)
-                    createChatAccount(user.email, user.password)
+                    createChatAccount(user.email, user.password, user.id)
                     Snackbar.make(requireView(), "Đăng ký thành công", Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -176,17 +176,18 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun createChatAccount(email: String, password: String) {
+    private fun createChatAccount(email: String, password: String, id: Long) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-//                    val reference = firebaseStorage.reference.child(Constants.USER).child(auth.uid!!)
                         val user = UserFirebase().apply {
                             uid = auth.uid
                             phoneNumber = auth.currentUser!!.phoneNumber
                             name = user.fullName
                             search = user.fullName.lowercase()
                             profileImage = "https://firebasestorage.googleapis.com/v0/b/agrimart-7a779.appspot.com/o/user.png?alt=media&token=fdaec1a7-ec3a-4949-8ab9-a10bc32781d8"
+                            status = "offline"
+                            idInServer = id
                         }
                     firebaseDatabase.reference.child(Constants.USER).child(auth.uid!!).setValue(user)
                         .addOnCompleteListener {

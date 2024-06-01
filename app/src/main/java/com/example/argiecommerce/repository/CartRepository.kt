@@ -12,11 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CartRepository {
-    fun addToCart(
-        token: String,
-        userId: Long,
-        productId: Long
-    ): LiveData<ScreenState<CartResponse?>> {
+    fun addToCart(token: String, userId: Long, productId: Long): LiveData<ScreenState<CartResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<CartResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
@@ -68,12 +64,7 @@ class CartRepository {
         return mutableLiveData
     }
 
-    fun changeQuantity(
-        token: String,
-        userId: Long,
-        productId: Long,
-        quantity: Int
-    ): LiveData<ScreenState<CartResponse?>> {
+    fun changeQuantity(token: String, userId: Long, productId: Long, quantity: Int): LiveData<ScreenState<CartResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<CartResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
@@ -99,11 +90,7 @@ class CartRepository {
         return mutableLiveData
     }
 
-    fun removeFromCart(
-        token: String,
-        userId: Long,
-        productId: Long
-    ): LiveData<ScreenState<MessageResponse?>> {
+    fun removeFromCart(token: String, userId: Long, productId: Long): LiveData<ScreenState<MessageResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<MessageResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
@@ -129,10 +116,7 @@ class CartRepository {
         return mutableLiveData
     }
 
-    fun deleteAllItems(
-        token: String,
-        userId: Long
-    ): LiveData<ScreenState<MessageResponse?>> {
+    fun deleteAllItems(token: String, userId: Long): LiveData<ScreenState<MessageResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<MessageResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 

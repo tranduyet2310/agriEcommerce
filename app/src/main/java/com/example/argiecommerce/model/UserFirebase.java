@@ -6,6 +6,8 @@ public class UserFirebase {
     private String profileImage;
     private String phoneNumber;
     private String search;
+    private String status;
+    private Long idInServer;
 
     public UserFirebase() {
     }
@@ -15,6 +17,22 @@ public class UserFirebase {
         this.name = name;
         this.profileImage = profileImage;
         this.phoneNumber = phoneNumber;
+    }
+
+    public Long getIdInServer() {
+        return idInServer;
+    }
+
+    public void setIdInServer(Long idInServer) {
+        this.idInServer = idInServer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getSearch() {

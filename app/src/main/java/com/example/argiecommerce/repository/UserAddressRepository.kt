@@ -14,11 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class UserAddressRepository {
-    fun createNewUserAddress(
-        token: String,
-        userId: Long,
-        userAddress: UserAddress
-    ): LiveData<ScreenState<UserAddress?>> {
+    fun createNewUserAddress(token: String, userId: Long, userAddress: UserAddress): LiveData<ScreenState<UserAddress?>> {
         val mutableLiveData = MutableLiveData<ScreenState<UserAddress?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 
@@ -70,11 +66,7 @@ class UserAddressRepository {
         return mutableLiveData
     }
 
-    fun updateUserAddress(
-        token: String,
-        userId: Long,
-        addressId: Long,
-        userAddress: UserAddress
+    fun updateUserAddress(token: String, userId: Long, addressId: Long, userAddress: UserAddress
     ): LiveData<ScreenState<UserAddress?>> {
         val mutableLiveData = MutableLiveData<ScreenState<UserAddress?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
@@ -102,11 +94,7 @@ class UserAddressRepository {
         return mutableLiveData
     }
 
-    fun deleteUserAddress(
-        token: String,
-        userId: Long,
-        addressId: Long
-    ): LiveData<ScreenState<MessageResponse?>> {
+    fun deleteUserAddress(token: String, userId: Long, addressId: Long): LiveData<ScreenState<MessageResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<MessageResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
 

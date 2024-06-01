@@ -103,7 +103,7 @@
         android:id="@+id/scrollShortTermPlant"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -598,7 +598,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="@string/estimate_yield"
+                android:text="@string/yield_estimated"
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -620,6 +620,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/titleHarvestYield"
                 app:layout_constraintTop_toBottomOf="@id/tvHarvestDate" />
+
+            <TextView
+                android:id="@+id/tvHarvestDetail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/_5_000_000"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/titleHarvestYield"
+                app:layout_constraintTop_toBottomOf="@id/titleHarvestYield" />
 
             <View
                 android:id="@+id/line_chemical_harvest"
@@ -648,7 +663,7 @@
         android:id="@+id/scrollLongTermPlant"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -1061,7 +1076,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="@string/estimate_yield"
+                android:text="@string/yield_estimated"
                 android:textColor="@color/grayAgri"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -1083,6 +1098,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/titleHarvestYieldLong"
                 app:layout_constraintTop_toBottomOf="@id/tvHarvestDateLong" />
+
+            <TextView
+                android:id="@+id/tvHarvestDetailLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/_5_000_000"
+                android:textColor="@color/grayAgri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvHarvestTitleLong"
+                app:layout_constraintTop_toBottomOf="@id/titleHarvestYieldLong" />
 
             <View
                 android:id="@+id/line_harvest_fruitingLong"

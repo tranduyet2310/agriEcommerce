@@ -64,10 +64,7 @@ class CooperationRepository {
         return mutableLiveData
     }
 
-    fun createCooperation(
-        token: String,
-        supplierId: Long,
-        cooperationResponse: CooperationResponse
+    fun createCooperation(token: String, supplierId: Long, cooperationResponse: CooperationResponse
     ): LiveData<ScreenState<CooperationResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<CooperationResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
@@ -94,10 +91,7 @@ class CooperationRepository {
         return mutableLiveData
     }
 
-    fun updateCooperation(
-        token: String,
-        cooperationId: Long,
-        cooperationResponse: CooperationResponse
+    fun updateCooperation(token: String, cooperationId: Long, cooperationResponse: CooperationResponse
     ): LiveData<ScreenState<CooperationResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<CooperationResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
@@ -124,10 +118,7 @@ class CooperationRepository {
         return mutableLiveData
     }
 
-    fun updateCooperationStatus(
-        token: String,
-        cooperationId: Long,
-        cooperationResponse: CooperationResponse
+    fun updateCooperationStatus(token: String, cooperationId: Long, cooperationResponse: CooperationResponse
     ): LiveData<ScreenState<CooperationResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<CooperationResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))
@@ -154,10 +145,7 @@ class CooperationRepository {
         return mutableLiveData
     }
 
-    fun updateCooperationAddress(
-        token: String,
-        cooperationId: Long,
-        addressId: Long
+    fun updateCooperationAddress(token: String, cooperationId: Long, addressId: Long
     ): LiveData<ScreenState<CooperationResponse?>> {
         val mutableLiveData = MutableLiveData<ScreenState<CooperationResponse?>>()
         mutableLiveData.postValue(ScreenState.Loading(null))

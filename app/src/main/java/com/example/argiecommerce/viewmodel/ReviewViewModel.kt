@@ -3,11 +3,9 @@ package com.example.argiecommerce.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.argiecommerce.model.OrderResponse
 import com.example.argiecommerce.model.ReviewRequest
 import com.example.argiecommerce.model.ReviewResponse
 import com.example.argiecommerce.model.ReviewStatisticResponse
@@ -22,11 +20,7 @@ class ReviewViewModel(application: Application) : AndroidViewModel(application) 
         return reviewRepository.getAllReivewsByProductId(productId).cachedIn(viewModelScope)
     }
 
-    fun createReviews(
-        token: String,
-        userId: Long,
-        productId: Long,
-        reviewRequest: ReviewRequest
+    fun createReviews(token: String, userId: Long, productId: Long, reviewRequest: ReviewRequest
     ): LiveData<ScreenState<ReviewResponse?>> {
         return reviewRepository.createReviews(token, userId, productId, reviewRequest)
     }

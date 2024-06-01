@@ -2,12 +2,22 @@ package com.example.argiecommerce.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.argiecommerce.R
 import com.example.argiecommerce.databinding.SupplierSearchListItemBinding
+import com.example.argiecommerce.model.Chat
 import com.example.argiecommerce.model.UserFirebase
+import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.GlideApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
 
 class ChatAdapter(
     context: Context,
@@ -19,6 +29,7 @@ class ChatAdapter(
     private val supplierList: List<UserFirebase>
     private val isChatCheck: Boolean
     var onClick: ((UserFirebase) -> Unit)? = null
+    var lastTextMessage: String = ""
 
     init {
         this.context = context
@@ -46,6 +57,16 @@ class ChatAdapter(
                 .skipMemoryCache(true)
                 .into(profileImage)
         }
+
+        fun showUserStatus(userFirebase: UserFirebase){
+            if (userFirebase.status.equals("online")){
+                imgOnline.visibility = View.VISIBLE
+                imgOffline.visibility = View.GONE
+            } else {
+                imgOnline.visibility = View.GONE
+                imgOffline.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -58,9 +79,48 @@ class ChatAdapter(
         holder.itemView.setOnClickListener {
             onClick?.invoke(currentItem)
         }
+        if (isChatCheck){
+            holder.showUserStatus(currentItem)
+            retrieveLastMessage(currentItem.uid, holder.lastMessage)
+        } else {
+            holder.lastMessage.visibility = View.GONE
+            holder.imgOnline.visibility = View.GONE
+            holder.imgOffline.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int {
         return supplierList.size
+    }
+
+    private fun retrieveLastMessage(chatUserUid: String?, lastMessage: TextView) {
+        lastTextMessage = "defaultMsg"
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        val reference = FirebaseDatabase.getInstance().reference.child(Constants.CHAT)
+        reference.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children){
+                    val chat: Chat? = dataSnapshot.getValue(Chat::class.java)
+                    if (firebaseUser != null && chat != null){
+                        if (chat.receiver.equals(firebaseUser.uid) && chat.sender.equals(chatUserUid)
+                            || chat.receiver.equals(chatUserUid) && chat.sender.equals(firebaseUser.uid)){
+                            lastTextMessage = chat.message
+                        }
+                    }
+                }
+
+                when(lastTextMessage){
+                    "defaultMsg" -> lastMessage.text = ""
+                    "Gửi một hình ảnh" -> lastMessage.text = lastTextMessage
+                    else -> lastMessage.text = lastTextMessage
+                }
+
+                lastTextMessage = "defaultMsg"
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
     }
 }

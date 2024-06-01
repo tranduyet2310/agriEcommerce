@@ -1,12 +1,10 @@
 package com.example.argiecommerce.adapter
 
 import android.content.Context
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.RelativeLayout.LayoutParams
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -90,12 +88,16 @@ class MessageAdapter(
             else if (!currentItem.sender.equals(firebaseUser!!.uid)){
                 holder.showImageMessage(currentItem)
                 holder.image.setOnClickListener {
-                    createReceiverOptionDialog(position, holder, currentItem)
+                    createReceiverOptionDialog(currentItem)
                 }
             }
         } else {
             holder.showTextMessage(currentItem)
-            createTextOptionDialog(position, holder, currentItem)
+            if (currentItem.sender.equals(firebaseUser!!.uid)){
+                holder.tvMessageContent.setOnClickListener {
+                    createTextOptionDialog(position, holder)
+                }
+            }
         }
         // send and had seen message
         if (position == chatList.size-1){
@@ -133,7 +135,7 @@ class MessageAdapter(
 
     private fun setupHadSeenMargin(currentItem: Chat, holder: ViewHodler){
         if (currentItem.message.equals("Gửi một hình ảnh") && !currentItem.url.equals("")){
-            val lp : RelativeLayout.LayoutParams? = holder.tvHadSeen.layoutParams as LayoutParams?
+            val lp : LayoutParams? = holder.tvHadSeen.layoutParams as LayoutParams?
             lp!!.setMargins(0, 245, 10, 0)
             holder.tvHadSeen.layoutParams = lp
         }
@@ -147,7 +149,7 @@ class MessageAdapter(
         )
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle("Thao tác muốn thực hiện?")
-        builder.setItems(options, DialogInterface.OnClickListener{ dialog, which ->
+        builder.setItems(options, { dialog, which ->
             if (which == 0){
                 onViewFullImage?.invoke(currentItem)
             } else if (which == 1){
@@ -157,14 +159,14 @@ class MessageAdapter(
         builder.show()
     }
 
-    private fun createReceiverOptionDialog(position: Int, holder: ViewHodler, currentItem: Chat){
+    private fun createReceiverOptionDialog(currentItem: Chat){
         val options = arrayOf<CharSequence>(
             "Xem chi tiết",
             "Hủy"
         )
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle("Thao tác muốn thực hiện?")
-        builder.setItems(options, DialogInterface.OnClickListener{ dialog, which ->
+        builder.setItems(options, { dialog, which ->
             if (which == 0){
                 onViewFullImage?.invoke(currentItem)
             }
@@ -172,14 +174,14 @@ class MessageAdapter(
         builder.show()
     }
 
-    private fun createTextOptionDialog(position: Int, holder: ViewHodler, currentItem: Chat){
+    private fun createTextOptionDialog(position: Int, holder: ViewHodler){
         val options = arrayOf<CharSequence>(
             "Xoá tin nhắn",
             "Hủy"
         )
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle("Thao tác muốn thực hiện?")
-        builder.setItems(options, DialogInterface.OnClickListener{ dialog, which ->
+        builder.setItems(options, { dialog, which ->
             if (which == 0){
                 deleteSentMessage(position, holder)
             }

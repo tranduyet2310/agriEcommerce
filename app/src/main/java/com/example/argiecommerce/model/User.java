@@ -3,8 +3,6 @@ package com.example.argiecommerce.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-
 public class User implements Parcelable {
     private long id;
     private String fullName;

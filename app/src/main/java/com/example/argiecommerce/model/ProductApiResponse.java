@@ -1,7 +1,6 @@
 package com.example.argiecommerce.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductApiResponse {
     private ArrayList<Product> content;
