@@ -99,6 +99,7 @@ class UserAccountFragment : Fragment(), View.OnClickListener {
         }
         if (user?.email != null) {
             binding.edtEmail.text = Editable.Factory.getInstance().newEditable(user?.email)
+            binding.edtEmail.isEnabled = false
         }
     }
 

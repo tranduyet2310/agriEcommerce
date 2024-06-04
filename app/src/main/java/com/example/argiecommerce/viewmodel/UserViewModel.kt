@@ -19,4 +19,18 @@ class UserViewModel: ViewModel() {
     var orderCreated: Boolean = false
     var supplierBasicInfo: SupplierBasicInfo? = null
     var category: CategoryApiResponse? = null
+    // ID for standard
+    var ocopId: Long = 0L
+    var organicId: Long = 0L
+    var globalGapId: Long = 0L
+    var vietGapId: Long = 0L
+    // ID for specialty
+    var btbId: Long = 0L
+    var dbsclId: Long = 0L
+    var dbshId: Long = 0L
+    var dhNtbId: Long = 0L
+    var dbbId: Long = 0L
+    var dnbId: Long = 0L
+    var tbbId: Long = 0L
+    var tnId: Long = 0L
 }

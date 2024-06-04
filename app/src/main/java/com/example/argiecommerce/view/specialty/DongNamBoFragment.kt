@@ -73,6 +73,8 @@ class DongNamBoFragment : Fragment() {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        dongNamBoId = userViewModel.dnbId
+
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()
@@ -103,12 +105,6 @@ class DongNamBoFragment : Fragment() {
         }
     }
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.DNB)){
-                dongNamBoId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(dongNamBoId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

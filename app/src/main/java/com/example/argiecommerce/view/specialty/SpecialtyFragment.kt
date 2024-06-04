@@ -11,10 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.SpecialtyViewpagerAdapter
+import com.example.argiecommerce.adapter.ViewpagerAdapter
 import com.example.argiecommerce.databinding.FragmentSpecialtyBinding
 import com.example.argiecommerce.model.CategoryApiResponse
-import com.example.argiecommerce.model.User
 import com.example.argiecommerce.network.Api
 import com.example.argiecommerce.network.RetrofitClient
 import com.example.argiecommerce.utils.Constants
@@ -53,6 +52,7 @@ class SpecialtyFragment : Fragment() {
                 alertDialog = progressDialog.createAlertDialog(requireActivity())
             }
             getCategoryData()
+            prepareCategoryId()
             withContext(Dispatchers.Main) {
                 alertDialog.dismiss()
             }
@@ -66,6 +66,21 @@ class SpecialtyFragment : Fragment() {
         navController = Navigation.findNavController(view)
 
         setupViewPager()
+    }
+
+    private fun prepareCategoryId() {
+        for (subcategory in specialtyCategory!!.subCategoryList) {
+            when (subcategory.subcategoryName) {
+                Constants.BTB -> userViewModel.btbId = subcategory.id.toLong()
+                Constants.DBSCL -> userViewModel.dbsclId = subcategory.id.toLong()
+                Constants.DBSH -> userViewModel.dbshId = subcategory.id.toLong()
+                Constants.NTB -> userViewModel.dhNtbId = subcategory.id.toLong()
+                Constants.DBB -> userViewModel.dbbId = subcategory.id.toLong()
+                Constants.DNB -> userViewModel.dnbId = subcategory.id.toLong()
+                Constants.TBB -> userViewModel.tbbId = subcategory.id.toLong()
+                Constants.TN -> userViewModel.tnId = subcategory.id.toLong()
+            }
+        }
     }
 
     private fun setupViewPager() {
@@ -83,7 +98,7 @@ class SpecialtyFragment : Fragment() {
         binding.viewpagerSpecialty.isUserInputEnabled = false
 
         val viewPager2Adapter =
-            SpecialtyViewpagerAdapter(specialtiesFragment, childFragmentManager, lifecycle)
+            ViewpagerAdapter(specialtiesFragment, childFragmentManager, lifecycle)
         binding.viewpagerSpecialty.adapter = viewPager2Adapter
         TabLayoutMediator(binding.tabLayout, binding.viewpagerSpecialty) { tab, position ->
             when (position) {

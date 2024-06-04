@@ -2,6 +2,7 @@ package com.example.argiecommerce.view.standard
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,8 +31,10 @@ import com.example.argiecommerce.viewmodel.FavoriteViewModel
 import com.example.argiecommerce.viewmodel.ProductViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class OcopFragment : Fragment() {
@@ -73,10 +76,13 @@ class OcopFragment : Fragment() {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        ocopId = userViewModel.ocopId
+
         setupRecyclerView()
         if (specialtyCategory != null){
             getProducts()
         }
+        Log.d("TEST", "ocop")
 
         return binding.root
     }
@@ -101,11 +107,11 @@ class OcopFragment : Fragment() {
         }
     }
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.OCOP)){
-                ocopId = subcategory.id.toLong()
-            }
-        }
+//        for (subcategory in specialtyCategory!!.subCategoryList){
+//            if (subcategory.subcategoryName.equals(Constants.OCOP)){
+//                ocopId = subcategory.id.toLong()
+//            }
+//        }
 
         val productApiRequest = ProductApiRequest(ocopId)
         lifecycleScope.launch {

@@ -73,6 +73,8 @@ class TayBacBoFragment : Fragment() {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        tayBacBoId = userViewModel.tbbId
+
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()
@@ -103,12 +105,6 @@ class TayBacBoFragment : Fragment() {
 
     }
      private fun getProducts() {
-         for (subcategory in specialtyCategory!!.subCategoryList){
-             if (subcategory.subcategoryName.equals(Constants.TBB)){
-                 tayBacBoId = subcategory.id.toLong()
-             }
-         }
-
         val productApiRequest = ProductApiRequest(tayBacBoId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

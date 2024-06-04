@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.FavoriteProductAdapter
 import com.example.argiecommerce.databinding.FragmentWishlistBinding
+import com.example.argiecommerce.model.CartResponse
 import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.MessageResponse
 import com.example.argiecommerce.model.Product
@@ -20,6 +21,7 @@ import com.example.argiecommerce.model.User
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
 import com.example.argiecommerce.utils.ScreenState
+import com.example.argiecommerce.viewmodel.CartViewModel
 import com.example.argiecommerce.viewmodel.FavoriteViewModel
 import com.example.argiecommerce.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -38,6 +40,9 @@ class WishlistFragment : Fragment() {
     }
     private val favoriteViewModel: FavoriteViewModel by lazy {
         ViewModelProvider(requireActivity()).get(FavoriteViewModel::class.java)
+    }
+    private val cartViewModel: CartViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(CartViewModel::class.java)
     }
 
     private var user: User? = null
@@ -80,6 +85,11 @@ class WishlistFragment : Fragment() {
                 requireActivity(), { state -> processFavProductDeleting(state) }
             )
         }
+
+        favoriteAdapter.onCartClick = {
+            addToCart(it)
+        }
+
         binding.toolbarLayout.imgBack.setOnClickListener {
             navController.navigateUp()
         }
@@ -117,6 +127,41 @@ class WishlistFragment : Fragment() {
         binding.emptyWishlist.visibility = View.GONE
         binding.noBookmarks.visibility = View.GONE
         binding.emptyBox.visibility = View.GONE
+    }
+
+    private fun addToCart(product: Product) {
+        if(product.isNew){
+            displayErrorSnackbar(getString(R.string.not_sale))
+            return
+        }
+        if (product.isInCart == 1) {
+            val token = loginUtils.getUserToken()
+            cartViewModel.addToCart(token, user!!.id, product.productId).observe(
+                requireActivity(), {state -> processCartResponse(state)}
+            )
+        }
+    }
+
+    private fun processCartResponse(state: ScreenState<CartResponse?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                alertDialog = progressDialog.createAlertDialog(requireActivity())
+            }
+
+            is ScreenState.Success -> {
+                if (state.data != null) {
+                    alertDialog.dismiss()
+                    Snackbar.make(requireView(), requireContext().resources.getString(R.string.add_into_cart), Snackbar.LENGTH_SHORT).show()
+                }
+            }
+
+            is ScreenState.Error -> {
+                alertDialog.dismiss()
+                if (state.message != null) {
+                    displayErrorSnackbar(state.message)
+                }
+            }
+        }
     }
 
     private fun processFavProductDeleting(state: ScreenState<MessageResponse?>) {

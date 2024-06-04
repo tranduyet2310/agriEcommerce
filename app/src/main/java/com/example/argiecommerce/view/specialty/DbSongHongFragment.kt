@@ -73,6 +73,8 @@ class DbSongHongFragment : Fragment() {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        dbSongHongId = userViewModel.dbshId
+
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()
@@ -104,12 +106,6 @@ class DbSongHongFragment : Fragment() {
     }
 
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.DBSH)){
-                dbSongHongId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(dbSongHongId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

@@ -73,6 +73,8 @@ class DbSongCuuLongFragment : Fragment()  {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        dbSongCuuLongId = userViewModel.dbsclId
+
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()
@@ -104,12 +106,6 @@ class DbSongCuuLongFragment : Fragment()  {
 
     }
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.DBSCL)){
-                dbSongCuuLongId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(dbSongCuuLongId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

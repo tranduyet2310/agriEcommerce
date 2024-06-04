@@ -268,9 +268,9 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         binding.details.tvRatingMiniView.text = "4.5"
 
         binding.details.nameOfProduct.text = product.productName
-        binding.details.tvInfoDetailsOfProduct.text = product.description
         binding.details.tvProductSold.text = product.sold.toString()
         binding.details.tvProductQuantity.text = product.productQuantity.toString()
+        binding.details.tvInfoDetailsOfProduct.text = product.description
 
         if (product.isFavourite == 1) {
             binding.details.imgFavourite.setImageResource(R.drawable.ic_favorite_red)

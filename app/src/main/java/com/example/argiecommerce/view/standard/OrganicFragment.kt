@@ -73,6 +73,8 @@ class OrganicFragment : Fragment() {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        organicId = userViewModel.organicId
+
         setupRecyclerView()
         if (specialtyCategory != null){
             getProducts()
@@ -101,12 +103,6 @@ class OrganicFragment : Fragment() {
         }
     }
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.ORGANIC)){
-                organicId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(organicId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

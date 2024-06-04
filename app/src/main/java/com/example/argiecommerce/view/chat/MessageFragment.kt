@@ -1,4 +1,4 @@
-package com.example.argiecommerce.view.profile
+package com.example.argiecommerce.view.chat
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,14 +10,6 @@ import androidx.navigation.Navigation
 import com.example.argiecommerce.R
 import com.example.argiecommerce.adapter.SpecialtyViewpagerAdapter
 import com.example.argiecommerce.databinding.FragmentMessageBinding
-import com.example.argiecommerce.view.specialty.BacTrungBoFragment
-import com.example.argiecommerce.view.specialty.DbSongCuuLongFragment
-import com.example.argiecommerce.view.specialty.DbSongHongFragment
-import com.example.argiecommerce.view.specialty.DhNamTrungBoFragment
-import com.example.argiecommerce.view.specialty.DongBacBoFragment
-import com.example.argiecommerce.view.specialty.DongNamBoFragment
-import com.example.argiecommerce.view.specialty.TayBacBoFragment
-import com.example.argiecommerce.view.specialty.TayNguyenFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 

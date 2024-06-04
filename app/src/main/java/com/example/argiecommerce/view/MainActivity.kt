@@ -163,6 +163,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkCertificate() {
+        Log.w("TEST", "check cert")
         Utils.readRawResource(this, R.raw.mycert)
     }
     private fun requestNewToken() {

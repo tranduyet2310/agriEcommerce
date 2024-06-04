@@ -139,10 +139,9 @@ class SignUpFragment : Fragment(), View.OnClickListener {
             return
         }
 
-        registerViewModel.getRegisterResponseLiveData(user).observe(requireActivity(), { state ->
-            processRegisterResponse(state)
-        })
-        Snackbar.make(requireView(), "Tạo tài khoản thành công", Snackbar.LENGTH_SHORT).show()
+        registerViewModel.getRegisterResponseLiveData(user)
+            .observe(requireActivity(), { state -> processRegisterResponse(state) })
+//        Snackbar.make(requireView(), "Tạo tài khoản thành công", Snackbar.LENGTH_SHORT).show()
     }
 
     private fun goToLoginFragment() {
@@ -163,7 +162,8 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     user.id = state.data.id
                     loginUtils.saveUserInfo(user)
                     createChatAccount(user.email, user.password, user.id)
-                    Snackbar.make(requireView(), "Đăng ký thành công", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(requireView(), getString(R.string.register_successfully), Snackbar.LENGTH_SHORT).show()
+                    navController.navigate(R.id.action_signUpFragment_to_loginFragment)
                 }
             }
 

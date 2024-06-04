@@ -73,6 +73,8 @@ class DhNamTrungBoFragment : Fragment()  {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        dhNamTrungBoId = userViewModel.dhNtbId
+
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()
@@ -103,12 +105,6 @@ class DhNamTrungBoFragment : Fragment()  {
         }
     }
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.NTB)){
-                dhNamTrungBoId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(dhNamTrungBoId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

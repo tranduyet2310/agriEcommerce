@@ -506,7 +506,7 @@
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
-        android:name="com.example.argiecommerce.view.profile.MessageFragment"
+        android:name="com.example.argiecommerce.view.chat.MessageFragment"
         android:label="fragment_message"
         tools:layout="@layout/fragment_message" >
         <action
@@ -515,7 +515,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatDetailFragment"
-        android:name="com.example.argiecommerce.view.profile.ChatDetailFragment"
+        android:name="com.example.argiecommerce.view.chat.ChatDetailFragment"
         android:label="fragment_chat_detail"
         tools:layout="@layout/fragment_chat_detail" >
         <argument

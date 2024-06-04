@@ -74,6 +74,8 @@ class VietGapFragment : Fragment() {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        vietGapId = userViewModel.vietGapId
+
         setupRecyclerView()
         if (specialtyCategory != null){
             getProducts()
@@ -104,12 +106,6 @@ class VietGapFragment : Fragment() {
     }
 
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.VIETGAP)){
-                vietGapId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(vietGapId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

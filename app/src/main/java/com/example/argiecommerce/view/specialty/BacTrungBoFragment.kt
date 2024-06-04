@@ -74,6 +74,8 @@ class BacTrungBoFragment : Fragment(){
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        bacTrungBoId = userViewModel.btbId
+
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()
@@ -135,12 +137,6 @@ class BacTrungBoFragment : Fragment(){
     }
 
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.BTB)){
-                bacTrungBoId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(bacTrungBoId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

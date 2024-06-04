@@ -21,7 +21,6 @@ import com.example.argiecommerce.model.FavoriteResponse
 import com.example.argiecommerce.model.Product
 import com.example.argiecommerce.model.ProductApiRequest
 import com.example.argiecommerce.model.User
-import com.example.argiecommerce.utils.Constants
 import com.example.argiecommerce.utils.Constants.PRODUCT_KEY
 import com.example.argiecommerce.utils.LoginUtils
 import com.example.argiecommerce.utils.ProgressDialog
@@ -73,6 +72,8 @@ class GlobalGapFragment : Fragment() {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        globalGapId = userViewModel.globalGapId
+
         setupRecyclerView()
         if (specialtyCategory != null){
             getProducts()
@@ -101,12 +102,6 @@ class GlobalGapFragment : Fragment() {
         }
     }
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.GLOBALGAP)){
-                globalGapId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(globalGapId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

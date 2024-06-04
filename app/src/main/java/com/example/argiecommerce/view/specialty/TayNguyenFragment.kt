@@ -73,6 +73,8 @@ class TayNguyenFragment : Fragment() {
 
         user = userViewModel.user
         specialtyCategory = userViewModel.category
+        tayNguyenId = userViewModel.tnId
+
         setupRecyclerView()
         setupAreaLayout()
         setupAreaData()
@@ -104,12 +106,6 @@ class TayNguyenFragment : Fragment() {
     }
 
     private fun getProducts() {
-        for (subcategory in specialtyCategory!!.subCategoryList){
-            if (subcategory.subcategoryName.equals(Constants.TN)){
-                tayNguyenId = subcategory.id.toLong()
-            }
-        }
-
         val productApiRequest = ProductApiRequest(tayNguyenId)
         lifecycleScope.launch {
             productViewModel.getProductBySubCategory(productApiRequest)

@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.StandardViewpagerAdapter
+import com.example.argiecommerce.adapter.ViewpagerAdapter
 import com.example.argiecommerce.databinding.FragmentSuppilerBinding
 import com.example.argiecommerce.model.ReviewStatisticResponse
 import com.example.argiecommerce.model.SupplierBasicInfo
@@ -109,7 +109,7 @@ class SupplierFragment : Fragment(), View.OnClickListener {
         binding.suppilerLayout.viewpagerSuppiler.isUserInputEnabled = false
 
         val viewPager2Adapter =
-            StandardViewpagerAdapter(specialtiesFragment, childFragmentManager, lifecycle)
+            ViewpagerAdapter(specialtiesFragment, childFragmentManager, lifecycle)
         binding.suppilerLayout.viewpagerSuppiler.adapter = viewPager2Adapter
         TabLayoutMediator(
             binding.suppilerLayout.tabLayout,

@@ -344,5 +344,6 @@
     <string name="enter_text_message">Nhập nội dung tin nhắn</string>
     <string name="had_seen">Đã xem</string>
     <string name="yield_estimated">Sản lượng dự kiến:</string>
+    <string name="register_successfully">Đăng ký thành công</string>
 
 </resources>

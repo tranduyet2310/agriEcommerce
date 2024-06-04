@@ -1,4 +1,4 @@
-package com.example.argiecommerce.view.profile
+package com.example.argiecommerce.view.chat
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -18,7 +18,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.argiecommerce.R
-import com.example.argiecommerce.adapter.ChatAdapter
 import com.example.argiecommerce.adapter.MessageAdapter
 import com.example.argiecommerce.databinding.FragmentChatDetailBinding
 import com.example.argiecommerce.model.Chat
@@ -40,7 +39,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.getValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask

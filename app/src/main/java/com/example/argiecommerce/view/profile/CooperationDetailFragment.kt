@@ -195,6 +195,7 @@ class CooperationDetailFragment : Fragment() {
     suspend fun resetFieldYield(){
         val token = loginUtils.getUserToken()
         cooperationResponse.requireYield = 0.0
+        cooperationResponse.cooperationStatus = OrderStatus.CANCELLED
         withContext(Dispatchers.IO){
             val response = apiService.updateCooperationYield(token, cooperationResponse.id, cooperationResponse)
             if (response.isSuccessful){
