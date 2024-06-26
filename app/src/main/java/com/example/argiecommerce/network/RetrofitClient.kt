@@ -3,7 +3,9 @@ package com.example.argiecommerce.network
 import android.os.Build
 import com.example.argiecommerce.utils.Constants.LOCALHOST
 import com.example.argiecommerce.utils.Utils
+import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,6 +36,8 @@ class RetrofitClient {
             .connectTimeout(30, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .addInterceptor(loggingInterceptor)
+            .connectionPool(ConnectionPool(0, 1, TimeUnit.NANOSECONDS))
+            .protocols(listOf(Protocol.HTTP_1_1))
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q){
             addCustomTrustManager(okBuilder)
